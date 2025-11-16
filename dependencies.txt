@@ -1,1 +1,0 @@
-npm install --save-dev webpack webpack-cli webpack-dev-server babel-loader ts-loader css-loader style-loader html-webpack-plugin @babel/core @babel/preset-env @babel/preset-react @babel/preset-typescript

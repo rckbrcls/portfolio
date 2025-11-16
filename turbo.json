@@ -13,10 +13,6 @@
         "!.next/cache/**"
       ]
     },
-    "alan-turing#build": {
-      "dependsOn": ["^build"],
-      "outputs": ["dist/**"]
-    },
     "lint": {
       "dependsOn": ["^lint"]
     },
