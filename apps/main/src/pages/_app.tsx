@@ -2,8 +2,6 @@ import type { AppProps } from "next/app";
 
 import "./globals.css";
 import "../styles/animations.css";
-import Aurora from "@/components/molecules/Aurora";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import Head from "next/head";
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -17,7 +15,9 @@ export default function App({ Component, pageProps }: AppProps) {
         />
       </Head>
 
-      <SpeedInsights />
+
+
+
       <Component {...pageProps} />
     </>
   );
