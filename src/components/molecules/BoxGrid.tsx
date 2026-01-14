@@ -12,22 +12,22 @@ const BoxGrid = memo(() => {
   const aboutMeBoxes: IBox[] = [
     {
       className: "md:col-span-2",
-      text: `Curiosity drives my code. I love experimenting, learning, and building projects that solve real problems.`,
+      text: `Coding is my playground. I love experimenting, breaking things (occasionally), and building cool projects. Honestly, I just have a lot of fun doing this.`,
       image: Me,
     },
     {
       className: "md:row-span-2",
       image: Ororu,
-      text: `This is Ororu, my pitbull and adventure buddy. She reminds me that happiness is found in the simplest things.`,
+      text: `Meet Ororu, my main adventure buddy. She keeps me grounded and reminds me that happiness is usually just a walk away.`,
     },
     {
       className: "md:col-span-2",
       image: Draw,
-      text: `When I'm not coding, I'm drawing or playing sports. Creativity and movement keep me inspired.`,
+      text: `When I step away from the keyboard, I'm usually drawing or staying active. Art and sports are my fuel, they keep the creativity flowing.`,
     },
     {
       className: "md:col-span-3",
-      text: `If I'm away from my computer, I'm probably exploring beaches or enjoying nature. Traveling recharges my energy and inspires everything I do.`,
+      text: `Disconnecting to reconnect. You'll mostly find me at the beach or lost in nature. Traveling isn't just a hobby; it's how I reset and find new inspiration.`,
       image: Beach,
     },
   ];
