@@ -172,7 +172,7 @@ export default function ProjectsList() {
         </div>
         <button
           onClick={resetFilter}
-          className="glass-dark-button-ghost flex h-12 w-min items-center justify-center gap-2 text-nowrap rounded-3xl p-4 font-semibold hover:scale-[1.01] active:scale-95 max-sm:h-10"
+          className="glass-dark-button-ghost flex h-12 w-min items-center justify-center gap-2 text-nowrap rounded-3xl p-4 font-semibold hover:scale-[1.01] max-sm:h-10"
         >
           <FaBroom className="h-5 w-5" />
         </button>

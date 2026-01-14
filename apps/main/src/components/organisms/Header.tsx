@@ -47,13 +47,13 @@ const Header = () => {
   return (
     <header
       className={cn(
-        `glass-dark group absolute bottom-4 z-50 flex w-min select-none flex-col items-start justify-center gap-3 rounded-3xl border-zinc-700/30 p-3 transition duration-500 max-sm:flex-row`,
+        `glass-dark group absolute bottom-4 z-50 flex w-min select-none flex-col items-start justify-center gap-3 rounded-3xl border-zinc-700/30 p-3 max-sm:p-1 max-sm:gap-4 transition duration-500 max-sm:flex-row`,
       )}
     >
       {routes.map((route, index) => (
         <Link
           className={cn(
-            `flex w-full items-center rounded-full p-2 duration-500 hover:scale-105 hover:bg-zinc-800 active:scale-95 active:bg-zinc-900`,
+            `flex w-full items-center rounded-full p-2 duration-500 hover:scale-105 hover:bg-zinc-700 active:scale-95 active:bg-zinc-900`,
             route.selected &&
             "bg-zinc-100 text-zinc-950 hover:bg-zinc-300 active:scale-95 active:bg-zinc-300",
           )}
