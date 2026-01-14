@@ -25,8 +25,8 @@ import {
   SiSupabase,
 } from "react-icons/si";
 import React from "react";
-import { Box } from "lucide-react";
 import { TypeTechStack } from "./techStack";
+import { Box } from "lucide-react";
 
 // TODO: otimizar isso
 export const techStackIcons: Record<TypeTechStack, React.ReactNode> = {

@@ -24,7 +24,9 @@ import {
   SiDeno,
   SiRedis,
   SiAmazonaws,
+  SiSupabase,
 } from "react-icons/si";
+import { Box } from "lucide-react";
 
 interface TechStackIconProps {
   tech: TypeTechStack;
@@ -56,7 +58,9 @@ const techIconMap: Record<TypeTechStack, React.ComponentType> = {
   Deno: SiDeno,
   Redis: SiRedis,
   AWS: SiAmazonaws,
-  "React Native": SiReact, // Usa o mesmo ícone do React
+  "React Native": SiReact,
+  Supabase: SiSupabase,
+  Zustand: Box
 };
 
 const TechStackIcon: React.FC<TechStackIconProps> = ({ tech, className }) => {
