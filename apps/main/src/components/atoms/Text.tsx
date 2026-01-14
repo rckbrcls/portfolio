@@ -13,9 +13,8 @@ export function Text({
   return (
     <p
       className={twMerge(
-        `md:text-lg ${
-          gradient &&
-          "inline-block bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent"
+        `${gradient &&
+        "inline-block bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent"
         }`,
         className,
       )}

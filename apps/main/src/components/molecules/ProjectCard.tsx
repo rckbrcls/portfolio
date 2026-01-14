@@ -57,7 +57,7 @@ const ProjectCard = ({ project }: IProjectCardProps) => {
       className={`glass-dark group flex transform-gpu select-none justify-between rounded-3xl delay-75 duration-500 hover:-translate-y-1`}
     >
       <div className="flex w-full flex-col-reverse md:flex-row">
-        <div className="flex w-full select-none flex-col gap-2 p-10 text-left max-md:p-5 md:w-2/3">
+        <div className="flex w-full select-none flex-col gap-1 p-10 text-left max-md:p-4 md:w-2/3">
           <SubTitle className="mb-3">{project.name}</SubTitle>
 
           <Text className="w-full text-start">{project?.description}</Text>
@@ -65,11 +65,11 @@ const ProjectCard = ({ project }: IProjectCardProps) => {
           <hr className="my-3 w-full border-t border-zinc-700/30" />
 
           <div className="flex w-full flex-wrap items-start justify-end gap-2">
-            <Text className="flex-1 text-nowrap font-bold">Tech Stack</Text>
+            <Text className="flex-1 text-nowrap max-sm:text-sm text-md font-bold">Tech Stack</Text>
             {project?.techStack?.map((tech, index) => (
               <div
                 key={index}
-                className="glass-dark flex items-center gap-2 rounded-full px-4 py-1"
+                className="glass-dark flex items-center gap-2 max-sm:text-xs text-xs rounded-full px-4 py-1"
               >
                 <TechStackIcon tech={tech as TypeTechStack} />
                 <Text>{tech}</Text>
@@ -80,11 +80,11 @@ const ProjectCard = ({ project }: IProjectCardProps) => {
           <hr className="my-3 w-full border-t border-zinc-700/30" />
 
           <div className="flex w-full flex-wrap items-start justify-end gap-2">
-            <Text className="flex-1 text-nowrap font-bold">Members</Text>
+            <Text className="flex-1 text-nowrap max-sm:text-sm text-md font-bold">Members</Text>
             {project?.members.map((member, index) => (
               <div
                 key={index}
-                className="glass-dark flex items-center rounded-full px-4 py-1"
+                className="glass-dark flex items-center max-sm:text-xs text-sm rounded-full px-4 py-1"
               >
                 <Text className="text-nowrap">{member}</Text>
               </div>
@@ -130,7 +130,7 @@ const ProjectCard = ({ project }: IProjectCardProps) => {
                 rel="noopener noreferrer"
               >
                 <FaPager className="text-2xl" />
-                <Text className="max-sm:hidden">Project</Text>
+                <Text className="">Project Page</Text>
               </a>
             )}
           </div>
