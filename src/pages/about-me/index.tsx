@@ -4,7 +4,6 @@ import Title from "@/components/atoms/Title";
 import { Text } from "@/components/atoms/Text";
 import BoxGrid from "@/components/molecules/BoxGrid";
 import { FaFileDownload } from "react-icons/fa";
-import { BorderBeam } from "@/components/ui/border-beam";
 import Head from "next/head";
 import { motion } from "framer-motion";
 import Aurora from "@/components/molecules/Aurora";
