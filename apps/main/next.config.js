@@ -14,12 +14,6 @@ const nextConfig = {
     unoptimized: false,
     formats: ["image/webp", "image/avif"],
   },
-  webpack: (config, { dev }) => {
-    if (!dev) {
-      config.cache = false;
-    }
-    return config;
-  },
 };
 
 module.exports = withBundleAnalyzer(nextConfig);
