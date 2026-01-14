@@ -1,30 +1,56 @@
 {
-  "name": "portifolio",
+  "name": "main",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "turbo build",
-    "dev": "turbo dev",
-    "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "build:main": "turbo run build --filter=main...",
-    "build:apps": "turbo run build --filter=./apps/*",
-    "build:packages": "turbo run build --filter=./packages/*",
-    "build:services": "turbo run build --filter=./services/*",
-    "dev:apps": "turbo run dev --filter=./apps/*",
-    "dev:packages": "turbo run dev --filter=./packages/*",
-    "dev:services": "turbo run dev --filter=./services/*"
+    "dev": "rm -rf ./.next && NODE_OPTIONS=\"--max_old_space_size=8000\"  next dev -H 0.0.0.0",
+    "build": "next build",
+    "build:analyze": "ANALYZE=true npm run build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@mesh-gradient/core": "^1.5.0",
+    "@mesh-gradient/react": "^1.5.0",
+    "@radix-ui/react-accordion": "^1.2.0",
+    "@radix-ui/react-dialog": "^1.1.4",
+    "@radix-ui/react-icons": "^1.3.0",
+    "@radix-ui/react-label": "^2.1.1",
+    "@radix-ui/react-popover": "^1.1.4",
+    "@radix-ui/react-separator": "^1.1.1",
+    "@radix-ui/react-slot": "^1.1.1",
+    "@vercel/analytics": "^1.6.1",
+    "@vercel/speed-insights": "^1.1.0",
+    "class-variance-authority": "^0.7.0",
+    "classnames": "^2.5.1",
+    "clsx": "^2.1.1",
+    "cmdk": "1.0.0",
+    "framer-motion": "^10.18.0",
+    "lucide-react": "^0.438.0",
+    "next": "13.5.6",
+    "nice-color-palettes": "^4.0.0",
+    "normalize.css": "^8.0.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-icons": "^4.12.0",
+    "react-use-measure": "^2.1.7",
+    "sharp": "^0.33.4",
+    "tailwind-merge": "^1.14.0",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "prettier": "^3.2.5",
-    "turbo": "^2.5.5",
-    "typescript": "^5.4.5"
-  },
-  "packageManager": "pnpm@8.15.6",
-  "engines": {
-    "node": ">=18"
-  },
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+    "@next/bundle-analyzer": "^15.3.5",
+    "@types/node": "^20.14.9",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.4.19",
+    "cssnano": "^6.0.1",
+    "postcss": "^8.4.31",
+    "prettier": "^3.4.2",
+    "prettier-plugin-tailwindcss": "^0.6.9",
+    "tailwindcss": "^3.4.4",
+    "typescript": "^5"
+  }
 }
