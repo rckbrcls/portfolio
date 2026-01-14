@@ -55,13 +55,15 @@ body {
     box-shadow: none;
   }
 
-  .glass-dark-button-ghost:hover {
-    background: #a855f7;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-color: #9c50e3;
+  @media (hover: hover) {
+    .glass-dark-button-ghost:hover {
+      background: #a855f7;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-color: #9c50e3;
 
-    color: white;
+      color: white;
+    }
   }
 }
 
