@@ -23,7 +23,7 @@ const BoxGrid = memo(() => {
     {
       className: "md:col-span-2",
       image: Draw,
-      text: `When I step away from the keyboard, I'm usually drawing or staying active. Art and sports are my fuel, they keep the creativity flowing.`,
+      text: `When I step away from the keyboard, I'm usually drawing or staying active. Art and sports are my fuel; They keep the creativity flowing.`,
     },
     {
       className: "md:col-span-3",
