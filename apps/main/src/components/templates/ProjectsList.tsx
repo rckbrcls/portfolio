@@ -8,7 +8,7 @@ import { Label } from "../ui/label";
 import { motion } from "framer-motion";
 import ProjectCard from "../molecules/ProjectCard";
 import { getProjectsFilterOptions } from "../../utils/filterOptionsOptimized";
-import { projects } from "../../../public/data/projects/projects";
+import { projects } from "../../../data/projects/projects";
 import { FaBroom } from "react-icons/fa";
 
 // Estado centralizado para filtros

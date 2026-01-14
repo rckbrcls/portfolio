@@ -2,9 +2,9 @@ import React, { memo } from "react";
 import Image from "next/image";
 import SubTitle from "@/components/atoms/SubTitle";
 import { twMerge } from "tailwind-merge";
-import Ororu from "../../../public/images/about-me/ororu.jpeg";
-import Draw from "../../../public/images/about-me/2D.png";
-import Me from "../../../public/images/about-me/me.jpeg";
+import Ororu from "../../../public/images/about-me/ororu.jpg";
+import Draw from "../../../public/images/about-me/2D.jpg";
+import Me from "../../../public/images/about-me/me.jpg";
 import Beach from "../../../public/images/about-me/beach.jpg";
 import { IBox } from "@/interface/IBox";
 

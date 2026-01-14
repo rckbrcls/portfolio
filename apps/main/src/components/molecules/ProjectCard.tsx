@@ -8,7 +8,7 @@ import { Text } from "@/components/atoms/Text";
 import { AiFillGithub } from "react-icons/ai";
 import { BiSolidComponent } from "react-icons/bi";
 import { FaPager } from "react-icons/fa";
-import { TypeTechStack } from "../../../public/data/techStack";
+import { TypeTechStack } from "../../../data/techStack";
 
 interface IProjectCardProps {
   project: IProject;

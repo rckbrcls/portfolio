@@ -1,13 +1,10 @@
-import {
-  projects,
-  microfrontendProjects,
-} from "../../public/data/projects/projects";
+import { projects, microfrontendProjects } from "../../data/projects/projects";
 import {
   frameworks,
   languages,
   databases,
   toolsAndLibraries,
-} from "../../public/data/techStack";
+} from "../../data/techStack";
 
 type FilterOption = { value: string; label: string };
 

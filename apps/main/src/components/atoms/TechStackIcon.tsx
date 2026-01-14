@@ -1,5 +1,5 @@
 import React from "react";
-import { TypeTechStack } from "../../../public/data/techStack";
+import { TypeTechStack } from "../../../data/techStack";
 import {
   SiReact,
   SiNextdotjs,

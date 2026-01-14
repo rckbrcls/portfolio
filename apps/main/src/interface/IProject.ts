@@ -1,6 +1,6 @@
 import { StaticImageData } from "next/image";
 import { IVisualization } from "./IVisualization";
-import { TypeTechStack } from "../../public/data/techStack";
+import { TypeTechStack } from "../../data/techStack";
 import { Route } from "next";
 import React from "react";
 
