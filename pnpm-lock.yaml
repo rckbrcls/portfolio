@@ -372,6 +372,12 @@ importers:
       '@johnn-e/react-mesh-gradient':
         specifier: ^1.1.1
         version: 1.1.1(@types/react@18.3.23)(react-dom@18.3.1)(react@18.3.1)
+      '@mesh-gradient/core':
+        specifier: ^1.5.0
+        version: 1.5.0
+      '@mesh-gradient/react':
+        specifier: ^1.5.0
+        version: 1.5.0(react-dom@18.3.1)(react@18.3.1)
       '@radix-ui/react-accordion':
         specifier: ^1.2.0
         version: 1.2.11(@types/react-dom@18.3.7)(@types/react@18.3.23)(react-dom@18.3.1)(react@18.3.1)
@@ -3732,6 +3738,21 @@ packages:
 
   /@mediapipe/tasks-vision@0.10.17:
     resolution: {integrity: sha512-CZWV/q6TTe8ta61cZXjfnnHsfWIdFhms03M9T7Cnd5y2mdpylJM0rF1qRq+wsQVRMLz1OYPVEBU9ph2Bx8cxrg==}
+    dev: false
+
+  /@mesh-gradient/core@1.5.0:
+    resolution: {integrity: sha512-68kCPIoY24EZsexxVT/w3B9/jGnscB7ntgy/GSBt4UVIJxNxq0VB5YmLSadRdoSdYa5WTOm8BgAwiXUnzVzD6Q==}
+    dev: false
+
+  /@mesh-gradient/react@1.5.0(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-zJ7JJzWzVU1Z/XHkYnRDKcbXhjlfqGEkZni5eT5xDBqi8/NQFJj3g6AO1n5FxAeCkjUbaFKwVNay8etbEy0lzQ==}
+    peerDependencies:
+      react: '>=18.0.0'
+      react-dom: '>=18.0.0'
+    dependencies:
+      '@mesh-gradient/core': 1.5.0
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
     dev: false
 
   /@miragejs/pretender-node-polyfill@0.1.2:

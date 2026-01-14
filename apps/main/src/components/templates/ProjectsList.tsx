@@ -106,7 +106,7 @@ export default function ProjectsList() {
         className="max-md:scrollbar-hidden flex w-11/12 items-end gap-2 max-md:overflow-x-scroll max-sm:-mx-4 max-sm:w-[calc(100%+2rem)] max-sm:px-4"
       >
         <div className="flex w-full flex-col gap-2">
-          <Label htmlFor="frameworks" className="font-semibold text-purple-400">
+          <Label htmlFor="frameworks" >
             Frameworks
           </Label>
           <MultiSelect
@@ -123,7 +123,7 @@ export default function ProjectsList() {
         </div>
 
         <div className="flex w-full flex-col gap-2">
-          <Label htmlFor="languages" className="font-semibold text-purple-400">
+          <Label htmlFor="languages" >
             Languages
           </Label>
           <MultiSelect
@@ -140,7 +140,7 @@ export default function ProjectsList() {
         </div>
 
         <div className="flex w-full flex-col gap-2">
-          <Label htmlFor="databases" className="font-semibold text-purple-400">
+          <Label htmlFor="databases" >
             Databases
           </Label>
           <MultiSelect
@@ -157,7 +157,7 @@ export default function ProjectsList() {
         </div>
 
         <div className="flex w-full flex-col gap-2">
-          <Label htmlFor="tools" className="font-semibold text-purple-400">
+          <Label htmlFor="tools" >
             Tools &amp; Libraries
           </Label>
           <MultiSelect
@@ -172,7 +172,7 @@ export default function ProjectsList() {
         </div>
         <button
           onClick={resetFilter}
-          className="flex h-12 w-min items-center justify-center gap-2 text-nowrap rounded-3xl p-4 font-semibold text-purple-300 transition duration-700 hover:scale-[1.01] hover:bg-zinc-950 active:scale-95 active:bg-zinc-950 max-sm:h-10"
+          className="glass-dark-button-ghost flex h-12 w-min items-center justify-center gap-2 text-nowrap rounded-3xl p-4 font-semibold hover:scale-[1.01] active:scale-95 max-sm:h-10"
         >
           <FaBroom className="h-5 w-5" />
         </button>
@@ -196,7 +196,7 @@ export default function ProjectsList() {
             <div className="mb-4 flex h-12 w-12 animate-bounce items-center justify-center rounded-full bg-gradient-to-tr from-purple-400 to-purple-700">
               <MdOutlineWebAsset className="h-7 w-7 text-white" />
             </div>
-            <span className="text-lg font-semibold text-purple-400 drop-shadow">
+            <span className="text-lg font-semibold drop-shadow">
               Oops! No projects here yet.
             </span>
             <span className="mt-2 text-xs text-purple-300">

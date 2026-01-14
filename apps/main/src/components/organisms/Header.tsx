@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { Route } from "next";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { Hand, Rocket, User, Mail } from "lucide-react";
 
 interface IHeaderButton {
   path: Route;
@@ -19,25 +20,25 @@ const Header = () => {
   const routes: IHeaderButton[] = [
     {
       path: "/",
-      icon: "👋",
+      icon: <Hand size={20} />,
       selected: pathname === "/",
       name: "Hello!",
     },
     {
       path: "/projects",
-      icon: "🚀",
+      icon: <Rocket size={20} />,
       selected: pathname === "/projects",
       name: "Projects",
     },
     {
       path: "/about-me",
-      icon: "🧑‍💻",
+      icon: <User size={20} />,
       selected: pathname === "/about-me",
       name: "About Me",
     },
     {
       path: "/contact",
-      icon: "📬",
+      icon: <Mail size={20} />,
       selected: pathname === "/contact",
       name: "Contact",
     },
@@ -46,15 +47,15 @@ const Header = () => {
   return (
     <header
       className={cn(
-        `glass-dark group absolute bottom-4 z-50 flex w-min select-none flex-col items-start justify-center gap-4 rounded-3xl border-zinc-700/30 p-2 transition duration-700 max-sm:flex-row`,
+        `glass-dark group absolute bottom-4 z-50 flex w-min select-none flex-col items-start justify-center gap-3 rounded-3xl border-zinc-700/30 p-3 transition duration-500 max-sm:flex-row`,
       )}
     >
       {routes.map((route, index) => (
         <Link
           className={cn(
-            `flex w-full items-center rounded-full px-2 py-1 duration-700 hover:scale-105 hover:bg-zinc-800 active:scale-95 active:bg-zinc-900`,
+            `flex w-full items-center rounded-full p-2 duration-500 hover:scale-105 hover:bg-zinc-800 active:scale-95 active:bg-zinc-900`,
             route.selected &&
-              "bg-zinc-100 text-zinc-950 hover:bg-zinc-300 active:scale-95 active:bg-zinc-300",
+            "bg-zinc-100 text-zinc-950 hover:bg-zinc-300 active:scale-95 active:bg-zinc-300",
           )}
           key={index}
           href={route.path}
@@ -62,7 +63,7 @@ const Header = () => {
           <span>{route.icon}</span>
           <span
             className={cn(
-              `max-w-0 overflow-hidden whitespace-nowrap text-xs font-semibold opacity-0 transition-all duration-700 group-hover:ml-2 group-hover:max-w-xs group-hover:opacity-100 max-sm:hidden`,
+              `max-w-0 overflow-hidden whitespace-nowrap text-xs font-semibold opacity-0 transition-all duration-500 group-hover:ml-2 group-hover:max-w-xs group-hover:opacity-100 max-sm:hidden`,
             )}
           >
             {route.name}

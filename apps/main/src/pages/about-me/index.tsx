@@ -20,20 +20,13 @@ export default function AboutMe() {
       className="absolute z-50 flex justify-center max-sm:bottom-4 max-sm:right-4 sm:left-4 sm:top-4"
     >
       <a
-        className="glass-dark relative flex w-full items-center justify-center gap-3 text-nowrap rounded-3xl px-6 py-2 text-base font-bold transition duration-300 hover:border-purple-400/40 max-sm:p-3"
+        className="glass-dark-button relative flex w-full items-center justify-center gap-3 text-nowrap rounded-3xl px-6 py-2 text-base font-bold transition duration-300 hover:border-purple-400/40 max-sm:p-3"
         href="/files/Resume.pdf"
         target="_blank"
         rel="noopener noreferrer"
       >
         <FaFileDownload className="transition-colors group-hover:text-purple-400" />
         <Text className="max-sm:hidden">Download Resume</Text>
-        <BorderBeam
-          size={100}
-          duration={5}
-          delay={9}
-          colorFrom="#6366f1"
-          colorTo="#ec4899"
-        />
       </a>
     </motion.div>
   );

@@ -1,9 +1,10 @@
 // @ts-nocheck
 "use client";
-import { useState, memo, lazy, Suspense } from "react";
+import { useState, memo, Suspense } from "react";
 import { ClassNameValue, twMerge } from "tailwind-merge";
 import { cn } from "@/lib/utils";
 import { useEffect } from "react";
+import { MeshGradient } from "@mesh-gradient/react";
 
 interface IAuroraProps {
   children?: React.ReactNode;
@@ -11,12 +12,7 @@ interface IAuroraProps {
   className?: ClassNameValue;
 }
 
-// Lazy load the heavy MeshGradientRenderer
-const MeshGradientRenderer = lazy(() =>
-  import("@johnn-e/react-mesh-gradient").then((module) => ({
-    default: module.MeshGradientRenderer,
-  })),
-);
+
 
 // Fallback component while MeshGradient loads
 const AuroraFallback = ({
@@ -43,23 +39,23 @@ function AuroraGradient({
   palettes,
 }: {
   dark: boolean;
-  palettes: string[];
+  palettes: [string, string, string, string];
 }) {
   return (
-    <MeshGradientRenderer
-      className="h-full w-full"
-      colors={palettes}
-      speed={0.01}
-      wireframe={dark}
-      backgroundColor={"#000000"}
+    <MeshGradient
+      className="h-full w-full fixed -z-10"
+      options={{
+        colors: palettes,
+        animationSpeed: 0.5,
+      }}
     />
   );
 }
 
 function Aurora({ children, dark = false, className }: IAuroraProps) {
-  const palettes = dark
-    ? ["#000", "#222", "#444", "#666", "#888"]
-    : ["#d500f9", "#6366f1", "#ec4899", "#a855f7", "#3b82f6"];
+  const palettes: [string, string, string, string] = dark
+    ? ["#000000", "#222222", "#444444", "#555555"]
+    : ["#d500f9", "#6366f1", "#ec4899", "#a855f7"];
 
   const position = dark ? "fixed" : "absolute";
   const [isClient, setIsClient] = useState(false);

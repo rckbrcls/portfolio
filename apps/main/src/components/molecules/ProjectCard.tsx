@@ -96,7 +96,7 @@ const ProjectCard = ({ project }: IProjectCardProps) => {
           <div className="flex gap-2">
             {project?.gitLink && (
               <a
-                className="glass-dark flex w-full items-center justify-center gap-3 text-nowrap rounded-full px-8 py-4 text-lg font-bold transition duration-300 hover:border-purple-400/40"
+                className="glass-dark-button flex w-full items-center justify-center gap-3 text-nowrap rounded-full py-3 font-bold"
                 href={project.gitLink}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -108,7 +108,7 @@ const ProjectCard = ({ project }: IProjectCardProps) => {
             {project?.microRoute && (
               <Link
                 href={`/microfrontend/${project.slug}`}
-                className="glass-dark flex w-full items-center justify-center gap-3 text-nowrap rounded-full px-8 py-4 text-lg font-bold transition duration-300 hover:border-purple-400/40"
+                className="glass-dark-button flex w-full items-center justify-center gap-3 text-nowrap rounded-full py-3 font-bold"
                 onClick={() => {
                   if (typeof window !== "undefined") {
                     sessionStorage.setItem(
@@ -125,7 +125,7 @@ const ProjectCard = ({ project }: IProjectCardProps) => {
             {project?.link && (
               <a
                 href={project.link}
-                className="glass-dark flex w-full items-center justify-center gap-3 text-nowrap rounded-full px-8 py-4 text-lg font-bold transition duration-300 hover:border-purple-400/40"
+                className="glass-dark-button flex w-full items-center justify-center gap-3 text-nowrap rounded-full py-3 font-bold"
                 target="_blank"
                 rel="noopener noreferrer"
               >

@@ -28,6 +28,41 @@ body {
     border-color: rgba(121, 121, 121, 0.2);
     border-width: 1px;
   }
+
+  .glass-dark-button {
+    background: #a855f7;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-color: #9c50e3;
+    border-width: 2px;
+    color: white;
+    transition: all 0.2s ease;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .glass-dark-button:hover {
+    background: #8c47cc;
+  }
+
+  .glass-dark-button-ghost {
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-width: 2px;
+    border-color: transparent;
+    color: white;
+    transition: all 0.2s ease;
+    box-shadow: none;
+  }
+
+  .glass-dark-button-ghost:hover {
+    background: #a855f7;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-color: #9c50e3;
+
+    color: white;
+  }
 }
 
 @layer utilities {
