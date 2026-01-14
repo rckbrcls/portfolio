@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useMemo } from "react";
 import Image from "next/image";
 import SubTitle from "@/components/atoms/SubTitle";
 import { twMerge } from "tailwind-merge";
@@ -9,7 +9,7 @@ import Beach from "../../../public/images/about-me/beach.jpg";
 import { IBox } from "@/interface/IBox";
 
 const BoxGrid = memo(() => {
-  const aboutMeBoxes: IBox[] = [
+  const aboutMeBoxes: IBox[] = useMemo(() => [
     {
       className: "md:col-span-2",
       text: `Coding is my playground. I love experimenting, breaking things (occasionally), and building cool projects. Honestly, I just have a lot of fun doing this.`,
@@ -30,7 +30,7 @@ const BoxGrid = memo(() => {
       text: `Disconnecting to reconnect. You'll mostly find me at the beach or lost in nature. Traveling isn't just a hobby; it's how I reset and find new inspiration.`,
       image: Beach,
     },
-  ];
+  ], []);
 
   return (
     <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-3">
