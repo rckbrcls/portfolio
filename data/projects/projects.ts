@@ -53,6 +53,18 @@ export const projects: IProject[] = [
     coverImage: "/images/projects/duplizen/duplizen.png",
     status: "working",
   },
+  {
+    slug: "polterware-pwa",
+    description: `A lightweight React library for building Progressive Web Apps. Includes hooks for install prompts, offline detection, and PWA status management.`,
+    name: "@polterware/pwa",
+    techStack: ["React", "TypeScript"],
+    timeline: null,
+    gitLink: "https://github.com/polterware/pwa",
+    npmUrl: "https://www.npmjs.com/package/@polterware/pwa",
+    members: ["Erick Barcelos"],
+    coverImage: "/images/projects/polterware-pwa/pwa.png",
+    status: "finished",
+  },
   // {
   //   slug: "souvenir",
   //   description: `ML-powered photo app with advanced editing and organization features, built with Swift and Python.`,

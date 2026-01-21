@@ -8,6 +8,7 @@ import { Text } from "@/components/atoms/Text";
 import { AiFillGithub } from "react-icons/ai";
 import { BiSolidComponent } from "react-icons/bi";
 import { FaPager } from "react-icons/fa";
+import { SiNpm } from "react-icons/si";
 import { TypeTechStack } from "../../../data/techStack";
 
 interface IProjectCardProps {
@@ -131,6 +132,17 @@ const ProjectCard = ({ project }: IProjectCardProps) => {
               >
                 <FaPager className="text-2xl" />
                 <Text className="">Project Page</Text>
+              </a>
+            )}
+            {project?.npmUrl && (
+              <a
+                href={project.npmUrl}
+                className="glass-dark-button flex w-full items-center justify-center gap-3 text-nowrap rounded-full py-3 font-bold"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <SiNpm className="text-2xl" />
+                <Text className="max-sm:hidden">npm</Text>
               </a>
             )}
           </div>
