@@ -15,6 +15,7 @@ export interface IProject {
   gitLink?: Route;
   microRoute?: Route;
   link?: Route;
+  npmUrl?: Route;
   members: string[];
   projectVisualization?: IVisualization[];
   coverImage?: StaticImageData | string;
