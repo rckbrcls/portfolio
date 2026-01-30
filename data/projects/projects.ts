@@ -3,18 +3,8 @@ import { IProject } from "@/interface/IProject";
 // Projects with external links (without microRoute)
 export const projects: IProject[] = [
   {
-    slug: "polterware",
-    description: `Website for my software studio showcasing professional personal projects.`,
-    name: "polterware",
-    techStack: ["Next.js", "React", "TypeScript", "Tailwind", "Supabase"],
-    timeline: null,
-    link: "https://polterware.com",
-    members: ["Erick Barcelos"],
-    coverImage: "/images/projects/polterware/polterware.png",
-    status: "finished",
-  },
-  {
     slug: "dost",
+    order: 1,
     description: `Full-stack clothing store platform with Next.js, Node.js on AWS EC2, MongoDB, Redis, and Amazon SES. Mobile app in development.`,
     name: "dost",
     techStack: [
@@ -36,7 +26,21 @@ export const projects: IProject[] = [
     status: "working",
   },
   {
+    slug: "polterware",
+    order: 2,
+    description: `Website for my software studio showcasing professional personal projects.`,
+    name: "polterware",
+    techStack: ["Next.js", "React", "TypeScript", "Tailwind", "Supabase"],
+    timeline: null,
+    link: "https://polterware.com",
+    members: ["Erick Barcelos"],
+    coverImage: "/images/projects/polterware/polterware.png",
+    status: "finished",
+  },
+
+  {
     slug: "duplizen",
+    order: 3,
     description: `Multiplayer social deduction game built with Next.js and Supabase for real-time gameplay. Features PWA support for mobile installation.`,
     name: "duplizen",
     techStack: [
@@ -55,6 +59,7 @@ export const projects: IProject[] = [
   },
   {
     slug: "polterware-pwa",
+    order: 4,
     description: `A lightweight React library for building Progressive Web Apps. Includes hooks for install prompts, offline detection, and PWA status management.`,
     name: "@polterware/pwa",
     techStack: ["React", "TypeScript"],
@@ -64,6 +69,18 @@ export const projects: IProject[] = [
     members: ["Erick Barcelos"],
     coverImage: "/images/projects/polterware-pwa/pwa.png",
     status: "finished",
+  },
+  {
+    slug: "converge",
+    order: 5,
+    description: `Native Pomodoro timer for macOS. Statistics, history and notifications without taking you out of the flow.`,
+    name: "Converge",
+    techStack: ["Swift", "SwiftUI"],
+    timeline: null,
+    members: ["Erick Barcelos"],
+    coverImage: "/images/projects/converge/Converge.jpeg",
+    status: "working",
+    link: "https://converge-focus.vercel.app/",
   },
   // {
   //   slug: "souvenir",
@@ -119,6 +136,7 @@ export const projects: IProject[] = [
 export const microfrontendProjects: IProject[] = [
   {
     slug: "alan-turing",
+    order: 6,
     description: `Educational site exploring Alan Turing, Stephen Cook, and Noam Chomsky's influence on computational theory for a USP course.`,
     name: "Computer Theory",
     techStack: ["Solid.js", "TypeScript", "Webpack"],
@@ -131,6 +149,7 @@ export const microfrontendProjects: IProject[] = [
   },
   {
     slug: "lojinha-simples",
+    order: 7,
     description: `Simple store application using a mock API, developed as a study tool for React and API integration.`,
     name: "Simple Little Store",
     techStack: ["React", "TypeScript", "Webpack"],
@@ -144,6 +163,7 @@ export const microfrontendProjects: IProject[] = [
 
   {
     slug: "secret-santa",
+    order: 8,
     description: `Secret Santa system with random draw that sends email notifications to participants with their match.`,
     name: "Secret Santa",
     techStack: ["React", "JavaScript", "MongoDB", "Node.js", "Webpack"],
@@ -157,6 +177,7 @@ export const microfrontendProjects: IProject[] = [
   },
   {
     slug: "video-project-manage",
+    order: 9,
     description: `Management system simulator for video/film production companies handling clients, projects, and administrative tasks.`,
     name: "Video Project Manage",
     techStack: ["React", "JavaScript", "Webpack"],
@@ -169,6 +190,7 @@ export const microfrontendProjects: IProject[] = [
   },
   {
     slug: "electoral-system",
+    order: 10,
     description: `Electoral candidate management system developed for a Database course to study SQL queries, triggers, and database concepts.`,
     name: "Electoral System",
     techStack: [
@@ -189,6 +211,7 @@ export const microfrontendProjects: IProject[] = [
   },
   {
     slug: "rgbwallet",
+    order: 11,
     description: `Wallet management system for ICMC Junior (USP's Junior Enterprise) to track member account balances.`,
     name: "RGBWallet",
     techStack: [
@@ -210,6 +233,7 @@ export const microfrontendProjects: IProject[] = [
   },
   {
     slug: "liga-academica",
+    order: 12,
     description: `Institutional website for the Academic League of Psychiatry with information on events, activities, and educational materials.`,
     name: "Liga Acadêmica de Psiquiatria",
     techStack: ["Next.js", "React", "TypeScript"],
@@ -221,6 +245,7 @@ export const microfrontendProjects: IProject[] = [
   },
   {
     slug: "joystick",
+    order: 13,
     description: `Full-stack mock marketplace for video games covering the entire ecosystem from frontend to backend.`,
     name: "Joystick",
     techStack: ["React", "JavaScript", "MongoDB", "Node.js", "Webpack"],

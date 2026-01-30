@@ -15,7 +15,8 @@ export type Framework =
   | "Solid.js"
   | "Flask"
   | "Swift"
-  | "Svelte";
+  | "Svelte"
+  | "SwiftUI";
 
 export type Database = "MongoDB" | "PostgreSQL" | "Redis";
 
@@ -47,7 +48,8 @@ export const frameworks: Framework[] = [
   "Express",
   "Solid.js",
   "Flask",
-  // "Swift",
+  "Swift",
+  "SwiftUI",
   // "Svelte",
   // "Flutter",
 ];
