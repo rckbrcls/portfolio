@@ -47,6 +47,7 @@ export const techStackIcons: Record<TypeTechStack, React.ReactNode> = {
   "Solid.js": React.createElement(SiSolid),
   Flask: React.createElement(SiFlask),
   Swift: React.createElement(SiSwift),
+  SwiftUI: React.createElement(SiSwift),
   Svelte: React.createElement(SiSvelte),
 
   // Databases

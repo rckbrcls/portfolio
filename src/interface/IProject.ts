@@ -21,4 +21,5 @@ export interface IProject {
   coverImage?: StaticImageData | string;
   status: TProjectStatus;
   localServer?: boolean;
+  order?: number;
 }
