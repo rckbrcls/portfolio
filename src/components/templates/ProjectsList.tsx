@@ -123,7 +123,7 @@ export default function ProjectsList() {
             >
                 <div className="flex w-full flex-col gap-2">
                     <Label htmlFor="sort">Sort By</Label>
-                    <div className="glass-dark relative flex w-full min-w-40 items-center rounded-3xl md:min-h-12 max-md:h-12 max-sm:h-10">
+                    <div className="glass-dark relative flex w-full min-w-52 items-center rounded-3xl md:min-h-12 max-md:h-12 max-sm:h-10">
                         <select
                             id="sort"
                             className="h-full w-full appearance-none bg-transparent px-4 py-2 pr-8 font-medium text-gray-200 focus:outline-none cursor-pointer"
@@ -149,13 +149,12 @@ export default function ProjectsList() {
                     </Label>
                     <MultiSelect
                         id="frameworks"
-                        className="min-w-60 font-medium text-gray-200 max-sm:h-10"
+                        className="w-full min-w-52 font-medium text-gray-200 max-sm:h-10"
                         options={filterOptions.frameworks}
                         onValueChange={(selected) =>
                             handleFilterChange("frameworks", selected)
                         }
                         defaultValue={filters.frameworks}
-                        placeholder="Select frameworks"
                         maxCount={maxCount}
                     />
                 </div>
@@ -166,13 +165,12 @@ export default function ProjectsList() {
                     </Label>
                     <MultiSelect
                         id="languages"
-                        className="min-w-60 font-medium text-gray-200 max-sm:h-10"
+                        className="w-full min-w-52 font-medium text-gray-200 max-sm:h-10"
                         options={filterOptions.languages}
                         onValueChange={(selected) =>
                             handleFilterChange("languages", selected)
                         }
                         defaultValue={filters.languages}
-                        placeholder="Select languages"
                         maxCount={maxCount}
                     />
                 </div>
@@ -183,13 +181,12 @@ export default function ProjectsList() {
                     </Label>
                     <MultiSelect
                         id="databases"
-                        className="min-w-60 font-medium text-gray-200 max-sm:h-10"
+                        className="w-full min-w-52 font-medium text-gray-200 max-sm:h-10"
                         options={filterOptions.databases}
                         onValueChange={(selected) =>
                             handleFilterChange("databases", selected)
                         }
                         defaultValue={filters.databases}
-                        placeholder="Select databases"
                         maxCount={maxCount}
                     />
                 </div>
@@ -200,11 +197,10 @@ export default function ProjectsList() {
                     </Label>
                     <MultiSelect
                         id="tools"
-                        className="min-w-60 font-medium text-gray-200 max-sm:h-10"
+                        className="w-full min-w-52 font-medium text-gray-200 max-sm:h-10"
                         options={filterOptions.tools}
                         onValueChange={(selected) => handleFilterChange("tools", selected)}
                         defaultValue={filters.tools}
-                        placeholder="Select tools"
                         maxCount={maxCount}
                     />
                 </div>
