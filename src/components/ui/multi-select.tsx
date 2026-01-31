@@ -179,7 +179,7 @@ export const MultiSelect = React.forwardRef<
                       <div
                         key={value}
                         className={cn(
-                          "glass-dark inline-flex items-center rounded-full px-4 py-0.5 text-sm",
+                          "glass-dark inline-flex items-center rounded-full px-4 py-0.5 text-sm max-sm:text-xs",
                         )}
                       >
                         {IconComponent && (
@@ -199,13 +199,13 @@ export const MultiSelect = React.forwardRef<
                   {!showall && selectedValues.length > maxCount && (
                     <div
                       className={cn(
-                        "glass-dark inline-flex items-center rounded-full px-4 py-0.5 text-sm",
+                        "glass-dark inline-flex items-center rounded-full px-4 py-0.5 text-sm max-sm:text-xs max-sm:px-2 max-sm:py-0.5",
                       )}
                       style={{ animationDuration: `${animation}s` }}
                     >
                       {`+ ${selectedValues.length - maxCount} more`}
-                      <XCircle
-                        className="ml-2 h-4 w-4 cursor-pointer"
+                      <XIcon
+                        className="ml-2 h-4 w-4 cursor-pointer max-sm:h-3 max-sm:w-3"
                         onClick={(event) => {
                           event.stopPropagation();
                           clearExtraOptions();

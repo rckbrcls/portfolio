@@ -4,7 +4,8 @@ export type Language =
   | "Python"
   | "Dart"
   | "Go"
-  | "Rust";
+  | "Rust"
+  | "Swift";
 
 export type Framework =
   | "React"
@@ -14,7 +15,6 @@ export type Framework =
   | "Express"
   | "Solid.js"
   | "Flask"
-  | "Swift"
   | "Svelte"
   | "SwiftUI";
 
@@ -36,6 +36,7 @@ export const languages: Language[] = [
   "JavaScript",
   "TypeScript",
   "Python",
+  "Swift",
   // "Go",
   // "Rust",
   // "Dart",
@@ -48,7 +49,6 @@ export const frameworks: Framework[] = [
   "Express",
   "Solid.js",
   "Flask",
-  "Swift",
   "SwiftUI",
   // "Svelte",
   // "Flutter",
