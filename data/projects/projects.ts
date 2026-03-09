@@ -86,9 +86,9 @@ export const projects: IProject[] = [
   {
     slug: "polter",
     order: 6,
-    description: `An optimized interactive CLI for managing Supabase CLI workflows with more speed, consistency, and discoverability. Features an interactive command builder, unified board, and pinned workflows.`,
+    description: `An infrastructure orchestrator CLI for managing dev processes, pipelines, and CLI commands (Supabase, GitHub, Vercel, Git) from one unified TUI. Features a multi-tool command board, reusable pipelines, process management, and declarative configuration.`,
     name: "Polter",
-    techStack: ["TypeScript", "Node.js", "Supabase"],
+    techStack: ["TypeScript", "Node.js", "React"],
     timeline: null,
     gitLink: "https://github.com/polterware/polter",
     npmUrl: "https://www.npmjs.com/package/@polterware/polter",
