@@ -123,17 +123,6 @@ const ProjectCard = ({ project }: IProjectCardProps) => {
                 <Text className="max-sm:hidden">Microfrontend</Text>
               </Link>
             )}
-            {project?.link && (
-              <a
-                href={project.link}
-                className="glass-dark-button flex w-full items-center justify-center gap-3 text-nowrap rounded-full py-3 font-bold"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FaPager className="text-2xl" />
-                <Text className="">Project Page</Text>
-              </a>
-            )}
             {project?.npmUrl && (
               <a
                 href={project.npmUrl}
@@ -143,6 +132,17 @@ const ProjectCard = ({ project }: IProjectCardProps) => {
               >
                 <SiNpm className="text-2xl" />
                 <Text className="max-sm:hidden">npm</Text>
+              </a>
+            )}
+            {project?.link && (
+              <a
+                href={project.link}
+                className="glass-dark-button flex w-full items-center justify-center gap-3 text-nowrap rounded-full py-3 font-bold"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaPager className="text-2xl" />
+                <Text className="">Project Page</Text>
               </a>
             )}
           </div>
