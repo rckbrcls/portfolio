@@ -106,23 +106,6 @@ const ProjectCard = ({ project }: IProjectCardProps) => {
                 <Text className="max-sm:hidden">Repository</Text>
               </a>
             )}
-            {project?.microRoute && (
-              <Link
-                href={`/microfrontend/${project.slug}`}
-                className="glass-dark-button flex w-full items-center justify-center gap-3 text-nowrap rounded-full py-3 font-bold"
-                onClick={() => {
-                  if (typeof window !== "undefined") {
-                    sessionStorage.setItem(
-                      "projectsScroll",
-                      window.scrollY.toString(),
-                    );
-                  }
-                }}
-              >
-                <BiSolidComponent className="text-2xl" />
-                <Text className="max-sm:hidden">Microfrontend</Text>
-              </Link>
-            )}
             {project?.npmUrl && (
               <a
                 href={project.npmUrl}

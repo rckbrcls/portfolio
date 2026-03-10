@@ -2,7 +2,6 @@ import { StaticImageData } from "next/image";
 import { IVisualization } from "./IVisualization";
 import { TypeTechStack } from "../../data/techStack";
 import { Route } from "next";
-import React from "react";
 
 type TProjectStatus = "finished" | "working" | "designing";
 
@@ -13,13 +12,11 @@ export interface IProject {
   techStack: TypeTechStack[];
   timeline: { start: string; end: string } | null | undefined;
   gitLink?: Route;
-  microRoute?: Route;
   link?: Route;
   npmUrl?: Route;
   members: string[];
   projectVisualization?: IVisualization[];
   coverImage?: StaticImageData | string;
   status: TProjectStatus;
-  localServer?: boolean;
   order?: number;
 }
