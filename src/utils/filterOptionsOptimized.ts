@@ -1,4 +1,4 @@
-import { projects, microfrontendProjects } from "../../data/projects/projects";
+import { projects } from "../../data/projects/projects";
 import {
   frameworks,
   languages,
@@ -9,9 +9,7 @@ import {
 type FilterOption = { value: string; label: string };
 
 // Helper para extrair tech stacks únicas de um array de projetos
-const extractUniqueTechStacks = (
-  projectList: typeof projects | typeof microfrontendProjects,
-) => {
+const extractUniqueTechStacks = (projectList: typeof projects) => {
   const allTechs = projectList.flatMap((project) => project.techStack);
   return Array.from(new Set(allTechs));
 };
@@ -49,15 +47,9 @@ export const getProjectsFilterOptions = () => {
   return categorizeTechStacks(uniqueTechs);
 };
 
-// Opções de filtro para microfrontends
-export const getMicrofrontendsFilterOptions = () => {
-  const uniqueTechs = extractUniqueTechStacks(microfrontendProjects);
-  return categorizeTechStacks(uniqueTechs);
-};
-
 // Opções de filtro para todos os projetos (fallback/geral)
 export const getFilterOptions = () => {
-  const allProjects = [...projects, ...microfrontendProjects];
+  const allProjects = [...projects];
   const uniqueTechs = extractUniqueTechStacks(allProjects);
   return categorizeTechStacks(uniqueTechs);
 };
