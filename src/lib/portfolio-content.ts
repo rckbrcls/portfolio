@@ -1,5 +1,4 @@
 import {
-  FileText,
   Github,
   Linkedin,
   Mail,
@@ -58,12 +57,6 @@ export const contactLinks: ContactLink[] = [
     value: "/in/brcls",
     href: "https://www.linkedin.com/in/brcls/",
     icon: Linkedin,
-  },
-  {
-    title: "Resume",
-    value: "PDF",
-    href: "/files/Resume.pdf",
-    icon: FileText,
   },
 ];
 

@@ -31,7 +31,6 @@ interface PortfolioPageIntroProps {
   kicker: string;
   title: string;
   titleVisual?: ReactNode;
-  summary?: string;
   action?: ReactNode;
 }
 
@@ -277,10 +276,9 @@ export function PortfolioPageIntro({
   kicker,
   title,
   titleVisual,
-  summary,
   action,
 }: PortfolioPageIntroProps) {
-  const hasSide = Boolean(summary || action);
+  const hasSide = Boolean(action);
 
   return (
     <PortfolioSection
@@ -303,9 +301,6 @@ export function PortfolioPageIntro({
 
         {hasSide ? (
           <div className="portfolio-page-intro-side">
-            {summary ? (
-              <p className="portfolio-section-summary">{summary}</p>
-            ) : null}
             {action ? (
               <div className="portfolio-page-intro-action">{action}</div>
             ) : null}

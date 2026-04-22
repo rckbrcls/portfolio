@@ -148,7 +148,7 @@ body {
   .portfolio-brand {
     position: absolute;
     left: 0.72rem;
-    top: 0.42rem;
+    top: 0.3rem;
     display: block;
     line-height: 0;
     transform: translateY(-22%);
@@ -1299,7 +1299,7 @@ body {
 
     .portfolio-brand {
       left: 0.64rem;
-      top: 0.38rem;
+      top: 0.26rem;
       transform: translateY(-18%);
     }
 
