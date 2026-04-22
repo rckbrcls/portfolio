@@ -1,0 +1,55 @@
+---
+title: "Launching the portfolio blog"
+summary: "Why the blog now lives inside the portfolio and what each post supports out of the box."
+publishedAt: "2026-04-22"
+tags:
+  - Next.js
+  - MDX
+  - Writing
+draft: false
+coverImage: "/images/blog/launching-the-blog/cover.svg"
+---
+
+This portfolio now has a local MDX blog. Posts live in the same repository as the
+site, which keeps writing, review, and publishing close to the work they are
+meant to explain.
+
+## Why keep the blog inside the portfolio
+
+A separate documentation surface would have added more structure than this site
+actually needs. The goal here is simpler: longer notes should sit next to the
+projects, not outside them.
+
+Standard markdown images work with normal repository assets:
+
+![Editorial diagram describing the blog system.](/images/blog/launching-the-blog/diagram.svg)
+
+Inline math also works in normal prose, like $f(x) = x^2 + 2x + 1$.
+
+$$
+\int_0^1 x^2 \, dx = \frac{1}{3}
+$$
+
+### Authoring notes
+
+- write posts in `content/blog/<slug>.mdx`
+- keep post assets in `public/images/blog/<slug>/`
+- use frontmatter for title, summary, date, tags, draft, and optional cover image
+
+Code blocks stay readable without pulling the site into a documentation visual
+language:
+
+```ts
+export function publishPost(slug: string) {
+  return `/blog/${slug}`;
+}
+```
+
+<Figure
+  src="/images/blog/launching-the-blog/cover.svg"
+  alt="Minimal editorial cover for the launch post."
+  caption="MDX can still use a small custom component when a figure needs a caption."
+/>
+
+The intent is not to turn the portfolio into a generic docs site. The intent is
+to give the work a place for sharper explanations, tradeoffs, and deeper notes.

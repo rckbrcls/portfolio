@@ -156,6 +156,8 @@ Pages should feel sparse but intentional. Each screen should have one dominant g
 
 Spacing should follow a disciplined 8px rhythm with 4px used only for fine adjustments. Sections need breathing room. Cards and modules should align hard to the grid. Asymmetry is allowed when it feels editorial and balanced, not chaotic.
 
+Full-width dividers should be rare. Do not use horizontal rules as the default way to separate major sections. Prefer hierarchy through typography, spacing, alignment, and content framing first. When boundaries are still needed, prefer local grid structure or card edges over page-wide separator lines.
+
 ## Elevation & Depth
 Depth should be subtle.
 
@@ -176,6 +178,7 @@ Components should merge editorial clarity with system framing.
 - **Buttons:** Primary buttons use dark fill or the accent blue, with high contrast text and compact, confident padding. Secondary buttons use white or pale surfaces with explicit borders.
 - **Cards:** Cards should be light, structured, and useful for grouping content. Use borders, padding, and typography to create hierarchy before resorting to color.
 - **Navigation:** Navigation should be minimal and crisp. Prefer line-based separators, strong active states, and clear tab markers over decorative fills.
+- **Section separation:** Use headlines, labels, whitespace, and editorial composition to signal shifts in content. Avoid stacking repeated divider lines throughout the page.
 - **Tables and data blocks:** Keep them airy. Use subtle row dividers, restrained striping or alternate fills, and clear numeric alignment.
 - **Inputs:** Inputs should feel clean and technical, with strong focus states using the tertiary accent or highlight wash.
 - **Badges and labels:** These should evoke a subtle operational feel, but remain quiet. Use muted fills and compact uppercase labels rather than loud status pills.
@@ -198,3 +201,4 @@ Whenever a component choice is ambiguous, prefer the quieter option.
 - Do not make the interface feel sterile corporate beige or generic AI SaaS.
 - Do not use oversized shadows, glassmorphism, or ornamental gradients.
 - Do not round everything heavily.
+- Do not rely on repeated divider lines to create section hierarchy across the site.

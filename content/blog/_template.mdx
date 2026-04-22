@@ -1,0 +1,46 @@
+---
+title: "Post title"
+summary: "One clear sentence explaining what the post is about."
+publishedAt: "2026-04-22"
+tags:
+  - Engineering
+  - Writing
+draft: true
+coverImage: "/images/blog/my-post/cover.svg"
+---
+
+Start with a short opening paragraph that explains the point of the post.
+
+## A section heading
+
+Normal markdown works as expected, including lists:
+
+- one point
+- another point
+- one more detail
+
+Inline math also works: $E = mc^2$.
+
+$$
+\sum_{i=1}^{n} i = \frac{n(n + 1)}{2}
+$$
+
+Standard markdown images should point to `/public` assets:
+
+![Describe the image here.](/images/blog/my-post/diagram.svg)
+
+Code blocks are supported too:
+
+```ts
+export function getPostUrl(slug: string) {
+  return `/blog/${slug}`;
+}
+```
+
+When a post needs a custom captioned figure, use the optional MDX component:
+
+<Figure
+  src="/images/blog/my-post/cover.svg"
+  alt="Describe the figure here."
+  caption="Short supporting caption."
+/>
