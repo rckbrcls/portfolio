@@ -5,6 +5,7 @@ import {
   Mail,
   type LucideIcon,
 } from "lucide-react";
+import { professionalWorkItems } from "../../data/work/professional-work";
 import { projects } from "../../data/projects/projects";
 import type { IProject } from "@/interface/IProject";
 
@@ -91,6 +92,14 @@ export const featuredProjects = featuredProjectSlugs.flatMap((slug) => {
   const project = projectLookup.get(slug);
   return project ? [project] : [];
 });
+
+export const orderedProfessionalWork = [...professionalWorkItems].sort(
+  (left, right) => left.order - right.order,
+);
+
+export const featuredProfessionalWork = orderedProfessionalWork.filter(
+  (item) => item.featured,
+);
 
 export function getProjectPrimaryLink(project: IProject) {
   if (project.link) {

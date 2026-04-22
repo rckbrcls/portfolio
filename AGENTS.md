@@ -84,13 +84,14 @@ This is not a generic SaaS marketing site, not a dashboard, and not a visual pla
 
 ## Blog Content Conventions
 
-- Recommended minimum frontmatter:
+- Recommended base frontmatter:
   - `title`
   - `summary`
   - `publishedAt`
   - `tags`
-  - `coverImage`
   - `draft`
+- Optional frontmatter:
+  - `coverImage`
 - Prefer local, versioned content stored in the repository over a CMS by default.
 - The blog should feel like part of the same product, not like a bolted-on documentation subsite.
 

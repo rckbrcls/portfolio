@@ -44,7 +44,7 @@ export default function BlogIndexPage({
       <PortfolioSection spacing="stack-tight">
         <PortfolioSectionBody>
           {posts.length > 0 ? (
-            <PortfolioCollection className="portfolio-blog-grid">
+            <PortfolioCollection columns={1}>
               {posts.map((post) => (
                 <BlogPostCard key={post.slug} post={post} />
               ))}

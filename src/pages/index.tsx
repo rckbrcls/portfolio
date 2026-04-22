@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { BlogPostCard } from "@/components/blog/BlogPostCard";
 import { FeaturedProjectCard } from "@/components/featured-project-card";
+import { ProfessionalWorkPreviewCard } from "@/components/professional-work-card";
 import {
   PortfolioCollection,
   PortfolioLayout,
@@ -11,7 +12,10 @@ import {
 } from "@/components/portfolio-shell";
 import ScaleLetterText from "@/components/ui/scale-letter-text";
 import { getLatestBlogPosts } from "@/lib/blog";
-import { featuredProjects } from "@/lib/portfolio-content";
+import {
+  featuredProfessionalWork,
+  featuredProjects,
+} from "@/lib/portfolio-content";
 
 export async function getStaticProps() {
   return {
@@ -27,9 +31,9 @@ export default function Home({
   return (
     <PortfolioLayout
       title="rckbrcls | Portfolio"
-      description="Personal projects, selected work, and writing by Erick Barcelos."
+      description="Professional work, independent projects, and writing by Erick Barcelos."
     >
-      <div className="portfolio-home">
+      <div className="portfolio-home portfolio-editorial-stack">
         <PortfolioSection spacing="page-start">
           <div className="portfolio-hero">
             <p className="portfolio-kicker">Software engineer</p>
@@ -43,10 +47,39 @@ export default function Home({
           </div>
         </PortfolioSection>
 
+        {featuredProfessionalWork.length > 0 ? (
+          <PortfolioSection spacing="stack-loose">
+            <div className="portfolio-section-intro">
+              <div className="portfolio-section-heading">
+                <h2 className="portfolio-section-title">
+                  Professional work.
+                </h2>
+              </div>
+
+              <Link href="/work" className="portfolio-inline-link">
+                Open work
+                <ArrowUpRight className="h-4 w-4" />
+              </Link>
+            </div>
+
+            <PortfolioSectionBody>
+              <PortfolioCollection columns={2} showCenterCross>
+                {featuredProfessionalWork.map((item, index) => (
+                  <ProfessionalWorkPreviewCard
+                    key={item.slug}
+                    item={item}
+                    index={index}
+                  />
+                ))}
+              </PortfolioCollection>
+            </PortfolioSectionBody>
+          </PortfolioSection>
+        ) : null}
+
         <PortfolioSection spacing="stack-loose">
           <div className="portfolio-section-intro">
             <div className="portfolio-section-heading">
-              <h2 className="portfolio-section-title">Personal projects.</h2>
+              <h2 className="portfolio-section-title">Independent projects.</h2>
             </div>
 
             <Link href="/work" className="portfolio-inline-link">
@@ -56,10 +89,7 @@ export default function Home({
           </div>
 
           <PortfolioSectionBody>
-            <PortfolioCollection
-              className="portfolio-preview-grid"
-              showCenterCross
-            >
+            <PortfolioCollection columns={2} showCenterCross>
               {featuredProjects.map((project, index) => (
                 <FeaturedProjectCard
                   key={project.slug}
@@ -86,7 +116,7 @@ export default function Home({
 
           <PortfolioSectionBody>
             {latestPosts.length > 0 ? (
-              <PortfolioCollection className="portfolio-blog-grid">
+              <PortfolioCollection columns={1}>
                 {latestPosts.map((post) => (
                   <BlogPostCard key={post.slug} post={post} />
                 ))}

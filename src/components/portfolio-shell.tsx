@@ -35,9 +35,9 @@ interface PortfolioPageIntroProps {
   action?: ReactNode;
 }
 
-interface PortfolioCollectionProps {
-  children: ReactNode;
-  className?: string;
+interface PortfolioCollectionProps
+  extends ComponentPropsWithoutRef<"div"> {
+  columns: 1 | 2;
   showCenterCross?: boolean;
 }
 
@@ -352,10 +352,16 @@ export function PortfolioSectionBody({
 export function PortfolioCollection({
   children,
   className,
+  columns,
   showCenterCross = false,
+  ...props
 }: PortfolioCollectionProps) {
   return (
-    <div className={cn("portfolio-collection", className)}>
+    <div
+      className={cn("portfolio-collection", className)}
+      data-columns={columns}
+      {...props}
+    >
       <span
         className="portfolio-collection-cross portfolio-collection-cross--top-left"
         aria-hidden="true"

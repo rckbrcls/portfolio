@@ -52,14 +52,19 @@ function parseBlogFrontmatter(
       ? frontmatter.coverImage.trim()
       : undefined;
 
-  return {
+  const parsedFrontmatter: BlogPostFrontmatter = {
     title,
     summary,
     publishedAt,
     tags,
     draft: frontmatter.draft,
-    coverImage,
   };
+
+  if (coverImage !== undefined) {
+    parsedFrontmatter.coverImage = coverImage;
+  }
+
+  return parsedFrontmatter;
 }
 
 function sortBlogPosts(posts: BlogPostMeta[]) {

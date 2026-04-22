@@ -1,55 +1,23 @@
 ---
-title: "Launching the portfolio blog"
-summary: "Why the blog now lives inside the portfolio and what each post supports out of the box."
+title: "My first blog post"
+summary: "Afraid this might be a terrible idea"
 publishedAt: "2026-04-22"
 tags:
-  - Next.js
-  - MDX
-  - Writing
+  - Thoughts
+  - Fear
+  - Attempt
+  - Blog
 draft: false
-coverImage: "/images/blog/launching-the-blog/cover.svg"
 ---
 
-This portfolio now has a local MDX blog. Posts live in the same repository as the
-site, which keeps writing, review, and publishing close to the work they are
-meant to explain.
+## My first blog post
 
-## Why keep the blog inside the portfolio
+Well, I don't know if starting this blog is a good idea. First, I'm not much of a writer. Second, I'm kind of shy. And third, maybe I'm afraid I'll have nothing to say.
+But well, let's try, right? Maybe I can express something worthwhile, or maybe I'll even grow fond of writing.
 
-A separate documentation surface would have added more structure than this site
-actually needs. The goal here is simpler: longer notes should sit next to the
-projects, not outside them.
+This is actually the first test post for the MDX features, and I think I liked the setup I put together to help me write and publish posts.
+I ended up using `@next/mdx` to make MDX work nicely inside Next.js, `gray-matter` to read the frontmatter, `remark-gfm` for the nicer Markdown bits, and `remark-math` with `rehype-katex` so I can throw formulas in here whenever I need to. So the plan is to keep writing mostly in Markdown and only lean on MDX when it actually adds something useful.
 
-Standard markdown images work with normal repository assets:
+Anyway, after all that rambling, thanks for making it this far, and if you want to see my next posts, check the site from time to time (I still haven't figured out a good way to notify new posts yet, maybe I'll mention them on X (rip Twitter)).
 
-![Editorial diagram describing the blog system.](/images/blog/launching-the-blog/diagram.svg)
-
-Inline math also works in normal prose, like $f(x) = x^2 + 2x + 1$.
-
-$$
-\int_0^1 x^2 \, dx = \frac{1}{3}
-$$
-
-### Authoring notes
-
-- write posts in `content/blog/<slug>.mdx`
-- keep post assets in `public/images/blog/<slug>/`
-- use frontmatter for title, summary, date, tags, draft, and optional cover image
-
-Code blocks stay readable without pulling the site into a documentation visual
-language:
-
-```ts
-export function publishPost(slug: string) {
-  return `/blog/${slug}`;
-}
-```
-
-<Figure
-  src="/images/blog/launching-the-blog/cover.svg"
-  alt="Minimal editorial cover for the launch post."
-  caption="MDX can still use a small custom component when a figure needs a caption."
-/>
-
-The intent is not to turn the portfolio into a generic docs site. The intent is
-to give the work a place for sharper explanations, tradeoffs, and deeper notes.
+Sorry for the informality (well, it's my site lol), and see you next time! &lt;3
