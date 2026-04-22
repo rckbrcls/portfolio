@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useRef } from "react";
-import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
+import { motion, useMotionValue, useTransform } from "framer-motion";
 
 import { cn } from "@/lib/utils";
 
@@ -19,8 +19,11 @@ export function MagicCard({
   gradientOpacity = 0.8,
 }: MagicCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
-  const mouseX = useMotionValue(-gradientSize);
-  const mouseY = useMotionValue(-gradientSize);
+  const mouseX = useMotionValue(-gradientSize * 1.5);
+  const mouseY = useMotionValue(-gradientSize * 1.5);
+  const indicatorX = useTransform(mouseX, (value) => value - gradientSize / 2);
+  const indicatorY = useTransform(mouseY, (value) => value - gradientSize / 2);
+  const indicatorScale = Math.max(0.75, gradientOpacity);
 
   const handleMouseMove = useCallback(
     (e: MouseEvent) => {
@@ -39,8 +42,8 @@ export function MagicCard({
     (e: MouseEvent) => {
       if (!e.relatedTarget) {
         document.removeEventListener("mousemove", handleMouseMove);
-        mouseX.set(-gradientSize);
-        mouseY.set(-gradientSize);
+        mouseX.set(-gradientSize * 1.5);
+        mouseY.set(-gradientSize * 1.5);
       }
     },
     [handleMouseMove, mouseX, gradientSize, mouseY]
@@ -48,8 +51,8 @@ export function MagicCard({
 
   const handleMouseEnter = useCallback(() => {
     document.addEventListener("mousemove", handleMouseMove);
-    mouseX.set(-gradientSize);
-    mouseY.set(-gradientSize);
+    mouseX.set(-gradientSize * 1.5);
+    mouseY.set(-gradientSize * 1.5);
   }, [handleMouseMove, mouseX, gradientSize, mouseY]);
 
   useEffect(() => {
@@ -65,8 +68,8 @@ export function MagicCard({
   }, [handleMouseEnter, handleMouseMove, handleMouseOut]);
 
   useEffect(() => {
-    mouseX.set(-gradientSize);
-    mouseY.set(-gradientSize);
+    mouseX.set(-gradientSize * 1.5);
+    mouseY.set(-gradientSize * 1.5);
   }, [gradientSize, mouseX, mouseY]);
 
   return (
@@ -79,12 +82,15 @@ export function MagicCard({
     >
       <div className="relative z-10">{children}</div>
       <motion.div
-        className="pointer-events-none absolute -inset-px rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        className="pointer-events-none absolute rounded-full border bg-card"
         style={{
-          background: useMotionTemplate`
-            radial-gradient(${gradientSize}px circle at ${mouseX}px ${mouseY}px, ${gradientColor}, transparent 100%)
-          `,
-          opacity: gradientOpacity,
+          width: gradientSize,
+          height: gradientSize,
+          x: indicatorX,
+          y: indicatorY,
+          scale: indicatorScale,
+          borderColor: gradientColor,
+          boxShadow: `inset 0 0 0 ${Math.max(1, Math.round(gradientOpacity * 2))}px ${gradientColor}`,
         }}
       />
     </div>

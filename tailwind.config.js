@@ -1,17 +1,6 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
 
-const withOpacity = (variableName) => ({ opacityValue }) => {
-  if (opacityValue === undefined) {
-    return `var(${variableName})`;
-  }
-
-  const parsedOpacity = Number(opacityValue);
-  const opacity = Number.isNaN(parsedOpacity)
-    ? `calc(${opacityValue} * 100%)`
-    : `${parsedOpacity * 100}%`;
-
-  return `color-mix(in oklab, var(${variableName}) ${opacity}, transparent)`;
-};
+const fromVariable = (variableName) => `var(${variableName})`;
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -30,55 +19,55 @@ module.exports = {
         sm: "calc(var(--radius) - 4px)",
       },
       colors: {
-        border: withOpacity("--border"),
-        input: withOpacity("--input"),
-        ring: withOpacity("--ring"),
-        background: withOpacity("--background"),
-        foreground: withOpacity("--foreground"),
+        border: fromVariable("--border"),
+        input: fromVariable("--input"),
+        ring: fromVariable("--ring"),
+        background: fromVariable("--background"),
+        foreground: fromVariable("--foreground"),
         card: {
-          DEFAULT: withOpacity("--card"),
-          foreground: withOpacity("--card-foreground"),
+          DEFAULT: fromVariable("--card"),
+          foreground: fromVariable("--card-foreground"),
         },
         popover: {
-          DEFAULT: withOpacity("--popover"),
-          foreground: withOpacity("--popover-foreground"),
+          DEFAULT: fromVariable("--popover"),
+          foreground: fromVariable("--popover-foreground"),
         },
         primary: {
-          DEFAULT: withOpacity("--primary"),
-          foreground: withOpacity("--primary-foreground"),
+          DEFAULT: fromVariable("--primary"),
+          foreground: fromVariable("--primary-foreground"),
         },
         secondary: {
-          DEFAULT: withOpacity("--secondary"),
-          foreground: withOpacity("--secondary-foreground"),
+          DEFAULT: fromVariable("--secondary"),
+          foreground: fromVariable("--secondary-foreground"),
         },
         muted: {
-          DEFAULT: withOpacity("--muted"),
-          foreground: withOpacity("--muted-foreground"),
+          DEFAULT: fromVariable("--muted"),
+          foreground: fromVariable("--muted-foreground"),
         },
         accent: {
-          DEFAULT: withOpacity("--accent"),
-          foreground: withOpacity("--accent-foreground"),
+          DEFAULT: fromVariable("--accent"),
+          foreground: fromVariable("--accent-foreground"),
         },
         destructive: {
-          DEFAULT: withOpacity("--destructive"),
-          foreground: withOpacity("--destructive-foreground"),
+          DEFAULT: fromVariable("--destructive"),
+          foreground: fromVariable("--destructive-foreground"),
         },
         chart: {
-          1: withOpacity("--chart-1"),
-          2: withOpacity("--chart-2"),
-          3: withOpacity("--chart-3"),
-          4: withOpacity("--chart-4"),
-          5: withOpacity("--chart-5"),
+          1: fromVariable("--chart-1"),
+          2: fromVariable("--chart-2"),
+          3: fromVariable("--chart-3"),
+          4: fromVariable("--chart-4"),
+          5: fromVariable("--chart-5"),
         },
         sidebar: {
-          DEFAULT: withOpacity("--sidebar"),
-          foreground: withOpacity("--sidebar-foreground"),
-          primary: withOpacity("--sidebar-primary"),
-          "primary-foreground": withOpacity("--sidebar-primary-foreground"),
-          accent: withOpacity("--sidebar-accent"),
-          "accent-foreground": withOpacity("--sidebar-accent-foreground"),
-          border: withOpacity("--sidebar-border"),
-          ring: withOpacity("--sidebar-ring"),
+          DEFAULT: fromVariable("--sidebar"),
+          foreground: fromVariable("--sidebar-foreground"),
+          primary: fromVariable("--sidebar-primary"),
+          "primary-foreground": fromVariable("--sidebar-primary-foreground"),
+          accent: fromVariable("--sidebar-accent"),
+          "accent-foreground": fromVariable("--sidebar-accent-foreground"),
+          border: fromVariable("--sidebar-border"),
+          ring: fromVariable("--sidebar-ring"),
         },
       },
       fontFamily: {

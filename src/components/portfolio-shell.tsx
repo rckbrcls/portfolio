@@ -15,7 +15,11 @@ import ScaleLetterText from "@/components/ui/scale-letter-text";
 import { contactLinks, navigationLinks } from "@/lib/portfolio-content";
 import { cn } from "@/lib/utils";
 
-type PortfolioSectionSpacing = "page-start" | "stack" | "stack-tight";
+type PortfolioSectionSpacing =
+  | "page-start"
+  | "stack"
+  | "stack-tight"
+  | "stack-loose";
 
 interface PortfolioLayoutProps {
   title: string;

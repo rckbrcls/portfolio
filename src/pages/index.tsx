@@ -2,6 +2,7 @@ import type { InferGetStaticPropsType } from "next";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { BlogPostCard } from "@/components/blog/BlogPostCard";
+import { FeaturedProjectCard } from "@/components/featured-project-card";
 import {
   PortfolioCollection,
   PortfolioLayout,
@@ -10,13 +11,7 @@ import {
 } from "@/components/portfolio-shell";
 import ScaleLetterText from "@/components/ui/scale-letter-text";
 import { getLatestBlogPosts } from "@/lib/blog";
-import {
-  featuredProjects,
-  getProjectPrimaryLink,
-  getProjectStackPreview,
-  getProjectSummary,
-  statusCopy,
-} from "@/lib/portfolio-content";
+import { featuredProjects } from "@/lib/portfolio-content";
 
 export async function getStaticProps() {
   return {
@@ -47,7 +42,7 @@ export default function Home({
         </div>
       </PortfolioSection>
 
-      <PortfolioSection spacing="stack">
+      <PortfolioSection spacing="stack-loose">
         <div className="portfolio-section-intro">
           <div className="portfolio-section-heading">
             <h2 className="portfolio-section-title">
@@ -66,69 +61,18 @@ export default function Home({
             className="portfolio-preview-grid"
             showCenterCross
           >
-            {featuredProjects.map((project, index) => {
-              const projectLink = getProjectPrimaryLink(project);
-              const cardContent = (
-                <>
-                  <div className="portfolio-preview-top">
-                    <p className="portfolio-kicker">
-                      {String(index + 1).padStart(2, "0")} / {project.name}
-                    </p>
-                    <span className="portfolio-status">
-                      {statusCopy[project.status]}
-                    </span>
-                  </div>
-
-                  <div className="portfolio-project-copy">
-                    <h3 className="portfolio-project-title">{project.name}</h3>
-                    <p className="portfolio-project-summary">
-                      {getProjectSummary(project)}
-                    </p>
-                  </div>
-
-                  <div className="portfolio-preview-meta">
-                    <p className="portfolio-project-stack">
-                      {getProjectStackPreview(project)}
-                    </p>
-
-                    {projectLink ? (
-                      <span className="portfolio-card-action">
-                        {projectLink.label}
-                        <ArrowUpRight className="h-4 w-4" />
-                      </span>
-                    ) : (
-                      <span className="portfolio-project-placeholder">
-                        No public link
-                      </span>
-                    )}
-                  </div>
-                </>
-              );
-
-              return (
-                <article key={project.slug}>
-                  {projectLink ? (
-                    <a
-                      href={projectLink.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="portfolio-preview-item portfolio-editorial-card"
-                    >
-                      {cardContent}
-                    </a>
-                  ) : (
-                    <div className="portfolio-preview-item portfolio-editorial-card">
-                      {cardContent}
-                    </div>
-                  )}
-                </article>
-              );
-            })}
+            {featuredProjects.map((project, index) => (
+              <FeaturedProjectCard
+                key={project.slug}
+                project={project}
+                index={index}
+              />
+            ))}
           </PortfolioCollection>
         </PortfolioSectionBody>
       </PortfolioSection>
 
-      <PortfolioSection spacing="stack">
+      <PortfolioSection spacing="stack-loose">
         <div className="portfolio-section-intro">
           <div className="portfolio-section-heading">
             <p className="portfolio-kicker">Blog</p>
