@@ -3,7 +3,6 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 
 import "./globals.css";
-import "../styles/animations.css";
 import Head from "next/head";
 
 export default function App({ Component, pageProps }: AppProps) {
