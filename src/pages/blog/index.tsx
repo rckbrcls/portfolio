@@ -8,7 +8,16 @@ import {
   PortfolioSection,
   PortfolioSectionBody,
 } from "@/components/portfolio-shell";
+import { MorphingText } from "@/components/ui/morphing-text";
 import { getAllBlogPosts } from "@/lib/blog";
+
+const BLOG_TITLE_VARIANTS = [
+  "Writing.",
+  "Notes.",
+  "Essays.",
+  "Posts.",
+  "Journal.",
+];
 
 export async function getStaticProps() {
   return {
@@ -26,7 +35,11 @@ export default function BlogIndexPage({
       title="Blog | rckbrcls"
       description="Writing by Erick Barcelos."
     >
-      <PortfolioPageIntro kicker="Blog" title="Writing." />
+      <PortfolioPageIntro
+        kicker="Blog"
+        title="Writing."
+        titleVisual={<MorphingText texts={BLOG_TITLE_VARIANTS} />}
+      />
 
       <PortfolioSection spacing="stack-tight">
         <PortfolioSectionBody>

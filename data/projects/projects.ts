@@ -23,6 +23,7 @@ export const projects: IProject[] = [
     link: "https://dostproject.com",
     members: ["Erick Barcelos"],
     coverImage: "/images/projects/dost/SOLID-LOGO-SOLO.svg",
+    previewMode: "iframe",
     status: "working",
   },
   {
@@ -35,6 +36,7 @@ export const projects: IProject[] = [
     link: "https://polterware.com",
     members: ["Erick Barcelos"],
     coverImage: "/images/projects/polterware/polterware.png",
+    previewMode: "iframe",
     status: "finished",
   },
 
@@ -55,6 +57,7 @@ export const projects: IProject[] = [
     link: "https://duplizen.polterware.com",
     members: ["Erick Barcelos"],
     coverImage: "/images/projects/duplizen/duplizen.png",
+    previewMode: "iframe",
     status: "working",
   },
   {
@@ -69,6 +72,7 @@ export const projects: IProject[] = [
     link: "https://kit.polterware.com/" as any,
     members: ["Erick Barcelos"],
     coverImage: "/images/projects/polterware-pwa/pwa.png",
+    previewMode: "iframe",
     status: "finished",
   },
   {
@@ -80,6 +84,7 @@ export const projects: IProject[] = [
     timeline: null,
     members: ["Erick Barcelos"],
     coverImage: "/images/projects/converge/converge.png",
+    previewMode: "iframe",
     status: "working",
     link: "https://converge.polterware.com",
   },
@@ -95,6 +100,7 @@ export const projects: IProject[] = [
     link: "https://kit.polterware.com/" as any,
     members: ["Erick Barcelos"],
     coverImage: "/images/projects/polter/polter.png",
+    previewMode: "iframe",
     status: "working",
   },
 ];

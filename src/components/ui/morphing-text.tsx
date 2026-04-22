@@ -1,147 +1,283 @@
-import { useCallback, useEffect, useRef } from "react"
+import {
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  type RefObject,
+} from "react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
-const morphTime = 1.5
-const cooldownTime = 0.5
+const morphTime = 1.4;
+const cooldownTime = 5;
 
-const useMorphingText = (texts: string[]) => {
-  const textIndexRef = useRef(0)
-  const morphRef = useRef(0)
-  const cooldownRef = useRef(0)
-  const timeRef = useRef(new Date())
+const useMorphingText = ({
+  texts,
+  filterId,
+  layersRef,
+}: {
+  texts: string[];
+  filterId: string;
+  layersRef: RefObject<HTMLSpanElement | null>;
+}) => {
+  const textIndexRef = useRef(0);
+  const morphRef = useRef(0);
+  const cooldownRef = useRef(cooldownTime);
+  const timeRef = useRef<number | null>(null);
 
-  const text1Ref = useRef<HTMLSpanElement>(null)
-  const text2Ref = useRef<HTMLSpanElement>(null)
+  const text1Ref = useRef<HTMLSpanElement>(null);
+  const text2Ref = useRef<HTMLSpanElement>(null);
 
-  const setStyles = useCallback(
-    (fraction: number) => {
-      const [current1, current2] = [text1Ref.current, text2Ref.current]
-      if (!current1 || !current2) return
+  const syncLayerFilter = (isMorphing: boolean) => {
+    const layers = layersRef.current;
 
-      current2.style.filter = `blur(${Math.min(8 / fraction - 8, 100)}px)`
-      current2.style.opacity = `${Math.pow(fraction, 0.4) * 100}%`
+    if (!layers) {
+      return;
+    }
 
-      const invertedFraction = 1 - fraction
-      current1.style.filter = `blur(${Math.min(
-        8 / invertedFraction - 8,
-        100
-      )}px)`
-      current1.style.opacity = `${Math.pow(invertedFraction, 0.4) * 100}%`
+    layers.style.filter = isMorphing ? `url(#${filterId}) blur(0.6px)` : "none";
+  };
 
-      current1.textContent = texts[textIndexRef.current % texts.length]
-      current2.textContent = texts[(textIndexRef.current + 1) % texts.length]
-    },
-    [texts]
-  )
+  const syncTextContent = () => {
+    const currentText = text1Ref.current;
+    const nextText = text2Ref.current;
 
-  const doMorph = useCallback(() => {
-    morphRef.current -= cooldownRef.current
-    cooldownRef.current = 0
+    if (!currentText || !nextText) {
+      return;
+    }
 
-    let fraction = morphRef.current / morphTime
+    currentText.textContent = texts[textIndexRef.current % texts.length];
+    nextText.textContent = texts[(textIndexRef.current + 1) % texts.length];
+  };
+
+  const setStyles = (fraction: number) => {
+    const currentText = text1Ref.current;
+    const nextText = text2Ref.current;
+
+    if (!currentText || !nextText) {
+      return;
+    }
+
+    syncLayerFilter(true);
+    syncTextContent();
+
+    const safeFraction = Math.max(fraction, 0.0001);
+    const invertedFraction = Math.max(1 - fraction, 0.0001);
+
+    nextText.style.filter = `blur(${Math.min(8 / safeFraction - 8, 100)}px)`;
+    nextText.style.opacity = `${Math.pow(fraction, 0.4) * 100}%`;
+
+    currentText.style.filter = `blur(${Math.min(8 / invertedFraction - 8, 100)}px)`;
+    currentText.style.opacity = `${Math.pow(invertedFraction, 0.4) * 100}%`;
+  };
+
+  const doMorph = () => {
+    morphRef.current -= cooldownRef.current;
+    cooldownRef.current = 0;
+
+    let fraction = morphRef.current / morphTime;
 
     if (fraction > 1) {
-      cooldownRef.current = cooldownTime
-      fraction = 1
+      cooldownRef.current = cooldownTime;
+      fraction = 1;
     }
 
-    setStyles(fraction)
+    setStyles(fraction);
 
     if (fraction === 1) {
-      textIndexRef.current++
+      textIndexRef.current += 1;
     }
-  }, [setStyles])
+  };
 
-  const doCooldown = useCallback(() => {
-    morphRef.current = 0
-    const [current1, current2] = [text1Ref.current, text2Ref.current]
-    if (current1 && current2) {
-      current2.style.filter = "none"
-      current2.style.opacity = "100%"
-      current1.style.filter = "none"
-      current1.style.opacity = "0%"
+  const doCooldown = () => {
+    const currentText = text1Ref.current;
+    const nextText = text2Ref.current;
+
+    morphRef.current = 0;
+    syncLayerFilter(false);
+    syncTextContent();
+
+    if (!currentText || !nextText) {
+      return;
     }
-  }, [])
+
+    currentText.style.filter = "none";
+    currentText.style.opacity = "100%";
+    nextText.style.filter = "none";
+    nextText.style.opacity = "0%";
+  };
 
   useEffect(() => {
-    let animationFrameId: number
-
-    const animate = () => {
-      animationFrameId = requestAnimationFrame(animate)
-
-      const newTime = new Date()
-      const dt = (newTime.getTime() - timeRef.current.getTime()) / 1000
-      timeRef.current = newTime
-
-      cooldownRef.current -= dt
-
-      if (cooldownRef.current <= 0) doMorph()
-      else doCooldown()
+    if (texts.length < 2) {
+      return;
     }
 
-    animate()
+    let animationFrameId = 0;
+
+    doCooldown();
+
+    const animate = (time: number) => {
+      if (timeRef.current === null) {
+        timeRef.current = time;
+      }
+
+      const dt = (time - timeRef.current) / 1000;
+      timeRef.current = time;
+      cooldownRef.current -= dt;
+
+      if (cooldownRef.current <= 0) {
+        doMorph();
+      } else {
+        doCooldown();
+      }
+
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    animationFrameId = requestAnimationFrame(animate);
+
     return () => {
-      cancelAnimationFrame(animationFrameId)
-    }
-  }, [doMorph, doCooldown])
+      cancelAnimationFrame(animationFrameId);
+      syncLayerFilter(false);
+      timeRef.current = null;
+    };
+  }, [filterId, texts]);
 
-  return { text1Ref, text2Ref }
-}
+  return { text1Ref, text2Ref };
+};
 
 interface MorphingTextProps {
-  className?: string
-  texts: string[]
+  className?: string;
+  texts: string[];
 }
 
-const Texts: React.FC<Pick<MorphingTextProps, "texts">> = ({ texts }) => {
-  const { text1Ref, text2Ref } = useMorphingText(texts)
-  return (
-    <>
-      <span
-        className="absolute inset-x-0 top-0 m-auto inline-block w-full"
-        ref={text1Ref}
-      />
-      <span
-        className="absolute inset-x-0 top-0 m-auto inline-block w-full"
-        ref={text2Ref}
-      />
-    </>
-  )
-}
-
-const SvgFilters: React.FC = () => (
-  <svg
-    id="filters"
-    className="fixed h-0 w-0"
-    preserveAspectRatio="xMidYMid slice"
-  >
-    <defs>
-      <filter id="threshold">
-        <feColorMatrix
-          in="SourceGraphic"
-          type="matrix"
-          values="1 0 0 0 0
-                  0 1 0 0 0
-                  0 0 1 0 0
-                  0 0 0 255 -140"
-        />
-      </filter>
-    </defs>
-  </svg>
-)
-
-export const MorphingText: React.FC<MorphingTextProps> = ({
+function MorphingLayers({
+  filterId,
   texts,
-  className,
-}) => (
-  <div
-    className={cn(
-      "relative mx-auto h-16 w-full max-w-3xl text-center font-sans text-[40pt] leading-none font-bold filter-[url(#threshold)_blur(0.6px)] md:h-24 lg:text-[6rem]",
-      className
-    )}
-  >
-    <Texts texts={texts} />
-    <SvgFilters />
-  </div>
-)
+}: {
+  filterId: string;
+  texts: string[];
+}) {
+  const layersRef = useRef<HTMLSpanElement>(null);
+  const { text1Ref, text2Ref } = useMorphingText({
+    texts,
+    filterId,
+    layersRef,
+  });
+  const currentText = texts[0] ?? "";
+  const nextText = texts[1] ?? currentText;
+
+  return (
+    <span
+      aria-hidden="true"
+      className="absolute inset-0 block"
+      ref={layersRef}
+    >
+      <span
+        ref={text1Ref}
+        className="absolute inset-0 block whitespace-nowrap"
+        style={{ opacity: 1 }}
+      >
+        {currentText}
+      </span>
+      <span
+        ref={text2Ref}
+        className="absolute inset-0 block whitespace-nowrap"
+        style={{ opacity: 0 }}
+      >
+        {nextText}
+      </span>
+    </span>
+  );
+}
+
+function SvgFilters({ filterId }: { filterId: string }) {
+  return (
+    <svg
+      aria-hidden="true"
+      className="fixed h-0 w-0"
+      preserveAspectRatio="xMidYMid slice"
+    >
+      <defs>
+        <filter id={filterId}>
+          <feColorMatrix
+            in="SourceGraphic"
+            type="matrix"
+            values="1 0 0 0 0
+                    0 1 0 0 0
+                    0 0 1 0 0
+                    0 0 0 255 -140"
+          />
+        </filter>
+      </defs>
+    </svg>
+  );
+}
+
+export function MorphingText({ texts, className }: MorphingTextProps) {
+  const [isMounted, setIsMounted] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const filterId = `morph-${useId().replace(/:/g, "")}`;
+
+  const staticText = texts[0] ?? "";
+  const longestText = texts.reduce((longest, candidate) => {
+    return candidate.length > longest.length ? candidate : longest;
+  }, staticText);
+
+  useEffect(() => {
+    setIsMounted(true);
+
+    if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
+      return;
+    }
+
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const syncPreference = () => {
+      setPrefersReducedMotion(mediaQuery.matches);
+    };
+
+    syncPreference();
+
+    if (typeof mediaQuery.addEventListener === "function") {
+      mediaQuery.addEventListener("change", syncPreference);
+
+      return () => {
+        mediaQuery.removeEventListener("change", syncPreference);
+      };
+    }
+
+    mediaQuery.addListener(syncPreference);
+
+    return () => {
+      mediaQuery.removeListener(syncPreference);
+    };
+  }, []);
+
+  if (!staticText) {
+    return null;
+  }
+
+  if (!isMounted || prefersReducedMotion || texts.length < 2) {
+    return (
+      <span className={cn("inline-block whitespace-nowrap", className)}>
+        {staticText}
+      </span>
+    );
+  }
+
+  return (
+    <span
+      className={cn(
+        "relative inline-grid align-baseline whitespace-nowrap",
+        className,
+      )}
+    >
+      <span aria-hidden="true" className="invisible whitespace-nowrap">
+        {longestText}
+      </span>
+      <span className="sr-only">{staticText}</span>
+      <MorphingLayers filterId={filterId} texts={texts} />
+      <SvgFilters filterId={filterId} />
+    </span>
+  );
+}

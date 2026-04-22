@@ -3,6 +3,7 @@ import {
   useRef,
   useState,
   type PointerEvent as ReactPointerEvent,
+  type ReactNode,
 } from "react";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
@@ -20,6 +21,21 @@ interface FeaturedProjectCardProps {
   index: number;
 }
 
+interface WorkProjectCardProps {
+  project: IProject;
+  index: number;
+}
+
+interface ProjectCardFrameProps {
+  project: IProject;
+  projectLink: ProjectPrimaryLink;
+  cardClassName: string;
+  previewLabel: string;
+  children: ReactNode;
+}
+
+type ProjectPrimaryLink = ReturnType<typeof getProjectPrimaryLink>;
+
 const PREVIEW_DELAY_MS = 200;
 const PREVIEW_GUTTER_PX = 24;
 const PREVIEW_OFFSET_X_PX = 28;
@@ -32,13 +48,19 @@ const DESKTOP_PREVIEW_MIN_WIDTH_PX = 1080;
 type PreviewHorizontalSide = "left" | "right";
 type PreviewVerticalSide = "top" | "bottom";
 
-export function FeaturedProjectCard({
+function ProjectCardFrame({
   project,
-  index,
-}: FeaturedProjectCardProps) {
-  const projectLink = getProjectPrimaryLink(project);
-  const previewNumber = String(index + 1).padStart(2, "0");
-  const hasPreview = Boolean(project.coverImage);
+  projectLink,
+  cardClassName,
+  previewLabel,
+  children,
+}: ProjectCardFrameProps) {
+  const iframePreviewHref =
+    project.previewMode === "iframe" && typeof project.link === "string"
+      ? project.link
+      : null;
+  const showsIframePreview = Boolean(iframePreviewHref);
+  const hasPreview = Boolean(project.coverImage) || showsIframePreview;
   const isLogoPreview =
     typeof project.coverImage === "string" &&
     project.coverImage.toLowerCase().endsWith(".svg");
@@ -66,7 +88,6 @@ export function FeaturedProjectCard({
   });
   const lastPointerRef = useRef({ x: 0, y: 0 });
   const isPointerInsideRef = useRef(false);
-  const isPreviewVisibleRef = useRef(false);
   const reduceMotionRef = useRef(false);
   const [isPreviewVisible, setIsPreviewVisible] = useState(false);
 
@@ -82,11 +103,6 @@ export function FeaturedProjectCard({
       window.cancelAnimationFrame(animationFrameRef.current);
       animationFrameRef.current = null;
     }
-  }
-
-  function syncPreviewVisibility(nextVisible: boolean) {
-    isPreviewVisibleRef.current = nextVisible;
-    setIsPreviewVisible(nextVisible);
   }
 
   function canUseFloatingPreview() {
@@ -142,8 +158,14 @@ export function FeaturedProjectCard({
     lastPointerRef.current = { x: clientX, y: clientY };
 
     const { width, height } = measurePreviewSize();
-    const maxX = Math.max(PREVIEW_GUTTER_PX, window.innerWidth - width - PREVIEW_GUTTER_PX);
-    const maxY = Math.max(PREVIEW_GUTTER_PX, window.innerHeight - height - PREVIEW_GUTTER_PX);
+    const maxX = Math.max(
+      PREVIEW_GUTTER_PX,
+      window.innerWidth - width - PREVIEW_GUTTER_PX,
+    );
+    const maxY = Math.max(
+      PREVIEW_GUTTER_PX,
+      window.innerHeight - height - PREVIEW_GUTTER_PX,
+    );
 
     let nextX = clientX + PREVIEW_OFFSET_X_PX;
     let nextY = clientY + PREVIEW_OFFSET_Y_PX;
@@ -159,7 +181,8 @@ export function FeaturedProjectCard({
     nextX = Math.min(Math.max(nextX, PREVIEW_GUTTER_PX), maxX);
     nextY = Math.min(Math.max(nextY, PREVIEW_GUTTER_PX), maxY);
 
-    const horizontal: PreviewHorizontalSide = nextX < clientX ? "left" : "right";
+    const horizontal: PreviewHorizontalSide =
+      nextX < clientX ? "left" : "right";
     const vertical: PreviewVerticalSide = nextY < clientY ? "top" : "bottom";
 
     targetPositionRef.current = { x: nextX, y: nextY };
@@ -200,6 +223,13 @@ export function FeaturedProjectCard({
     animationFrameRef.current = window.requestAnimationFrame(animatePreview);
   }
 
+  function hidePreview() {
+    cancelRevealTimeout();
+    isPointerInsideRef.current = false;
+    setIsPreviewVisible(false);
+    stopAnimationFrame();
+  }
+
   function handlePointerEnter(event: ReactPointerEvent<HTMLElement>) {
     if (!hasPreview || !canUseFloatingPreview()) {
       return;
@@ -227,7 +257,7 @@ export function FeaturedProjectCard({
 
       measurePreviewSize();
       updateTargetPosition(lastPointerRef.current.x, lastPointerRef.current.y);
-      syncPreviewVisibility(true);
+      setIsPreviewVisible(true);
       ensureAnimationFrame();
     }, PREVIEW_DELAY_MS);
   }
@@ -241,13 +271,6 @@ export function FeaturedProjectCard({
     ensureAnimationFrame();
   }
 
-  function hidePreview() {
-    cancelRevealTimeout();
-    isPointerInsideRef.current = false;
-    syncPreviewVisibility(false);
-    stopAnimationFrame();
-  }
-
   useEffect(() => {
     return () => {
       cancelRevealTimeout();
@@ -255,6 +278,87 @@ export function FeaturedProjectCard({
     };
   }, []);
 
+  return (
+    <article
+      className="portfolio-featured-project-card-shell"
+      onPointerEnter={hasPreview ? handlePointerEnter : undefined}
+      onPointerMove={hasPreview ? handlePointerMove : undefined}
+      onPointerLeave={hasPreview ? hidePreview : undefined}
+      onPointerCancel={hasPreview ? hidePreview : undefined}
+    >
+      {projectLink ? (
+        <a
+          href={projectLink.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={cn(cardClassName, "portfolio-editorial-card")}
+        >
+          {children}
+        </a>
+      ) : (
+        <div className={cn(cardClassName, "portfolio-editorial-card")}>
+          {children}
+        </div>
+      )}
+
+      {hasPreview ? (
+        <div
+          ref={previewRef}
+          aria-hidden="true"
+          className={cn(
+            "portfolio-project-preview-popover",
+            isPreviewVisible && "portfolio-project-preview-popover--visible",
+            isLogoPreview &&
+              !showsIframePreview &&
+              "portfolio-project-preview-popover--logo",
+          )}
+        >
+          <div
+            className={cn(
+              "portfolio-project-preview-media",
+              showsIframePreview && "portfolio-project-preview-media--iframe",
+            )}
+          >
+            {showsIframePreview && isPreviewVisible ? (
+              <iframe
+                aria-hidden="true"
+                className="portfolio-project-preview-iframe"
+                src={iframePreviewHref ?? undefined}
+                tabIndex={-1}
+                title={`${project.name} preview`}
+                loading="eager"
+                scrolling="no"
+              />
+            ) : null}
+
+            {!showsIframePreview && project.coverImage ? (
+              <Image
+                src={project.coverImage}
+                alt=""
+                fill
+                sizes="288px"
+                className="portfolio-project-preview-image"
+              />
+            ) : null}
+          </div>
+          <div className="portfolio-project-preview-footer">
+            <span className="portfolio-project-preview-label">Preview</span>
+            <span className="portfolio-project-preview-name">
+              {previewLabel}
+            </span>
+          </div>
+        </div>
+      ) : null}
+    </article>
+  );
+}
+
+export function FeaturedProjectCard({
+  project,
+  index,
+}: FeaturedProjectCardProps) {
+  const projectLink = getProjectPrimaryLink(project);
+  const previewNumber = String(index + 1).padStart(2, "0");
   const cardContent = (
     <>
       <div className="portfolio-preview-top">
@@ -287,55 +391,59 @@ export function FeaturedProjectCard({
   );
 
   return (
-    <article
-      className="portfolio-featured-project-card-shell"
-      onPointerEnter={hasPreview ? handlePointerEnter : undefined}
-      onPointerMove={hasPreview ? handlePointerMove : undefined}
-      onPointerLeave={hasPreview ? hidePreview : undefined}
-      onPointerCancel={hasPreview ? hidePreview : undefined}
+    <ProjectCardFrame
+      project={project}
+      projectLink={projectLink}
+      cardClassName="portfolio-preview-item"
+      previewLabel={`${previewNumber} / ${project.name}`}
     >
-      {projectLink ? (
-        <a
-          href={projectLink.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="portfolio-preview-item portfolio-editorial-card"
-        >
-          {cardContent}
-        </a>
-      ) : (
-        <div className="portfolio-preview-item portfolio-editorial-card">
-          {cardContent}
-        </div>
-      )}
+      {cardContent}
+    </ProjectCardFrame>
+  );
+}
 
-      {project.coverImage ? (
-        <div
-          ref={previewRef}
-          aria-hidden="true"
-          className={cn(
-            "portfolio-project-preview-popover",
-            isPreviewVisible && "portfolio-project-preview-popover--visible",
-            isLogoPreview && "portfolio-project-preview-popover--logo",
-          )}
-        >
-          <div className="portfolio-project-preview-media">
-            <Image
-              src={project.coverImage}
-              alt=""
-              fill
-              sizes="288px"
-              className="portfolio-project-preview-image"
-            />
-          </div>
-          <div className="portfolio-project-preview-footer">
-            <span className="portfolio-project-preview-label">Preview</span>
-            <span className="portfolio-project-preview-name">
-              {previewNumber} / {project.name}
-            </span>
-          </div>
+export function WorkProjectCard({ project, index }: WorkProjectCardProps) {
+  const projectLink = getProjectPrimaryLink(project);
+  const previewNumber = String(index + 1).padStart(2, "0");
+  const cardContent = (
+    <>
+      <div className="portfolio-project-item-header">
+        <p className="portfolio-kicker">{previewNumber} / Project</p>
+        <span className="portfolio-status">{statusCopy[project.status]}</span>
+      </div>
+
+      <div className="portfolio-project-item-body">
+        <div className="portfolio-project-item-main">
+          <h2 className="portfolio-project-title">{project.name}</h2>
+          <p className="portfolio-project-summary">{getProjectSummary(project)}</p>
         </div>
-      ) : null}
-    </article>
+
+        <p className="portfolio-project-stack">
+          {getProjectStackPreview(project, 5)}
+        </p>
+
+        <div className="portfolio-project-item-actions">
+          {projectLink ? (
+            <span className="portfolio-card-action">
+              {projectLink.label}
+              <ArrowUpRight className="h-4 w-4" />
+            </span>
+          ) : (
+            <span className="portfolio-project-placeholder">No public link</span>
+          )}
+        </div>
+      </div>
+    </>
+  );
+
+  return (
+    <ProjectCardFrame
+      project={project}
+      projectLink={projectLink}
+      cardClassName="portfolio-project-item"
+      previewLabel={`${previewNumber} / ${project.name}`}
+    >
+      {cardContent}
+    </ProjectCardFrame>
   );
 }

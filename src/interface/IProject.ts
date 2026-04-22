@@ -4,6 +4,7 @@ import { TypeTechStack } from "../../data/techStack";
 import { Route } from "next";
 
 type TProjectStatus = "finished" | "working" | "designing";
+export type TProjectPreviewMode = "image" | "iframe";
 
 export interface IProject {
   slug: string;
@@ -17,6 +18,7 @@ export interface IProject {
   members: string[];
   projectVisualization?: IVisualization[];
   coverImage?: StaticImageData | string;
+  previewMode?: TProjectPreviewMode;
   status: TProjectStatus;
   order?: number;
 }

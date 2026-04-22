@@ -6,12 +6,12 @@ import {
   useEffect,
   useRef,
   useState,
+  type CSSProperties,
   type ComponentPropsWithoutRef,
   type ReactNode,
 } from "react";
 import { ArrowUp, ArrowUpRight } from "lucide-react";
 import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
-import ScaleLetterText from "@/components/ui/scale-letter-text";
 import { contactLinks, navigationLinks } from "@/lib/portfolio-content";
 import { cn } from "@/lib/utils";
 
@@ -30,6 +30,7 @@ interface PortfolioLayoutProps {
 interface PortfolioPageIntroProps {
   kicker: string;
   title: string;
+  titleVisual?: ReactNode;
   summary?: string;
   action?: ReactNode;
 }
@@ -53,40 +54,69 @@ export function PortfolioLayout({
 }: PortfolioLayoutProps) {
   const router = useRouter();
   const footerSentinelRef = useRef<HTMLDivElement | null>(null);
+  const footerRef = useRef<HTMLElement | null>(null);
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [backToTopFooterOffset, setBackToTopFooterOffset] = useState(0);
 
   useEffect(() => {
-    const node = footerSentinelRef.current;
+    const sentinelNode = footerSentinelRef.current;
+    const footerNode = footerRef.current;
 
-    if (!node || typeof window === "undefined") {
+    if (!sentinelNode || !footerNode || typeof window === "undefined") {
       return;
     }
 
     let isSentinelVisible = false;
+    let frame = 0;
 
     const syncVisibility = () => {
       setShowBackToTop(isSentinelVisible && window.scrollY > 48);
+
+      const footerRect = footerNode.getBoundingClientRect();
+      const footerOffset = Math.max(
+        0,
+        Math.round(window.innerHeight - footerRect.top),
+      );
+
+      setBackToTopFooterOffset(footerOffset);
+    };
+
+    const requestSyncVisibility = () => {
+      if (frame !== 0) {
+        return;
+      }
+
+      frame = window.requestAnimationFrame(() => {
+        frame = 0;
+        syncVisibility();
+      });
     };
 
     if (typeof IntersectionObserver === "undefined") {
       const onScroll = () => {
-        const rect = node.getBoundingClientRect();
+        const rect = sentinelNode.getBoundingClientRect();
         isSentinelVisible = rect.top <= window.innerHeight;
-        syncVisibility();
+        requestSyncVisibility();
       };
 
       onScroll();
       window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("resize", requestSyncVisibility);
 
       return () => {
+        if (frame !== 0) {
+          window.cancelAnimationFrame(frame);
+        }
+
         window.removeEventListener("scroll", onScroll);
+        window.removeEventListener("resize", requestSyncVisibility);
       };
     }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         isSentinelVisible = entry.isIntersecting;
-        syncVisibility();
+        requestSyncVisibility();
       },
       {
         threshold: 0.35,
@@ -94,16 +124,22 @@ export function PortfolioLayout({
     );
 
     const onScroll = () => {
-      syncVisibility();
+      requestSyncVisibility();
     };
 
-    observer.observe(node);
+    observer.observe(sentinelNode);
     window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", requestSyncVisibility);
     syncVisibility();
 
     return () => {
+      if (frame !== 0) {
+        window.cancelAnimationFrame(frame);
+      }
+
       observer.disconnect();
       window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", requestSyncVisibility);
     };
   }, []);
 
@@ -133,33 +169,29 @@ export function PortfolioLayout({
                 />
               </Link>
 
-              <div className="portfolio-header-main">
-                <nav className="portfolio-nav" aria-label="Primary navigation">
-                  {navigationLinks.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      aria-current={
-                        router.pathname === item.href ||
-                        (item.href !== "/" &&
-                          router.pathname.startsWith(`${item.href}/`))
-                          ? "page"
-                          : undefined
-                      }
-                      className="portfolio-nav-link"
-                    >
-                      {item.number}. {item.label}
-                    </Link>
-                  ))}
-                </nav>
-
-                <div className="portfolio-header-controls">
-                  <AnimatedThemeToggler className="portfolio-theme-toggle" />
-                </div>
-              </div>
+              <nav className="portfolio-nav" aria-label="Primary navigation">
+                {navigationLinks.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    aria-current={
+                      router.pathname === item.href ||
+                      (item.href !== "/" &&
+                        router.pathname.startsWith(`${item.href}/`))
+                        ? "page"
+                        : undefined
+                    }
+                    className="portfolio-nav-link"
+                  >
+                    {item.number}. {item.label}
+                  </Link>
+                ))}
+              </nav>
             </header>
           </div>
         </div>
+
+        <AnimatedThemeToggler className="portfolio-floating-theme-toggle" />
 
         <div className="portfolio-frame">
           <span
@@ -189,7 +221,7 @@ export function PortfolioLayout({
           </div>
         </div>
 
-        <footer className="portfolio-footer">
+        <footer ref={footerRef} className="portfolio-footer">
           <div className="portfolio-footer-card-grid">
             {contactLinks.map((item) => {
               const Icon = item.icon;
@@ -228,6 +260,11 @@ export function PortfolioLayout({
         <a
           href="#top"
           className={`portfolio-floating-top${showBackToTop ? " is-visible" : ""}`}
+          style={
+            {
+              "--portfolio-floating-top-footer-offset": `${backToTopFooterOffset}px`,
+            } as CSSProperties
+          }
         >
           <ArrowUp className="h-4 w-4" />
           Back to top
@@ -240,6 +277,7 @@ export function PortfolioLayout({
 export function PortfolioPageIntro({
   kicker,
   title,
+  titleVisual,
   summary,
   action,
 }: PortfolioPageIntroProps) {
@@ -259,8 +297,8 @@ export function PortfolioPageIntro({
       >
         <div className="portfolio-section-heading">
           <p className="portfolio-kicker">{kicker}</p>
-          <h1 className="portfolio-page-title">
-            <ScaleLetterText text={title} />
+          <h1 className="portfolio-page-title" aria-label={title}>
+            {titleVisual ?? title}
           </h1>
         </div>
 
