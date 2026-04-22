@@ -60,12 +60,6 @@ export const contactLinks: ContactLink[] = [
   },
 ];
 
-export const statusCopy = {
-  working: "Shipping",
-  finished: "Released",
-  designing: "In design",
-} as const;
-
 export const orderedProjects = [...projects].sort((left, right) => {
   const leftOrder = left.order ?? Number.MAX_SAFE_INTEGER;
   const rightOrder = right.order ?? Number.MAX_SAFE_INTEGER;

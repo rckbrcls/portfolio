@@ -10,8 +10,14 @@ import {
   type ComponentPropsWithoutRef,
   type ReactNode,
 } from "react";
-import { ArrowUp, ArrowUpRight } from "lucide-react";
-import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
+import { ArrowUp, ArrowUpRight, Moon, Settings2, Sun } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useThemeToggle } from "@/hooks/use-theme-toggle";
 import { contactLinks, navigationLinks } from "@/lib/portfolio-content";
 import { cn } from "@/lib/utils";
 
@@ -44,6 +50,54 @@ interface PortfolioSectionProps extends ComponentPropsWithoutRef<"section"> {
 }
 
 interface PortfolioSectionBodyProps extends ComponentPropsWithoutRef<"div"> {}
+
+function HeaderConfigMenu() {
+  const [open, setOpen] = useState(false);
+  const triggerRef = useRef<HTMLButtonElement | null>(null);
+  const { isDark, mounted, toggleLabel, toggleTheme } = useThemeToggle();
+  const ThemeIcon = mounted && isDark ? Sun : Moon;
+  const nextThemeLabel = mounted && isDark ? "Light" : "Dark";
+
+  return (
+    <DropdownMenu open={open} onOpenChange={setOpen}>
+      <DropdownMenuTrigger asChild>
+        <button
+          ref={triggerRef}
+          type="button"
+          aria-label="Open config"
+          aria-haspopup="menu"
+          aria-expanded={open}
+          className="portfolio-nav-button portfolio-nav-icon-button"
+        >
+          <Settings2 className="portfolio-nav-icon" />
+          <span className="sr-only">Config</span>
+        </button>
+      </DropdownMenuTrigger>
+
+      <DropdownMenuContent
+        align="end"
+        sideOffset={10}
+        className="portfolio-config-menu !w-auto !min-w-[14rem] !rounded-none !p-0"
+      >
+        <DropdownMenuItem
+          className="portfolio-config-menu-item !rounded-none"
+          aria-label={toggleLabel}
+          onSelect={() => {
+            toggleTheme(triggerRef.current);
+            setOpen(false);
+          }}
+        >
+          <span className="portfolio-config-menu-copy">
+            <ThemeIcon className="portfolio-config-menu-icon h-4 w-4" />
+            <span className="portfolio-config-menu-label">
+              {nextThemeLabel}
+            </span>
+          </span>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
 
 export function PortfolioLayout({
   title,
@@ -184,12 +238,12 @@ export function PortfolioLayout({
                     {item.number}. {item.label}
                   </Link>
                 ))}
+
+                <HeaderConfigMenu />
               </nav>
             </header>
           </div>
         </div>
-
-        <AnimatedThemeToggler className="portfolio-floating-theme-toggle" />
 
         <div className="portfolio-frame">
           <span

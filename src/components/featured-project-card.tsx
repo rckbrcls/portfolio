@@ -13,7 +13,6 @@ import {
   getProjectPrimaryLink,
   getProjectStackPreview,
   getProjectSummary,
-  statusCopy,
 } from "@/lib/portfolio-content";
 
 interface FeaturedProjectCardProps {
@@ -365,7 +364,6 @@ export function FeaturedProjectCard({
         <p className="portfolio-kicker">
           {previewNumber} / {project.name}
         </p>
-        <span className="portfolio-status">{statusCopy[project.status]}</span>
       </div>
 
       <div className="portfolio-project-copy">
@@ -409,7 +407,6 @@ export function WorkProjectCard({ project, index }: WorkProjectCardProps) {
     <>
       <div className="portfolio-project-item-header">
         <p className="portfolio-kicker">{previewNumber} / Project</p>
-        <span className="portfolio-status">{statusCopy[project.status]}</span>
       </div>
 
       <div className="portfolio-project-item-body">

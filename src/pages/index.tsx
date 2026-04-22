@@ -55,7 +55,7 @@ export default function Home({
               </div>
 
               <Link href="/work" className="portfolio-inline-link">
-                Open work
+                See all work
                 <ArrowUpRight className="h-4 w-4" />
               </Link>
             </div>
@@ -75,11 +75,11 @@ export default function Home({
         ) : null}
 
         <PortfolioSection spacing="stack-loose">
-            <div className="portfolio-section-intro">
-              <div className="portfolio-section-heading">
-                <p className="portfolio-kicker">Work</p>
-                <h2 className="portfolio-section-title">Independent.</h2>
-              </div>
+          <div className="portfolio-section-intro">
+            <div className="portfolio-section-heading">
+              <p className="portfolio-kicker">Work</p>
+              <h2 className="portfolio-section-title">Independent.</h2>
+            </div>
 
             <Link href="/work" className="portfolio-inline-link">
               See all work
@@ -108,7 +108,7 @@ export default function Home({
             </div>
 
             <Link href="/blog" className="portfolio-inline-link">
-              Open archive
+              See all posts
               <ArrowUpRight className="h-4 w-4" />
             </Link>
           </div>
