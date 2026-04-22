@@ -2,6 +2,7 @@ import type { InferGetStaticPropsType } from "next";
 
 import { BlogPostCard } from "@/components/blog/BlogPostCard";
 import {
+  PortfolioCollection,
   PortfolioLayout,
   PortfolioPageIntro,
 } from "@/components/portfolio-shell";
@@ -27,11 +28,11 @@ export default function BlogIndexPage({
 
       <section className="portfolio-section">
         {posts.length > 0 ? (
-          <div className="portfolio-blog-grid">
+          <PortfolioCollection className="portfolio-blog-grid">
             {posts.map((post) => (
               <BlogPostCard key={post.slug} post={post} />
             ))}
-          </div>
+          </PortfolioCollection>
         ) : (
           <article className="portfolio-empty-state">
             <p className="portfolio-kicker">No posts yet</p>

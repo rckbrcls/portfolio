@@ -32,7 +32,6 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },
-  swcMinify: true,
   images: {
     unoptimized: false,
     formats: ["image/webp", "image/avif"],

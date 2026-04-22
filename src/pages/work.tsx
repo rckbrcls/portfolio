@@ -1,5 +1,9 @@
 import { ArrowUpRight } from "lucide-react";
-import { PortfolioLayout, PortfolioPageIntro } from "@/components/portfolio-shell";
+import {
+  PortfolioCollection,
+  PortfolioLayout,
+  PortfolioPageIntro,
+} from "@/components/portfolio-shell";
 import {
   getProjectPrimaryLink,
   getProjectStackPreview,
@@ -20,17 +24,18 @@ export default function WorkPage() {
       />
 
       <section className="portfolio-section">
-        <div className="portfolio-project-list">
+        <PortfolioCollection className="portfolio-project-list">
           {orderedProjects.map((project, index) => {
             const projectLink = getProjectPrimaryLink(project);
-
-            return (
-              <article key={project.slug} className="portfolio-project-item">
+            const projectContent = (
+              <>
                 <div className="portfolio-project-item-header">
                   <p className="portfolio-kicker">
                     {String(index + 1).padStart(2, "0")} / Project
                   </p>
-                  <span className="portfolio-status">{statusCopy[project.status]}</span>
+                  <span className="portfolio-status">
+                    {statusCopy[project.status]}
+                  </span>
                 </div>
 
                 <div className="portfolio-project-item-body">
@@ -47,24 +52,40 @@ export default function WorkPage() {
 
                   <div className="portfolio-project-item-actions">
                     {projectLink ? (
-                      <a
-                        href={projectLink.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="portfolio-inline-link"
-                      >
+                      <span className="portfolio-card-action">
                         {projectLink.label}
                         <ArrowUpRight className="h-4 w-4" />
-                      </a>
+                      </span>
                     ) : (
-                      <span className="portfolio-project-placeholder">No public link</span>
+                      <span className="portfolio-project-placeholder">
+                        No public link
+                      </span>
                     )}
                   </div>
                 </div>
+              </>
+            );
+
+            return (
+              <article key={project.slug}>
+                {projectLink ? (
+                  <a
+                    href={projectLink.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="portfolio-project-item portfolio-editorial-card"
+                  >
+                    {projectContent}
+                  </a>
+                ) : (
+                  <div className="portfolio-project-item portfolio-editorial-card">
+                    {projectContent}
+                  </div>
+                )}
               </article>
             );
           })}
-        </div>
+        </PortfolioCollection>
       </section>
     </PortfolioLayout>
   );

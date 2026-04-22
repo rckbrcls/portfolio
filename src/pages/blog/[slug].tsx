@@ -4,6 +4,7 @@ import { ArrowUpRight } from "lucide-react";
 
 import { blogMdxComponents } from "@/components/blog/mdx-components";
 import { PortfolioLayout } from "@/components/portfolio-shell";
+import ScaleLetterText from "@/components/ui/scale-letter-text";
 import { getAllBlogPosts, getBlogPostBySlug } from "@/lib/blog";
 import { getBlogPostComponent } from "@/lib/blog-content";
 import { formatBlogDate } from "@/lib/blog-shared";
@@ -64,7 +65,9 @@ export default function BlogPostPage({
         <div className="portfolio-article-layout">
           <header className="portfolio-article-header">
             <p className="portfolio-kicker">Blog post</p>
-            <h1 className="portfolio-article-title">{post.title}</h1>
+            <h1 className="portfolio-article-title">
+              <ScaleLetterText text={post.title} />
+            </h1>
             <p className="portfolio-article-summary">{post.summary}</p>
 
             <div className="portfolio-article-meta">

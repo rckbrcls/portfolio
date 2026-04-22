@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 import { Moon, Sun } from "lucide-react"
+import { useTheme } from "next-themes"
 import { flushSync } from "react-dom"
 
 import { cn } from "@/lib/utils"
@@ -8,31 +9,41 @@ interface AnimatedThemeTogglerProps extends React.ComponentPropsWithoutRef<"butt
   duration?: number
 }
 
+type ThemeName = "light" | "dark"
+
+type ViewTransitionDocument = Document & {
+  startViewTransition?: (
+    callback: () => void
+  ) => {
+    ready?: Promise<void>
+  }
+}
+
 export const AnimatedThemeToggler = ({
   className,
   duration = 400,
   ...props
 }: AnimatedThemeTogglerProps) => {
-  const [isDark, setIsDark] = useState(false)
+  const { resolvedTheme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
   const buttonRef = useRef<HTMLButtonElement>(null)
+  const isDark = mounted && resolvedTheme === "dark"
 
   useEffect(() => {
-    const updateTheme = () => {
-      setIsDark(document.documentElement.classList.contains("dark"))
-    }
+    setMounted(true)
+  }, [])
 
-    updateTheme()
+  const syncDocumentTheme = useCallback((nextTheme: ThemeName) => {
+    const root = document.documentElement
 
-    const observer = new MutationObserver(updateTheme)
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class"],
-    })
-
-    return () => observer.disconnect()
+    root.classList.remove("light", "dark")
+    root.classList.add(nextTheme)
+    root.style.colorScheme = nextTheme
   }, [])
 
   const toggleTheme = useCallback(() => {
+    if (!mounted) return
+
     const button = buttonRef.current
     if (!button) return
 
@@ -45,53 +56,73 @@ export const AnimatedThemeToggler = ({
       Math.max(x, viewportWidth - x),
       Math.max(y, viewportHeight - y)
     )
+    const nextTheme: ThemeName = isDark ? "light" : "dark"
 
     const applyTheme = () => {
-      const newTheme = !isDark
-      setIsDark(newTheme)
-      document.documentElement.classList.toggle("dark")
-      localStorage.setItem("theme", newTheme ? "dark" : "light")
+      setTheme(nextTheme)
+      syncDocumentTheme(nextTheme)
     }
 
-    if (typeof document.startViewTransition !== "function") {
+    const themeDocument = document as ViewTransitionDocument
+
+    if (typeof themeDocument.startViewTransition !== "function") {
       applyTheme()
       return
     }
 
-    const transition = document.startViewTransition(() => {
-      flushSync(applyTheme)
+    const transition = themeDocument.startViewTransition(() => {
+      flushSync(() => {
+        applyTheme()
+      })
     })
 
     const ready = transition?.ready
     if (ready && typeof ready.then === "function") {
-      ready.then(() => {
-        document.documentElement.animate(
-          {
-            clipPath: [
-              `circle(0px at ${x}px ${y}px)`,
-              `circle(${maxRadius}px at ${x}px ${y}px)`,
-            ],
-          },
-          {
-            duration,
-            easing: "ease-in-out",
-            pseudoElement: "::view-transition-new(root)",
-          }
-        )
-      })
+      void ready
+        .then(() => {
+          document.documentElement.animate(
+            {
+              clipPath: [
+                `circle(0px at ${x}px ${y}px)`,
+                `circle(${maxRadius}px at ${x}px ${y}px)`,
+              ],
+            },
+            {
+              duration,
+              easing: "ease-in-out",
+              pseudoElement: "::view-transition-new(root)",
+            }
+          )
+        })
+        .catch(() => undefined)
     }
-  }, [isDark, duration])
+  }, [duration, isDark, mounted, setTheme, syncDocumentTheme])
+
+  const srLabel = mounted
+    ? isDark
+      ? "Switch to light theme"
+      : "Switch to dark theme"
+    : "Toggle theme"
 
   return (
     <button
       type="button"
       ref={buttonRef}
       onClick={toggleTheme}
+      aria-pressed={isDark}
       className={cn(className)}
       {...props}
     >
-      {isDark ? <Sun /> : <Moon />}
-      <span className="sr-only">Toggle theme</span>
+      {mounted ? (
+        isDark ? (
+          <Sun />
+        ) : (
+          <Moon />
+        )
+      ) : (
+        <span aria-hidden="true" className="block h-4 w-4" />
+      )}
+      <span className="sr-only">{srLabel}</span>
     </button>
   )
 }

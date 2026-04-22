@@ -2,7 +2,11 @@ import type { InferGetStaticPropsType } from "next";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { BlogPostCard } from "@/components/blog/BlogPostCard";
-import { PortfolioLayout } from "@/components/portfolio-shell";
+import {
+  PortfolioCollection,
+  PortfolioLayout,
+} from "@/components/portfolio-shell";
+import ScaleLetterText from "@/components/ui/scale-letter-text";
 import { getLatestBlogPosts } from "@/lib/blog";
 import {
   featuredProjects,
@@ -32,20 +36,21 @@ export default function Home({
         <div className="portfolio-hero">
           <p className="portfolio-kicker">Software engineer</p>
           <h1 className="portfolio-hero-title">
-            Selected product, native, and tooling work.
+            <ScaleLetterText text="Erick Barcelos." />
           </h1>
-          <div className="portfolio-hero-foot">
-            <Link href="/work" className="portfolio-button">
-              View selected work
-            </Link>
-          </div>
+          <p className="portfolio-hero-summary">
+            Software engineer building products, native experiences, and better
+            tools. Lifelong learner.
+          </p>
         </div>
       </section>
 
       <section className="portfolio-section">
         <div className="portfolio-section-intro">
           <div className="portfolio-section-heading">
-            <h2 className="portfolio-section-title">Personal projects.</h2>
+            <h2 className="portfolio-section-title">
+              <ScaleLetterText text="Personal projects." />
+            </h2>
           </div>
 
           <Link href="/work" className="portfolio-inline-link">
@@ -54,12 +59,14 @@ export default function Home({
           </Link>
         </div>
 
-        <div className="portfolio-preview-grid">
+        <PortfolioCollection
+          className="portfolio-preview-grid"
+          showCenterCross
+        >
           {featuredProjects.map((project, index) => {
             const projectLink = getProjectPrimaryLink(project);
-
-            return (
-              <article key={project.slug} className="portfolio-preview-item">
+            const cardContent = (
+              <>
                 <div className="portfolio-preview-top">
                   <p className="portfolio-kicker">
                     {String(index + 1).padStart(2, "0")} / {project.name}
@@ -82,28 +89,48 @@ export default function Home({
                   </p>
 
                   {projectLink ? (
-                    <a
-                      href={projectLink.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="portfolio-inline-link"
-                    >
+                    <span className="portfolio-card-action">
                       {projectLink.label}
                       <ArrowUpRight className="h-4 w-4" />
-                    </a>
-                  ) : null}
+                    </span>
+                  ) : (
+                    <span className="portfolio-project-placeholder">
+                      No public link
+                    </span>
+                  )}
                 </div>
+              </>
+            );
+
+            return (
+              <article key={project.slug}>
+                {projectLink ? (
+                  <a
+                    href={projectLink.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="portfolio-preview-item portfolio-editorial-card"
+                  >
+                    {cardContent}
+                  </a>
+                ) : (
+                  <div className="portfolio-preview-item portfolio-editorial-card">
+                    {cardContent}
+                  </div>
+                )}
               </article>
             );
           })}
-        </div>
+        </PortfolioCollection>
       </section>
 
       <section className="portfolio-section">
         <div className="portfolio-section-intro">
           <div className="portfolio-section-heading">
             <p className="portfolio-kicker">Blog</p>
-            <h2 className="portfolio-section-title">Writing.</h2>
+            <h2 className="portfolio-section-title">
+              <ScaleLetterText text="Writing." />
+            </h2>
           </div>
 
           <Link href="/blog" className="portfolio-inline-link">
@@ -113,11 +140,11 @@ export default function Home({
         </div>
 
         {latestPosts.length > 0 ? (
-          <div className="portfolio-blog-grid">
+          <PortfolioCollection className="portfolio-blog-grid">
             {latestPosts.map((post) => (
               <BlogPostCard key={post.slug} post={post} />
             ))}
-          </div>
+          </PortfolioCollection>
         ) : (
           <article className="portfolio-empty-state">
             <p className="portfolio-kicker">No posts yet</p>
