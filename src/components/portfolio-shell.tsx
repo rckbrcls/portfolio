@@ -220,7 +220,14 @@ export function PortfolioLayout({
         </div>
 
         <footer ref={footerRef} className="portfolio-footer">
-          <div className="portfolio-footer-card-grid">
+          <div
+            className="portfolio-footer-card-grid"
+            style={
+              {
+                "--portfolio-footer-columns": String(contactLinks.length),
+              } as CSSProperties
+            }
+          >
             {contactLinks.map((item) => {
               const Icon = item.icon;
               const opensInNewTab =

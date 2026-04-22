@@ -36,13 +36,12 @@ export default function Home({
       <div className="portfolio-home portfolio-editorial-stack">
         <PortfolioSection spacing="page-start">
           <div className="portfolio-hero">
-            <p className="portfolio-kicker">Software engineer</p>
             <h1 className="portfolio-hero-title">
               <ScaleLetterText text="Erick Barcelos." />
             </h1>
             <p className="portfolio-hero-summary">
-              Software engineer building products, native experiences, and
-              better tools. Lifelong learner.
+              Software engineer building products, experiences, and better
+              tools. Lifelong learner.
             </p>
           </div>
         </PortfolioSection>
@@ -51,9 +50,8 @@ export default function Home({
           <PortfolioSection spacing="stack-loose">
             <div className="portfolio-section-intro">
               <div className="portfolio-section-heading">
-                <h2 className="portfolio-section-title">
-                  Professional work.
-                </h2>
+                <p className="portfolio-kicker">Work</p>
+                <h2 className="portfolio-section-title">Professional.</h2>
               </div>
 
               <Link href="/work" className="portfolio-inline-link">
@@ -77,10 +75,11 @@ export default function Home({
         ) : null}
 
         <PortfolioSection spacing="stack-loose">
-          <div className="portfolio-section-intro">
-            <div className="portfolio-section-heading">
-              <h2 className="portfolio-section-title">Independent projects.</h2>
-            </div>
+            <div className="portfolio-section-intro">
+              <div className="portfolio-section-heading">
+                <p className="portfolio-kicker">Work</p>
+                <h2 className="portfolio-section-title">Independent.</h2>
+              </div>
 
             <Link href="/work" className="portfolio-inline-link">
               See all work

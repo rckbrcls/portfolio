@@ -14,7 +14,6 @@ import {
 } from "@/lib/portfolio-content";
 
 const WORK_TITLE_VARIANTS = [
-  "Work.",
   "Builds.",
   "Products.",
   "Systems.",
@@ -30,14 +29,14 @@ export default function WorkPage() {
       <div className="portfolio-editorial-stack">
         <PortfolioPageIntro
           kicker="Work"
-          title="Work."
+          title="Builds."
           titleVisual={<MorphingText texts={WORK_TITLE_VARIANTS} />}
         />
 
         <PortfolioSection spacing="stack-tight">
           <div className="portfolio-section-intro">
             <div className="portfolio-section-heading">
-              <h2 className="portfolio-section-title">Professional work.</h2>
+              <h2 className="portfolio-section-title">Professional.</h2>
             </div>
           </div>
 
@@ -57,7 +56,7 @@ export default function WorkPage() {
         <PortfolioSection spacing="stack-tight">
           <div className="portfolio-section-intro">
             <div className="portfolio-section-heading">
-              <h2 className="portfolio-section-title">Independent projects.</h2>
+              <h2 className="portfolio-section-title">Independent.</h2>
             </div>
           </div>
 

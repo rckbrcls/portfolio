@@ -148,7 +148,7 @@ body {
   .portfolio-brand {
     position: absolute;
     left: 0.72rem;
-    top: 0.3rem;
+    top: 0.22rem;
     display: block;
     line-height: 0;
     transform: translateY(-22%);
@@ -178,8 +178,8 @@ body {
     width: 1.96rem;
     height: 1.96rem;
     flex-shrink: 0;
-    border: 1px solid var(--portfolio-border);
-    background: var(--portfolio-surface);
+    border: 1px solid transparent;
+    background: transparent;
     color: var(--portfolio-primary);
     transition:
       border-color 160ms var(--portfolio-ease-out),
@@ -433,6 +433,7 @@ body {
   .portfolio-collection > article {
     position: relative;
     min-width: 0;
+    z-index: 0;
   }
 
   .portfolio-collection > article > .portfolio-editorial-card {
@@ -631,7 +632,7 @@ body {
     display: inline-flex;
     align-items: center;
     border: 1px solid var(--portfolio-border);
-    border-radius: var(--portfolio-radius-full);
+    border-radius: 0;
     background: var(--portfolio-surface-alt);
     padding: 0.42rem 0.7rem;
     font-family: var(--font-mono);
@@ -641,6 +642,10 @@ body {
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--portfolio-secondary);
+    transition:
+      border-color 180ms var(--portfolio-ease-out),
+      background-color 180ms var(--portfolio-ease-out),
+      color 180ms var(--portfolio-ease-out);
   }
 
   .portfolio-preview-top,
@@ -987,7 +992,7 @@ body {
 
   .portfolio-footer-card-grid {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(var(--portfolio-footer-columns, 1), minmax(0, 1fr));
     gap: 1px;
     background: var(--portfolio-border);
   }
@@ -1115,7 +1120,8 @@ body {
   }
 
   @media (hover: hover) and (pointer: fine) {
-    .portfolio-featured-project-card-shell:hover {
+    .portfolio-collection > article:hover,
+    .portfolio-collection > article:focus-within {
       z-index: 6;
     }
 
@@ -1126,7 +1132,7 @@ body {
 
     .portfolio-floating-theme-toggle:hover {
       transform: translateY(-1px);
-      border-color: var(--portfolio-accent-border);
+      border-color: var(--portfolio-border);
       background: var(--portfolio-highlight);
       color: var(--portfolio-accent);
     }
@@ -1146,6 +1152,12 @@ body {
     .portfolio-editorial-card:hover .portfolio-project-title,
     .portfolio-editorial-card:hover .portfolio-blog-card-title,
     .portfolio-editorial-card:hover .portfolio-card-action {
+      color: var(--portfolio-accent);
+    }
+
+    .portfolio-editorial-card:hover .portfolio-tag {
+      border-color: var(--portfolio-accent-border);
+      background: var(--portfolio-highlight);
       color: var(--portfolio-accent);
     }
 
@@ -1260,7 +1272,7 @@ body {
     }
 
     .portfolio-footer-card-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: 1fr;
     }
   }
 
@@ -1299,7 +1311,7 @@ body {
 
     .portfolio-brand {
       left: 0.64rem;
-      top: 0.26rem;
+      top: 0.18rem;
       transform: translateY(-18%);
     }
 
@@ -1355,7 +1367,7 @@ body {
     }
 
     .portfolio-footer-card-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: 1fr;
     }
 
     .portfolio-article-title {
