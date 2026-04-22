@@ -25,7 +25,7 @@ body {
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--portfolio-border) transparent;
+  scrollbar-color: var(--portfolio-border) var(--portfolio-surface);
 }
 
 ::-webkit-scrollbar {
@@ -34,11 +34,11 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--portfolio-surface);
 }
 
 ::-webkit-scrollbar-thumb {
-  border: 3px solid transparent;
+  border: 3px solid var(--portfolio-surface);
   border-radius: 9999px;
   background-color: var(--portfolio-border);
   background-clip: padding-box;
@@ -65,11 +65,7 @@ body {
     width: min(calc(100% - 2rem), var(--portfolio-max-width));
     margin: 1rem auto 0;
     border: 1px solid var(--portfolio-border);
-    --portfolio-cross-color: color-mix(
-      in srgb,
-      var(--portfolio-accent) 18%,
-      var(--portfolio-border)
-    );
+    --portfolio-cross-color: var(--portfolio-accent-border);
   }
 
   .portfolio-frame-corner,
@@ -187,7 +183,7 @@ body {
     border-radius: 0;
     object-fit: cover;
     object-position: center top;
-    background: transparent;
+    background: var(--portfolio-neutral);
   }
 
   .portfolio-header-main {
@@ -211,11 +207,7 @@ body {
     height: 1.96rem;
     flex-shrink: 0;
     border: 1px solid var(--portfolio-border);
-    background: color-mix(
-      in srgb,
-      var(--portfolio-surface) 92%,
-      var(--portfolio-highlight)
-    );
+    background: var(--portfolio-surface-alt);
     color: var(--portfolio-primary);
     transition:
       border-color 160ms var(--portfolio-ease-out),
@@ -253,7 +245,7 @@ body {
   }
 
   .portfolio-nav-link {
-    border-bottom: 1px solid transparent;
+    border-bottom: 1px solid var(--portfolio-surface);
     padding-bottom: 0.24rem;
     font-family: var(--font-mono);
     font-size: 0.78rem;
@@ -284,11 +276,24 @@ body {
   }
 
   .portfolio-section {
-    padding: var(--portfolio-section-space) 0;
+    --portfolio-section-stack-space-current: 0px;
+    margin-top: var(--portfolio-section-stack-space-current);
   }
 
-  .portfolio-section:first-child {
-    padding-top: 0;
+  .portfolio-section--page-start {
+    --portfolio-section-stack-space-current: 0px;
+  }
+
+  .portfolio-section--stack {
+    --portfolio-section-stack-space-current: var(
+      --portfolio-section-stack-space
+    );
+  }
+
+  .portfolio-section--stack-tight {
+    --portfolio-section-stack-space-current: var(
+      --portfolio-section-stack-space-tight
+    );
   }
 
   .portfolio-section-intro {
@@ -297,6 +302,10 @@ body {
     align-items: end;
     justify-content: space-between;
     gap: var(--portfolio-space-lg);
+  }
+
+  .portfolio-section-body {
+    margin-top: var(--portfolio-section-body-gap);
   }
 
   .portfolio-section-heading {
@@ -353,7 +362,7 @@ body {
     display: grid;
     gap: var(--portfolio-space-lg);
     max-width: 56rem;
-    padding: 0 0 var(--portfolio-space-lg);
+    padding: 0;
   }
 
   .portfolio-hero-title {
@@ -404,11 +413,7 @@ body {
     position: relative;
     border: 1px solid var(--portfolio-border);
     background: var(--portfolio-border);
-    --portfolio-cross-color: color-mix(
-      in srgb,
-      var(--portfolio-accent) 18%,
-      var(--portfolio-border)
-    );
+    --portfolio-cross-color: var(--portfolio-accent-border);
   }
 
   .portfolio-collection-cross--top-left {
@@ -456,14 +461,12 @@ body {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1px;
-    margin-top: var(--portfolio-space-xl);
   }
 
   .portfolio-blog-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 1px;
-    margin-top: var(--portfolio-space-xl);
   }
 
   .portfolio-preview-item {
@@ -481,16 +484,12 @@ body {
     position: relative;
     min-height: 100%;
     border: 1px solid var(--portfolio-border);
-    background: color-mix(
-      in srgb,
-      var(--portfolio-surface) 92%,
-      var(--portfolio-neutral)
-    );
+    background: var(--portfolio-surface);
     padding: var(--portfolio-space-lg);
     color: inherit;
     text-decoration: none;
     transform-origin: center;
-    box-shadow: inset 0 0 0 1px transparent;
+    box-shadow: inset 0 0 0 1px var(--portfolio-surface);
     z-index: 0;
     transition:
       transform 280ms var(--portfolio-ease-out),
@@ -669,7 +668,6 @@ body {
   .portfolio-empty-state {
     display: grid;
     gap: var(--portfolio-space-md);
-    margin-top: var(--portfolio-space-xl);
   }
 
   .portfolio-project-item {
@@ -688,21 +686,21 @@ body {
     pointer-events: none;
     z-index: 3;
     transform: translate(-50%, -50%);
-    background:
-      linear-gradient(
-        to right,
-        transparent calc(50% - 0.5px),
-        var(--portfolio-cross-color) calc(50% - 0.5px),
-        var(--portfolio-cross-color) calc(50% + 0.5px),
-        transparent calc(50% + 0.5px)
-      ),
-      linear-gradient(
-        to bottom,
-        transparent calc(50% - 0.5px),
-        var(--portfolio-cross-color) calc(50% - 0.5px),
-        var(--portfolio-cross-color) calc(50% + 0.5px),
-        transparent calc(50% + 0.5px)
-      );
+    background: var(--portfolio-cross-color);
+    clip-path: polygon(
+      45% 0,
+      55% 0,
+      55% 45%,
+      100% 45%,
+      100% 55%,
+      55% 55%,
+      55% 100%,
+      45% 100%,
+      45% 55%,
+      0 55%,
+      0 45%,
+      45% 45%
+    );
   }
 
   .portfolio-project-item-body {
@@ -836,11 +834,7 @@ body {
   .portfolio-prose-link {
     color: var(--portfolio-accent);
     text-decoration: underline;
-    text-decoration-color: color-mix(
-      in oklab,
-      var(--portfolio-accent) 32%,
-      transparent
-    );
+    text-decoration-color: var(--portfolio-accent-border);
     text-underline-offset: 0.22em;
   }
 
@@ -867,7 +861,7 @@ body {
 
   .portfolio-prose-code-block {
     border: none;
-    background: transparent;
+    background: inherit;
     padding: 0;
     font-family: var(--font-mono);
     font-size: 0.88rem;
@@ -1029,11 +1023,7 @@ body {
     align-items: center;
     gap: 0.5rem;
     border: 1px solid var(--portfolio-border);
-    background: color-mix(
-      in srgb,
-      var(--portfolio-surface) 94%,
-      var(--portfolio-highlight)
-    );
+    background: var(--portfolio-surface);
     padding: 0.75rem 1rem;
     font-family: var(--font-mono);
     font-size: 0.76rem;
@@ -1043,11 +1033,10 @@ body {
     text-transform: uppercase;
     text-decoration: none;
     color: var(--portfolio-primary);
-    opacity: 0;
+    visibility: hidden;
     pointer-events: none;
     transform: translateY(0.75rem) scale(0.98);
     transition:
-      opacity 220ms var(--portfolio-ease-out),
       transform 280ms var(--portfolio-ease-out),
       border-color 280ms var(--portfolio-ease-out),
       background-color 280ms var(--portfolio-ease-out),
@@ -1055,7 +1044,7 @@ body {
   }
 
   .portfolio-floating-top.is-visible {
-    opacity: 1;
+    visibility: visible;
     pointer-events: auto;
     transform: translateY(0) scale(1);
   }
@@ -1073,16 +1062,8 @@ body {
 
     .portfolio-theme-toggle:hover {
       transform: translateY(-1px);
-      border-color: color-mix(
-        in srgb,
-        var(--portfolio-accent) 24%,
-        var(--portfolio-border)
-      );
-      background: color-mix(
-        in srgb,
-        var(--portfolio-highlight) 22%,
-        var(--portfolio-surface)
-      );
+      border-color: var(--portfolio-accent-border);
+      background: var(--portfolio-highlight);
       color: var(--portfolio-accent);
     }
 
@@ -1093,18 +1074,9 @@ body {
     .portfolio-editorial-card:hover {
       z-index: 1;
       transform: translateY(-3px) scale(1.01);
-      border-color: color-mix(
-        in srgb,
-        var(--portfolio-accent) 26%,
-        var(--portfolio-border)
-      );
-      box-shadow: inset 0 0 0 1px
-        color-mix(in srgb, var(--portfolio-accent) 24%, transparent);
-      background: color-mix(
-        in srgb,
-        var(--portfolio-highlight) 16%,
-        var(--portfolio-surface)
-      );
+      border-color: var(--portfolio-accent-border);
+      box-shadow: inset 0 0 0 1px var(--portfolio-accent-border);
+      background: var(--portfolio-highlight);
     }
 
     .portfolio-editorial-card:hover .portfolio-project-title,
@@ -1118,25 +1090,13 @@ body {
     }
 
     .portfolio-footer-card:hover {
-      background: color-mix(
-        in srgb,
-        var(--portfolio-highlight) 12%,
-        var(--portfolio-surface)
-      );
+      background: var(--portfolio-highlight);
       color: var(--portfolio-primary);
     }
 
     .portfolio-floating-top:hover {
-      border-color: color-mix(
-        in srgb,
-        var(--portfolio-accent) 24%,
-        var(--portfolio-border)
-      );
-      background: color-mix(
-        in srgb,
-        var(--portfolio-highlight) 18%,
-        var(--portfolio-surface)
-      );
+      border-color: var(--portfolio-accent-border);
+      background: var(--portfolio-highlight);
       color: var(--portfolio-accent);
     }
 
@@ -1162,21 +1122,21 @@ body {
       pointer-events: none;
       z-index: 3;
       transform: translate(-50%, -50%);
-      background:
-        linear-gradient(
-          to right,
-          transparent calc(50% - 0.5px),
-          var(--portfolio-cross-color) calc(50% - 0.5px),
-          var(--portfolio-cross-color) calc(50% + 0.5px),
-          transparent calc(50% + 0.5px)
-        ),
-        linear-gradient(
-          to bottom,
-          transparent calc(50% - 0.5px),
-          var(--portfolio-cross-color) calc(50% - 0.5px),
-          var(--portfolio-cross-color) calc(50% + 0.5px),
-          transparent calc(50% + 0.5px)
-        );
+      background: var(--portfolio-cross-color);
+      clip-path: polygon(
+        45% 0,
+        55% 0,
+        55% 45%,
+        100% 45%,
+        100% 55%,
+        55% 55%,
+        55% 100%,
+        45% 100%,
+        45% 55%,
+        0 55%,
+        0 45%,
+        45% 45%
+      );
     }
 
     .portfolio-preview-grid .portfolio-collection-cross--center {
@@ -1235,8 +1195,20 @@ body {
       height: 1.82rem;
     }
 
-    .portfolio-section {
-      padding: var(--portfolio-section-space-mobile) 0;
+    .portfolio-section--stack {
+      --portfolio-section-stack-space-current: var(
+        --portfolio-section-stack-space-mobile
+      );
+    }
+
+    .portfolio-section--stack-tight {
+      --portfolio-section-stack-space-current: var(
+        --portfolio-section-stack-space-tight-mobile
+      );
+    }
+
+    .portfolio-section-body {
+      margin-top: var(--portfolio-section-body-gap-mobile);
     }
 
     .portfolio-hero {
@@ -1290,8 +1262,12 @@ body {
     --portfolio-space-xxl: 64px;
     --portfolio-gutter: 24px;
     --portfolio-margin: 32px;
-    --portfolio-section-space: 64px;
-    --portfolio-section-space-mobile: 48px;
+    --portfolio-section-stack-space: 40px;
+    --portfolio-section-stack-space-tight: 28px;
+    --portfolio-section-stack-space-mobile: 32px;
+    --portfolio-section-stack-space-tight-mobile: 24px;
+    --portfolio-section-body-gap: 40px;
+    --portfolio-section-body-gap-mobile: 32px;
     --portfolio-header-offset: 120px;
     --portfolio-header-offset-mobile: 104px;
     --portfolio-primary: #111111;
@@ -1306,7 +1282,7 @@ body {
     --portfolio-warning: #c58a12;
     --portfolio-danger: #c94949;
     --portfolio-accent: #246bfd;
-    --portfolio-accent-border: rgba(36, 107, 253, 0.3);
+    --portfolio-accent-border: #8eaefe;
     --portfolio-code-surface: #111111;
     --portfolio-code-foreground: #f5f5f5;
     --portfolio-max-width: 1280px;
@@ -1355,9 +1331,9 @@ body {
     --portfolio-neutral: #000000;
     --portfolio-surface: #0f0f0f;
     --portfolio-surface-alt: #1a1a1a;
-    --portfolio-border: rgb(255 255 255 / 12%);
-    --portfolio-highlight: rgb(36 107 253 / 18%);
-    --portfolio-accent-border: rgb(36 107 253 / 38%);
+    --portfolio-border: #262626;
+    --portfolio-highlight: #162c57;
+    --portfolio-accent-border: #3f69c9;
     --portfolio-code-surface: #050505;
     --portfolio-code-foreground: #f5f5f5;
     --background: var(--portfolio-neutral);
@@ -1394,7 +1370,7 @@ body {
     --sidebar-ring: var(--portfolio-tertiary);
   }
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border outline-ring;
   }
   body {
     @apply bg-background text-foreground;
@@ -1406,5 +1382,4 @@ body {
 
 ::view-transition-old(root), ::view-transition-new(root) {
     animation: none;
-    mix-blend-mode: normal;
 }

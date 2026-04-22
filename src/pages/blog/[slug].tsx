@@ -3,7 +3,10 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
 import { blogMdxComponents } from "@/components/blog/mdx-components";
-import { PortfolioLayout } from "@/components/portfolio-shell";
+import {
+  PortfolioLayout,
+  PortfolioSection,
+} from "@/components/portfolio-shell";
 import ScaleLetterText from "@/components/ui/scale-letter-text";
 import { getAllBlogPosts, getBlogPostBySlug } from "@/lib/blog";
 import { getBlogPostComponent } from "@/lib/blog-content";
@@ -61,7 +64,7 @@ export default function BlogPostPage({
       title={`${post.title} | rckbrcls`}
       description={post.summary}
     >
-      <section className="portfolio-section">
+      <PortfolioSection spacing="page-start">
         <div className="portfolio-article-layout">
           <header className="portfolio-article-header">
             <p className="portfolio-kicker">Blog post</p>
@@ -114,7 +117,7 @@ export default function BlogPostPage({
             </article>
           )}
         </div>
-      </section>
+      </PortfolioSection>
     </PortfolioLayout>
   );
 }

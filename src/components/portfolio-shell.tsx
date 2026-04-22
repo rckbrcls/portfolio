@@ -2,12 +2,20 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ComponentPropsWithoutRef,
+  type ReactNode,
+} from "react";
 import { ArrowUp, ArrowUpRight } from "lucide-react";
 import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
 import ScaleLetterText from "@/components/ui/scale-letter-text";
 import { contactLinks, navigationLinks } from "@/lib/portfolio-content";
 import { cn } from "@/lib/utils";
+
+type PortfolioSectionSpacing = "page-start" | "stack" | "stack-tight";
 
 interface PortfolioLayoutProps {
   title: string;
@@ -27,6 +35,12 @@ interface PortfolioCollectionProps {
   className?: string;
   showCenterCross?: boolean;
 }
+
+interface PortfolioSectionProps extends ComponentPropsWithoutRef<"section"> {
+  spacing?: PortfolioSectionSpacing;
+}
+
+interface PortfolioSectionBodyProps extends ComponentPropsWithoutRef<"div"> {}
 
 export function PortfolioLayout({
   title,
@@ -228,7 +242,10 @@ export function PortfolioPageIntro({
   const hasSide = Boolean(summary || action);
 
   return (
-    <section className="portfolio-section portfolio-page-intro">
+    <PortfolioSection
+      spacing="page-start"
+      className="portfolio-page-intro"
+    >
       <div
         className={
           hasSide
@@ -254,7 +271,39 @@ export function PortfolioPageIntro({
           </div>
         ) : null}
       </div>
+    </PortfolioSection>
+  );
+}
+
+export function PortfolioSection({
+  children,
+  className,
+  spacing = "stack",
+  ...props
+}: PortfolioSectionProps) {
+  return (
+    <section
+      className={cn(
+        "portfolio-section",
+        `portfolio-section--${spacing}`,
+        className,
+      )}
+      {...props}
+    >
+      {children}
     </section>
+  );
+}
+
+export function PortfolioSectionBody({
+  children,
+  className,
+  ...props
+}: PortfolioSectionBodyProps) {
+  return (
+    <div className={cn("portfolio-section-body", className)} {...props}>
+      {children}
+    </div>
   );
 }
 

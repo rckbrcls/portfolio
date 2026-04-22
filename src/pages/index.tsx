@@ -5,6 +5,8 @@ import { BlogPostCard } from "@/components/blog/BlogPostCard";
 import {
   PortfolioCollection,
   PortfolioLayout,
+  PortfolioSection,
+  PortfolioSectionBody,
 } from "@/components/portfolio-shell";
 import ScaleLetterText from "@/components/ui/scale-letter-text";
 import { getLatestBlogPosts } from "@/lib/blog";
@@ -32,7 +34,7 @@ export default function Home({
       title="rckbrcls | Portfolio"
       description="Personal projects, selected work, and writing by Erick Barcelos."
     >
-      <section className="portfolio-section">
+      <PortfolioSection spacing="page-start">
         <div className="portfolio-hero">
           <p className="portfolio-kicker">Software engineer</p>
           <h1 className="portfolio-hero-title">
@@ -43,9 +45,9 @@ export default function Home({
             tools. Lifelong learner.
           </p>
         </div>
-      </section>
+      </PortfolioSection>
 
-      <section className="portfolio-section">
+      <PortfolioSection spacing="stack">
         <div className="portfolio-section-intro">
           <div className="portfolio-section-heading">
             <h2 className="portfolio-section-title">
@@ -59,72 +61,74 @@ export default function Home({
           </Link>
         </div>
 
-        <PortfolioCollection
-          className="portfolio-preview-grid"
-          showCenterCross
-        >
-          {featuredProjects.map((project, index) => {
-            const projectLink = getProjectPrimaryLink(project);
-            const cardContent = (
-              <>
-                <div className="portfolio-preview-top">
-                  <p className="portfolio-kicker">
-                    {String(index + 1).padStart(2, "0")} / {project.name}
-                  </p>
-                  <span className="portfolio-status">
-                    {statusCopy[project.status]}
-                  </span>
-                </div>
-
-                <div className="portfolio-project-copy">
-                  <h3 className="portfolio-project-title">{project.name}</h3>
-                  <p className="portfolio-project-summary">
-                    {getProjectSummary(project)}
-                  </p>
-                </div>
-
-                <div className="portfolio-preview-meta">
-                  <p className="portfolio-project-stack">
-                    {getProjectStackPreview(project)}
-                  </p>
-
-                  {projectLink ? (
-                    <span className="portfolio-card-action">
-                      {projectLink.label}
-                      <ArrowUpRight className="h-4 w-4" />
+        <PortfolioSectionBody>
+          <PortfolioCollection
+            className="portfolio-preview-grid"
+            showCenterCross
+          >
+            {featuredProjects.map((project, index) => {
+              const projectLink = getProjectPrimaryLink(project);
+              const cardContent = (
+                <>
+                  <div className="portfolio-preview-top">
+                    <p className="portfolio-kicker">
+                      {String(index + 1).padStart(2, "0")} / {project.name}
+                    </p>
+                    <span className="portfolio-status">
+                      {statusCopy[project.status]}
                     </span>
-                  ) : (
-                    <span className="portfolio-project-placeholder">
-                      No public link
-                    </span>
-                  )}
-                </div>
-              </>
-            );
-
-            return (
-              <article key={project.slug}>
-                {projectLink ? (
-                  <a
-                    href={projectLink.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="portfolio-preview-item portfolio-editorial-card"
-                  >
-                    {cardContent}
-                  </a>
-                ) : (
-                  <div className="portfolio-preview-item portfolio-editorial-card">
-                    {cardContent}
                   </div>
-                )}
-              </article>
-            );
-          })}
-        </PortfolioCollection>
-      </section>
 
-      <section className="portfolio-section">
+                  <div className="portfolio-project-copy">
+                    <h3 className="portfolio-project-title">{project.name}</h3>
+                    <p className="portfolio-project-summary">
+                      {getProjectSummary(project)}
+                    </p>
+                  </div>
+
+                  <div className="portfolio-preview-meta">
+                    <p className="portfolio-project-stack">
+                      {getProjectStackPreview(project)}
+                    </p>
+
+                    {projectLink ? (
+                      <span className="portfolio-card-action">
+                        {projectLink.label}
+                        <ArrowUpRight className="h-4 w-4" />
+                      </span>
+                    ) : (
+                      <span className="portfolio-project-placeholder">
+                        No public link
+                      </span>
+                    )}
+                  </div>
+                </>
+              );
+
+              return (
+                <article key={project.slug}>
+                  {projectLink ? (
+                    <a
+                      href={projectLink.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="portfolio-preview-item portfolio-editorial-card"
+                    >
+                      {cardContent}
+                    </a>
+                  ) : (
+                    <div className="portfolio-preview-item portfolio-editorial-card">
+                      {cardContent}
+                    </div>
+                  )}
+                </article>
+              );
+            })}
+          </PortfolioCollection>
+        </PortfolioSectionBody>
+      </PortfolioSection>
+
+      <PortfolioSection spacing="stack">
         <div className="portfolio-section-intro">
           <div className="portfolio-section-heading">
             <p className="portfolio-kicker">Blog</p>
@@ -139,24 +143,26 @@ export default function Home({
           </Link>
         </div>
 
-        {latestPosts.length > 0 ? (
-          <PortfolioCollection className="portfolio-blog-grid">
-            {latestPosts.map((post) => (
-              <BlogPostCard key={post.slug} post={post} />
-            ))}
-          </PortfolioCollection>
-        ) : (
-          <article className="portfolio-empty-state">
-            <p className="portfolio-kicker">No posts yet</p>
-            <h3 className="portfolio-empty-state-title">
-              The writing archive is ready.
-            </h3>
-            <p className="portfolio-empty-state-copy">
-              New posts will appear here as soon as they are published.
-            </p>
-          </article>
-        )}
-      </section>
+        <PortfolioSectionBody>
+          {latestPosts.length > 0 ? (
+            <PortfolioCollection className="portfolio-blog-grid">
+              {latestPosts.map((post) => (
+                <BlogPostCard key={post.slug} post={post} />
+              ))}
+            </PortfolioCollection>
+          ) : (
+            <article className="portfolio-empty-state">
+              <p className="portfolio-kicker">No posts yet</p>
+              <h3 className="portfolio-empty-state-title">
+                The writing archive is ready.
+              </h3>
+              <p className="portfolio-empty-state-copy">
+                New posts will appear here as soon as they are published.
+              </p>
+            </article>
+          )}
+        </PortfolioSectionBody>
+      </PortfolioSection>
     </PortfolioLayout>
   );
 }

@@ -150,7 +150,7 @@ function DirectionAwareTabs({
                 "relative flex items-center gap-2 rounded-full px-3.5 py-1.5 text-sm font-bold text-white transition focus-visible:outline-none focus-visible:outline-1 focus-visible:ring-1",
                 activeTab === tab.id
                   ? "text-white"
-                  : "text-white/80 hover:text-white/60",
+                  : "text-white hover:text-white",
                 rounded,
               )}
               style={{ WebkitTapHighlightColor: "transparent" }}
@@ -158,7 +158,7 @@ function DirectionAwareTabs({
               {activeTab === tab.id && (
                 <motion.span
                   layoutId="bubble"
-                  className="shadow-inner-shadow absolute inset-0 z-10 bg-neutral-700/80 mix-blend-difference"
+                  className="shadow-inner-shadow absolute inset-0 z-10 bg-neutral-700 mix-blend-difference"
                   style={rounded ? { borderRadius: 9 } : { borderRadius: 9999 }}
                   transition={{ type: "spring", bounce: 0.19, duration: 0.4 }}
                 />

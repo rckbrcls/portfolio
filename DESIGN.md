@@ -16,7 +16,7 @@ colors:
     neutral: "#000000"
     surface: "#0F0F0F"
     surface-alt: "#1A1A1A"
-    border: "rgb(255 255 255 / 12%)"
+    border: "#262626"
   accent:
     tertiary: "#246BFD"
     highlight: "#DCE7FF"
@@ -148,7 +148,7 @@ The system uses neutral bases in both themes. Light mode is built from white and
 - **Dark Neutral (#000000):** Page background for the dark theme. Dark mode must read as truly black, not navy.
 - **Dark Surface (#0F0F0F):** Primary panel and card surface in dark mode.
 - **Dark Surface Alt (#1A1A1A):** Secondary grouped fill for chips, inputs, muted controls, and low-emphasis UI in dark mode.
-- **Dark Border (rgb(255 255 255 / 12%)):** Structural border for dark mode, subtle but still visible on black.
+- **Dark Border (#262626):** Structural border for dark mode, subtle but still visible on black.
 
 ### Invariant Accent Colors
 - **Tertiary (#246BFD):** Electric but controlled blue used as the single main accent for interaction, selection, and active system states.
@@ -156,6 +156,13 @@ The system uses neutral bases in both themes. Light mode is built from white and
 - **Success (#1F8F5F), Warning (#C58A12), Danger (#C94949):** Semantic colors. Keep them stable across themes.
 
 Use accent color intentionally. Most of the screen should be neutral, typographic, and structural. Color should guide action, not decorate the page.
+
+## Opacity & Transparency
+Opacity is implicitly `100%` everywhere in this system.
+
+Do not use alpha-based colors, transparent fills, transparent borders, glass surfaces, backdrop blur, or opacity-driven reveal patterns as part of the default design language.
+
+If transparency is ever needed, it must be explicitly requested for that specific task. Otherwise, every component, state, and motion treatment should stay fully opaque.
 
 ## Typography
 Typography is the main source of identity. It should carry the elegance of neo-swiss systems while borrowing a slight instrument-panel attitude from techno brutalism.
@@ -179,7 +186,7 @@ Full-width dividers should be rare. Do not use horizontal rules as the default w
 ## Elevation & Depth
 Depth should be subtle.
 
-This system does not rely on heavy shadows, glass effects, or layered visual spectacle. Hierarchy should come primarily from contrast, borders, spacing, and containment.
+This system does not rely on heavy shadows, glass effects, transparent layering, or layered visual spectacle. Hierarchy should come primarily from contrast, borders, spacing, and containment.
 
 Use very soft shadows only when needed to separate floating UI such as command palettes, dropdowns, or sticky toolbars. Most cards should feel flat but precise, using white and gray contrast in light mode or black and charcoal contrast in dark mode rather than dramatic lift.
 
@@ -222,5 +229,6 @@ Whenever a component choice is ambiguous, prefer the quieter option.
 - Do not make the interface feel sterile corporate beige or generic AI SaaS.
 - Do not let dark mode drift into navy, blue-gray, or decorative tinting on base surfaces.
 - Do not use oversized shadows, glassmorphism, or ornamental gradients.
+- Do not use transparent fills, alpha tokens, backdrop blur, or opacity-based hiding as a default styling tool.
 - Do not round everything heavily.
 - Do not rely on repeated divider lines to create section hierarchy across the site.

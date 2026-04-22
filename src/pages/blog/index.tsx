@@ -5,6 +5,8 @@ import {
   PortfolioCollection,
   PortfolioLayout,
   PortfolioPageIntro,
+  PortfolioSection,
+  PortfolioSectionBody,
 } from "@/components/portfolio-shell";
 import { getAllBlogPosts } from "@/lib/blog";
 
@@ -26,25 +28,27 @@ export default function BlogIndexPage({
     >
       <PortfolioPageIntro kicker="Blog" title="Writing." />
 
-      <section className="portfolio-section">
-        {posts.length > 0 ? (
-          <PortfolioCollection className="portfolio-blog-grid">
-            {posts.map((post) => (
-              <BlogPostCard key={post.slug} post={post} />
-            ))}
-          </PortfolioCollection>
-        ) : (
-          <article className="portfolio-empty-state">
-            <p className="portfolio-kicker">No posts yet</p>
-            <h2 className="portfolio-empty-state-title">
-              The archive is ready for the first entry.
-            </h2>
-            <p className="portfolio-empty-state-copy">
-              Publish an MDX post and it will appear here automatically.
-            </p>
-          </article>
-        )}
-      </section>
+      <PortfolioSection spacing="stack-tight">
+        <PortfolioSectionBody>
+          {posts.length > 0 ? (
+            <PortfolioCollection className="portfolio-blog-grid">
+              {posts.map((post) => (
+                <BlogPostCard key={post.slug} post={post} />
+              ))}
+            </PortfolioCollection>
+          ) : (
+            <article className="portfolio-empty-state">
+              <p className="portfolio-kicker">No posts yet</p>
+              <h2 className="portfolio-empty-state-title">
+                The archive is ready for the first entry.
+              </h2>
+              <p className="portfolio-empty-state-copy">
+                Publish an MDX post and it will appear here automatically.
+              </p>
+            </article>
+          )}
+        </PortfolioSectionBody>
+      </PortfolioSection>
     </PortfolioLayout>
   );
 }
