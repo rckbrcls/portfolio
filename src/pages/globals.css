@@ -430,12 +430,6 @@ body {
     transform: translate(50%, 50%);
   }
 
-  .portfolio-collection-cross--center {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
   .portfolio-collection > article {
     position: relative;
     min-width: 0;
@@ -1263,10 +1257,6 @@ body {
 
     .portfolio-collection[data-columns="2"] {
       grid-template-columns: 1fr;
-    }
-
-    .portfolio-collection-cross--center {
-      display: none;
     }
 
     .portfolio-footer-card-grid {

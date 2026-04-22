@@ -38,7 +38,6 @@ interface PortfolioPageIntroProps {
 interface PortfolioCollectionProps
   extends ComponentPropsWithoutRef<"div"> {
   columns: 1 | 2;
-  showCenterCross?: boolean;
 }
 
 interface PortfolioSectionProps extends ComponentPropsWithoutRef<"section"> {
@@ -353,7 +352,6 @@ export function PortfolioCollection({
   children,
   className,
   columns,
-  showCenterCross = false,
   ...props
 }: PortfolioCollectionProps) {
   return (
@@ -378,12 +376,6 @@ export function PortfolioCollection({
         className="portfolio-collection-cross portfolio-collection-cross--bottom-right"
         aria-hidden="true"
       />
-      {showCenterCross ? (
-        <span
-          className="portfolio-collection-cross portfolio-collection-cross--center"
-          aria-hidden="true"
-        />
-      ) : null}
       {children}
     </div>
   );

@@ -63,7 +63,7 @@ export default function Home({
             </div>
 
             <PortfolioSectionBody>
-              <PortfolioCollection columns={2} showCenterCross>
+              <PortfolioCollection columns={2}>
                 {featuredProfessionalWork.map((item, index) => (
                   <ProfessionalWorkPreviewCard
                     key={item.slug}
@@ -89,7 +89,7 @@ export default function Home({
           </div>
 
           <PortfolioSectionBody>
-            <PortfolioCollection columns={2} showCenterCross>
+            <PortfolioCollection columns={2}>
               {featuredProjects.map((project, index) => (
                 <FeaturedProjectCard
                   key={project.slug}
