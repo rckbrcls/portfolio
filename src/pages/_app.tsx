@@ -9,10 +9,10 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>rckbrcls</title>
+        <title>rckbrcls | Portfolio</title>
         <meta
           name="description"
-          content="A portfolio showcasing innovative web development projects, cutting-edge applications, and creative solutions. Explore my work in frontend, backend, and full-stack development."
+          content="Selected product, native, and tooling work by Erick Barcelos."
         />
       </Head>
       <Component {...pageProps} />
