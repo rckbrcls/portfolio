@@ -1,4 +1,5 @@
 import type { InferGetStaticPropsType } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { BlogPostCard } from "@/components/blog/BlogPostCard";
@@ -36,13 +37,27 @@ export default function Home({
       <div className="portfolio-home portfolio-editorial-stack">
         <PortfolioSection spacing="page-start">
           <div className="portfolio-hero">
-            <h1 className="portfolio-hero-title">
-              <ScaleLetterText text="Erick Barcelos." />
-            </h1>
-            <p className="portfolio-hero-summary">
-              Software engineer building products, experiences, and better
-              tools. Lifelong learner.
-            </p>
+            <div className="portfolio-hero-copy">
+              <h1 className="portfolio-hero-title">
+                <ScaleLetterText text="Erick Barcelos." />
+              </h1>
+              <p className="portfolio-hero-summary">
+                Software engineer building products, experiences, and better
+                tools. Lifelong learner.
+              </p>
+            </div>
+
+            <div className="portfolio-hero-media">
+              <Image
+                src="/images/turing.png"
+                alt="Portrait illustration of Erick Barcelos"
+                width={1019}
+                height={917}
+                priority
+                sizes="(min-width: 1200px) 384px, (min-width: 901px) 32vw, (min-width: 769px) 300px, 72vw"
+                className="portfolio-hero-image"
+              />
+            </div>
           </div>
         </PortfolioSection>
 
