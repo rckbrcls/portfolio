@@ -1,0 +1,22 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="720" fill="#F7F6F2"/>
+  <rect x="72" y="72" width="1056" height="576" fill="#FFFFFF" stroke="#D6DDE5" stroke-width="2"/>
+  <rect x="120" y="132" width="268" height="22" fill="#101214"/>
+  <rect x="120" y="178" width="424" height="18" fill="#D6DDE5"/>
+  <rect x="120" y="210" width="390" height="18" fill="#D6DDE5"/>
+  <rect x="120" y="242" width="454" height="18" fill="#D6DDE5"/>
+  <rect x="120" y="320" width="320" height="260" fill="#EEF2F6" stroke="#D6DDE5" stroke-width="2"/>
+  <rect x="482" y="320" width="262" height="120" fill="#101214"/>
+  <rect x="778" y="320" width="302" height="120" fill="#246BFD"/>
+  <rect x="482" y="460" width="262" height="120" fill="#FFFFFF" stroke="#D6DDE5" stroke-width="2"/>
+  <rect x="778" y="460" width="302" height="120" fill="#FFFFFF" stroke="#D6DDE5" stroke-width="2"/>
+  <text x="120" y="106" fill="#4F5B66" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" letter-spacing="2.4">
+    BLOG SYSTEM
+  </text>
+  <text x="510" y="392" fill="#F7F6F2" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="700">
+    MDX POSTS
+  </text>
+  <text x="810" y="392" fill="#FFFFFF" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="700">
+    MATH + IMAGES
+  </text>
+</svg>
