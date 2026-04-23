@@ -7,6 +7,7 @@ import {
   useState,
   type CSSProperties,
   type ComponentPropsWithoutRef,
+  type FocusEvent,
   type ReactNode,
 } from "react";
 import { ArrowUp, ArrowUpRight, Moon, Settings2, Sun } from "lucide-react";
@@ -16,7 +17,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { TypingAnimation } from "@/components/ui/typing-animation";
 import { useThemeToggle } from "@/hooks/use-theme-toggle";
+import { headerBrandGreetings } from "@/lib/header-brand-greetings";
 import { contactLinks, navigationLinks } from "@/lib/portfolio-content";
 import { cn } from "@/lib/utils";
 
@@ -100,6 +103,10 @@ type HeaderBrandBlockName = keyof typeof HEADER_BRAND_BLOCKS;
 
 function HeaderBrandAnimation() {
   const [frameSrc, setFrameSrc] = useState(HEADER_BRAND_IDLE_FRAME);
+  const [isGreetingVisible, setIsGreetingVisible] = useState(false);
+  const [greetingAnimationKey, setGreetingAnimationKey] = useState(0);
+  const [greetingIndex, setGreetingIndex] = useState(0);
+  const hasOpenedGreetingRef = useRef(false);
 
   useEffect(() => {
     if (typeof window === "undefined") {
@@ -205,14 +212,82 @@ function HeaderBrandAnimation() {
     };
   }, []);
 
+  const currentGreeting =
+    headerBrandGreetings[greetingIndex] ?? "Shipping first. Panicking second.";
+
+  const openGreeting = () => {
+    setIsGreetingVisible((current) => {
+      if (!current) {
+        setGreetingAnimationKey((key) => key + 1);
+        setGreetingIndex((index) => {
+          if (!hasOpenedGreetingRef.current) {
+            hasOpenedGreetingRef.current = true;
+            return 0;
+          }
+
+          return (index + 1) % headerBrandGreetings.length;
+        });
+      }
+
+      return true;
+    });
+  };
+
+  const closeGreeting = () => {
+    setIsGreetingVisible(false);
+  };
+
+  const handleGreetingBlur = (event: FocusEvent<HTMLSpanElement>) => {
+    const nextFocusTarget = event.relatedTarget;
+
+    if (
+      nextFocusTarget instanceof Node &&
+      event.currentTarget.contains(nextFocusTarget)
+    ) {
+      return;
+    }
+
+    closeGreeting();
+  };
+
   return (
-    <span className="portfolio-brand-animation">
-      <img
-        src={frameSrc}
-        alt=""
-        aria-hidden="true"
-        className="portfolio-brand-photo"
-      />
+    <span
+      className="portfolio-brand-interaction"
+      data-greeting-open={isGreetingVisible ? "true" : "false"}
+      onMouseEnter={openGreeting}
+      onMouseLeave={closeGreeting}
+      onFocus={openGreeting}
+      onBlur={handleGreetingBlur}
+    >
+      <Link href="/" className="portfolio-brand" aria-label="Go to home">
+        <span className="portfolio-brand-animation">
+          <img
+            src={frameSrc}
+            alt=""
+            aria-hidden="true"
+            className="portfolio-brand-photo"
+          />
+        </span>
+      </Link>
+
+      <span className="portfolio-brand-greeting" aria-hidden="true">
+        <span className="portfolio-brand-greeting-tail" />
+        <span className="portfolio-brand-greeting-copy">
+          {isGreetingVisible ? (
+            <TypingAnimation
+              key={greetingAnimationKey}
+              as="span"
+              className="portfolio-brand-greeting-text"
+              delay={120}
+              duration={42}
+              startOnView={false}
+              showCursor
+            >
+              {currentGreeting}
+            </TypingAnimation>
+          ) : null}
+        </span>
+      </span>
     </span>
   );
 }
@@ -372,13 +447,7 @@ export function PortfolioLayout({
         <div className="portfolio-header-shell">
           <div className="portfolio-header-shell-inner">
             <header className="portfolio-header">
-              <Link
-                href="/"
-                className="portfolio-brand"
-                aria-label="Go to home"
-              >
-                <HeaderBrandAnimation />
-              </Link>
+              <HeaderBrandAnimation />
 
               <nav className="portfolio-nav" aria-label="Primary navigation">
                 {navigationLinks.map((item) => (
