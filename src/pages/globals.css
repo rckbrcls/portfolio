@@ -135,6 +135,7 @@ body {
     position: relative;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 1rem;
     min-height: 2.8rem;
     width: fit-content;
@@ -260,7 +261,10 @@ body {
   .portfolio-nav {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    flex: 1 1 auto;
     gap: 0.95rem;
+    width: 100%;
     white-space: nowrap;
   }
 
@@ -519,16 +523,50 @@ body {
   }
 
   .portfolio-hero-media {
+    --portfolio-hero-image-width: min(100%, 27rem);
+    position: relative;
     display: grid;
     justify-self: stretch;
     place-items: center;
     width: 100%;
   }
 
+  .portfolio-hero-media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: var(--portfolio-hero-image-width);
+    height: auto;
+    aspect-ratio: 1019 / 917;
+    margin: auto;
+    background: var(--portfolio-primary);
+    opacity: 0;
+    transform: translateY(0.25rem) scale(0.985);
+    transition:
+      opacity 700ms var(--portfolio-ease-out),
+      transform 700ms var(--portfolio-ease-out);
+    -webkit-mask: url("/images/turing.png") center / contain no-repeat;
+    mask: url("/images/turing.png") center / contain no-repeat;
+  }
+
   .portfolio-hero-image {
     display: block;
-    width: min(100%, 25rem);
+    position: relative;
+    z-index: 1;
+    width: var(--portfolio-hero-image-width);
     height: auto;
+    transition: transform 700ms var(--portfolio-ease-out);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .portfolio-hero-media:hover .portfolio-hero-image {
+      transform: translateY(-0.7rem);
+    }
+
+    .portfolio-hero-media:hover::after {
+      opacity: 0.18;
+      transform: translateY(0.95rem) scale(1);
+    }
   }
 
   .portfolio-project-copy {
@@ -1406,6 +1444,7 @@ body {
     }
 
     .portfolio-hero-media {
+      --portfolio-hero-image-width: min(100%, 22rem);
       justify-self: center;
       place-items: center;
       width: min(100%, 22rem);
@@ -1433,6 +1472,7 @@ body {
   @media (max-width: 768px) {
     .portfolio-shell {
       --portfolio-floating-top-base-offset: 1.25rem;
+      --portfolio-frame-side-gap: 0.5rem;
     }
 
     .portfolio-frame {
@@ -1452,13 +1492,22 @@ body {
     }
 
     .portfolio-header-shell-inner {
-      max-width: calc(100vw - 1rem);
+      width: min(calc(100vw - 1rem), 24rem);
+      max-width: none;
+      margin: 0 auto;
     }
 
     .portfolio-header {
+      width: 100%;
       gap: 0.72rem;
       min-height: 2.62rem;
       padding: 0.56rem 0.82rem 0.5rem 3.64rem;
+    }
+
+    .portfolio-header-shell {
+      left: 0;
+      right: 0;
+      transform: none;
     }
 
     .portfolio-brand-interaction {
@@ -1480,7 +1529,7 @@ body {
     .portfolio-brand-greeting {
       top: calc(100% + 0.24rem);
       left: -0.04rem;
-      max-width: min(9.2rem, calc(100vw - 2.2rem));
+      max-width: none;
       padding: 0.38rem 0.5rem 0.36rem;
     }
 
@@ -1535,6 +1584,7 @@ body {
     }
 
     .portfolio-hero-media {
+      --portfolio-hero-image-width: min(72vw, 18rem);
       width: min(72vw, 18rem);
     }
 
@@ -1624,7 +1674,10 @@ body {
     );
     --portfolio-code-surface: #111111;
     --portfolio-code-foreground: #f5f5f5;
-    --portfolio-max-width: 1280px;
+    --portfolio-max-width: 68rem;
+    --portfolio-frame-side-gap: calc(
+      (100vw - min(calc(100vw - 2rem), var(--portfolio-max-width))) / 2
+    );
     --portfolio-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
     --background: var(--portfolio-neutral);
     --foreground: var(--portfolio-primary);
