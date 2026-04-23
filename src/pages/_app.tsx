@@ -1,22 +1,34 @@
 import type { AppProps } from "next/app";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
+import { GeistPixelSquare } from "geist/font/pixel";
+import { ThemeProvider } from "next-themes";
 
+import "katex/dist/katex.min.css";
 import "./globals.css";
-import "../styles/animations.css";
 import Head from "next/head";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>rckbrcls</title>
+        <title>rckbrcls | Portfolio</title>
         <meta
           name="description"
-          content="A portfolio showcasing innovative web development projects, cutting-edge applications, and creative solutions. Explore my work in frontend, backend, and full-stack development."
+          content="Software engineer building products, experiences, and better tools."
         />
       </Head>
-      <Component {...pageProps} />
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="light"
+        enableSystem={false}
+        storageKey="theme"
+        themes={["light", "dark"]}
+      >
+        <div className={GeistPixelSquare.className}>
+          <Component {...pageProps} />
+        </div>
+      </ThemeProvider>
       <SpeedInsights />
       <Analytics />
     </>

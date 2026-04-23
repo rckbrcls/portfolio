@@ -1,41 +1,139 @@
-import Image from "next/image";
-import React from "react";
-import Head from "next/head";
-import Aurora from "@/components/molecules/Aurora";
-import Title from "@/components/atoms/Title";
-import Header from "@/components/organisms/Header";
-import SubTitle from "@/components/atoms/SubTitle";
-import BlurIn from "@/components/ui/blur-in";
+import type { InferGetStaticPropsType } from "next";
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
+import { BlogPostCard } from "@/components/blog/BlogPostCard";
+import { FeaturedProjectCard } from "@/components/featured-project-card";
+import { ProfessionalWorkPreviewCard } from "@/components/professional-work-card";
+import {
+  PortfolioCollection,
+  PortfolioLayout,
+  PortfolioSection,
+  PortfolioSectionBody,
+} from "@/components/portfolio-shell";
+import ScaleLetterText from "@/components/ui/scale-letter-text";
+import { getLatestBlogPosts } from "@/lib/blog";
+import {
+  featuredProfessionalWork,
+  featuredProjects,
+} from "@/lib/portfolio-content";
 
-export default function Home() {
+export async function getStaticProps() {
+  return {
+    props: {
+      latestPosts: getLatestBlogPosts(3),
+    },
+  };
+}
+
+export default function Home({
+  latestPosts,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
-    <>
-      <Head>
-        <title>Hello! | rckbrcls</title>
-      </Head>
+    <PortfolioLayout
+      title="rckbrcls | Portfolio"
+      description="Professional work, independent projects, and writing by Erick Barcelos."
+    >
+      <div className="portfolio-home portfolio-editorial-stack">
+        <PortfolioSection spacing="page-start">
+          <div className="portfolio-hero">
+            <h1 className="portfolio-hero-title">
+              <ScaleLetterText text="Erick Barcelos." />
+            </h1>
+            <p className="portfolio-hero-summary">
+              Software engineer building products, experiences, and better
+              tools. Lifelong learner.
+            </p>
+          </div>
+        </PortfolioSection>
 
-      <Aurora>
-        <Header />
-        <div className="flex h-full w-full flex-col items-center justify-center gap-8">
-          <div className="relative flex h-48 w-48 select-none sm:h-64 sm:w-64 md:h-80 md:w-80 lg:h-96 lg:w-96">
-            <Image
-              src="/images/assets/me.png"
-              alt="Picture of Erick"
-              fill
-              className="select-none object-contain"
-              priority
-              quality={100}
-            />
+        {featuredProfessionalWork.length > 0 ? (
+          <PortfolioSection spacing="stack-loose">
+            <div className="portfolio-section-intro">
+              <div className="portfolio-section-heading">
+                <p className="portfolio-kicker">Work</p>
+                <h2 className="portfolio-section-title">Professional.</h2>
+              </div>
+
+              <Link href="/work" className="portfolio-inline-link">
+                See all work
+                <ArrowUpRight className="h-4 w-4" />
+              </Link>
+            </div>
+
+            <PortfolioSectionBody>
+              <PortfolioCollection columns={2}>
+                {featuredProfessionalWork.map((item, index) => (
+                  <ProfessionalWorkPreviewCard
+                    key={item.slug}
+                    item={item}
+                    index={index}
+                  />
+                ))}
+              </PortfolioCollection>
+            </PortfolioSectionBody>
+          </PortfolioSection>
+        ) : null}
+
+        <PortfolioSection spacing="stack-loose">
+          <div className="portfolio-section-intro">
+            <div className="portfolio-section-heading">
+              <p className="portfolio-kicker">Work</p>
+              <h2 className="portfolio-section-title">Independent.</h2>
+            </div>
+
+            <Link href="/work" className="portfolio-inline-link">
+              See all work
+              <ArrowUpRight className="h-4 w-4" />
+            </Link>
           </div>
-          <div className="flex flex-col items-center gap-3">
-            <Title word="Olá! I'm Erick" type="blur" />
-            <BlurIn
-              word="Software Engineer and Lifelong Learner"
-              className="text-lg font-normal md:text-xl"
-            />
+
+          <PortfolioSectionBody>
+            <PortfolioCollection columns={2}>
+              {featuredProjects.map((project, index) => (
+                <FeaturedProjectCard
+                  key={project.slug}
+                  project={project}
+                  index={index}
+                />
+              ))}
+            </PortfolioCollection>
+          </PortfolioSectionBody>
+        </PortfolioSection>
+
+        <PortfolioSection spacing="stack-loose">
+          <div className="portfolio-section-intro">
+            <div className="portfolio-section-heading">
+              <p className="portfolio-kicker">Blog</p>
+              <h2 className="portfolio-section-title">Writing.</h2>
+            </div>
+
+            <Link href="/blog" className="portfolio-inline-link">
+              See all posts
+              <ArrowUpRight className="h-4 w-4" />
+            </Link>
           </div>
-        </div>
-      </Aurora>
-    </>
+
+          <PortfolioSectionBody>
+            {latestPosts.length > 0 ? (
+              <PortfolioCollection columns={1}>
+                {latestPosts.map((post) => (
+                  <BlogPostCard key={post.slug} post={post} />
+                ))}
+              </PortfolioCollection>
+            ) : (
+              <article className="portfolio-empty-state">
+                <p className="portfolio-kicker">No posts yet</p>
+                <h3 className="portfolio-empty-state-title">
+                  The writing archive is ready.
+                </h3>
+                <p className="portfolio-empty-state-copy">
+                  New posts will appear here as soon as they are published.
+                </p>
+              </article>
+            )}
+          </PortfolioSectionBody>
+        </PortfolioSection>
+      </div>
+    </PortfolioLayout>
   );
 }
