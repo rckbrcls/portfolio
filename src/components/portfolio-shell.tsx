@@ -56,6 +56,7 @@ const HEADER_BRAND_IDLE_FRAME = "/animation/piscar-sorrindo-1(igual).png";
 const HEADER_BRAND_CLOSED_SMILE_FRAME = "/animation/fechar-sorriso-2.png";
 const HEADER_BRAND_OPEN_SMILE_FRAME = "/animation/abrir-sorriso-2(igual).png";
 const HEADER_BRAND_INITIAL_IDLE_HOLD_MS = 1600;
+const HEADER_BRAND_GREETING_RECENT_LIMIT = 12;
 
 const HEADER_BRAND_BLOCKS = {
   blinkSmiling: {
@@ -118,12 +119,49 @@ const sectionSpacingClassNames = {
 const crossClassName =
   "pointer-events-none absolute z-[3] size-[var(--portfolio-cross-size)] bg-portfolio-accent-border [clip-path:var(--portfolio-cross-shape)]";
 
+const getRandomHeaderBrandGreetingIndex = (
+  recentGreetingIndexes: readonly number[],
+  currentGreetingIndex: number,
+) => {
+  const greetingCount = headerBrandGreetings.length;
+
+  if (greetingCount <= 1) {
+    return 0;
+  }
+
+  const getCandidates = (blockedIndexes: readonly number[]) => {
+    const candidates: number[] = [];
+
+    for (let index = 0; index < greetingCount; index += 1) {
+      if (blockedIndexes.indexOf(index) === -1) {
+        candidates.push(index);
+      }
+    }
+
+    return candidates;
+  };
+
+  let candidates = getCandidates(recentGreetingIndexes);
+
+  if (candidates.length === 0) {
+    const mostRecentGreetingIndex =
+      recentGreetingIndexes[0] ?? currentGreetingIndex;
+    candidates = getCandidates([mostRecentGreetingIndex]);
+  }
+
+  if (candidates.length === 0) {
+    return currentGreetingIndex;
+  }
+
+  return candidates[Math.floor(Math.random() * candidates.length)];
+};
+
 function HeaderBrandAnimation() {
   const [frameSrc, setFrameSrc] = useState(HEADER_BRAND_IDLE_FRAME);
   const [isGreetingVisible, setIsGreetingVisible] = useState(false);
   const [greetingAnimationKey, setGreetingAnimationKey] = useState(0);
   const [greetingIndex, setGreetingIndex] = useState(0);
-  const hasOpenedGreetingRef = useRef(false);
+  const recentGreetingIndexesRef = useRef<number[]>([]);
 
   useEffect(() => {
     if (typeof window === "undefined") {
@@ -237,12 +275,19 @@ function HeaderBrandAnimation() {
       if (!current) {
         setGreetingAnimationKey((key) => key + 1);
         setGreetingIndex((index) => {
-          if (!hasOpenedGreetingRef.current) {
-            hasOpenedGreetingRef.current = true;
-            return 0;
-          }
+          const nextGreetingIndex = getRandomHeaderBrandGreetingIndex(
+            recentGreetingIndexesRef.current,
+            index,
+          );
+          const nextRecentGreetingIndexes = recentGreetingIndexesRef.current.slice(
+            0,
+            HEADER_BRAND_GREETING_RECENT_LIMIT - 1,
+          );
 
-          return (index + 1) % headerBrandGreetings.length;
+          nextRecentGreetingIndexes.unshift(nextGreetingIndex);
+          recentGreetingIndexesRef.current = nextRecentGreetingIndexes;
+
+          return nextGreetingIndex;
         });
       }
 
