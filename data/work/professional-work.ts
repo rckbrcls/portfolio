@@ -10,6 +10,7 @@ export const professionalWorkItems: IProfessionalWorkItem[] = [
     meta: "Distributed systems / high availability / security",
     order: 1,
     featured: true,
+    workCategory: "professional",
     href: "/work",
   },
   {
@@ -21,6 +22,7 @@ export const professionalWorkItems: IProfessionalWorkItem[] = [
     meta: "Pricing / ticketing / persistence / risk flows",
     order: 2,
     featured: true,
+    workCategory: "professional",
     href: "/work",
   },
   {
@@ -32,6 +34,7 @@ export const professionalWorkItems: IProfessionalWorkItem[] = [
     meta: "Pricing systems / product flows / quote lifecycle",
     order: 3,
     featured: true,
+    workCategory: "professional",
     href: "/work",
   },
   {
@@ -43,6 +46,7 @@ export const professionalWorkItems: IProfessionalWorkItem[] = [
     meta: ".NET / microservices / backend architecture",
     order: 4,
     featured: true,
+    workCategory: "professional",
     href: "/work",
   },
 ];

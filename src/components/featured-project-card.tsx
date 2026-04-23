@@ -14,6 +14,7 @@ import {
   getProjectStackPreview,
   getProjectSummary,
 } from "@/lib/portfolio-content";
+import { getWorkCategoryLabel } from "@/lib/work-category";
 
 interface FeaturedProjectCardProps {
   project: IProject;
@@ -358,11 +359,12 @@ export function FeaturedProjectCard({
 }: FeaturedProjectCardProps) {
   const projectLink = getProjectPrimaryLink(project);
   const previewNumber = String(index + 1).padStart(2, "0");
+  const categoryLabel = getWorkCategoryLabel(project.workCategory);
   const cardContent = (
     <>
       <div className="portfolio-preview-top">
         <p className="portfolio-kicker">
-          {previewNumber} / {project.name}
+          {previewNumber} / {categoryLabel}
         </p>
       </div>
 
@@ -403,10 +405,13 @@ export function FeaturedProjectCard({
 export function WorkProjectCard({ project, index }: WorkProjectCardProps) {
   const projectLink = getProjectPrimaryLink(project);
   const previewNumber = String(index + 1).padStart(2, "0");
+  const categoryLabel = getWorkCategoryLabel(project.workCategory);
   const cardContent = (
     <>
       <div className="portfolio-project-item-header">
-        <p className="portfolio-kicker">{previewNumber} / Project</p>
+        <p className="portfolio-kicker">
+          {previewNumber} / {categoryLabel}
+        </p>
       </div>
 
       <div className="portfolio-project-item-body">

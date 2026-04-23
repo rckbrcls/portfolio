@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import type { IProfessionalWorkItem } from "@/interface/IProfessionalWorkItem";
+import { getWorkCategoryLabel } from "@/lib/work-category";
 
 interface ProfessionalWorkPreviewCardProps {
   item: IProfessionalWorkItem;
@@ -17,6 +18,7 @@ function PreviewCardFrame({
   index,
 }: ProfessionalWorkPreviewCardProps) {
   const previewNumber = String(index + 1).padStart(2, "0");
+  const categoryLabel = getWorkCategoryLabel(item.workCategory);
 
   return (
     <Link
@@ -24,7 +26,9 @@ function PreviewCardFrame({
       className="portfolio-preview-item portfolio-editorial-card"
     >
       <div className="portfolio-preview-top">
-        <p className="portfolio-kicker">{previewNumber} / Work</p>
+        <p className="portfolio-kicker">
+          {previewNumber} / {categoryLabel}
+        </p>
         <span className="portfolio-professional-work-company">
           {item.company}
         </span>
@@ -61,12 +65,15 @@ export function ProfessionalWorkCard({
   index,
 }: ProfessionalWorkCardProps) {
   const previewNumber = String(index + 1).padStart(2, "0");
+  const categoryLabel = getWorkCategoryLabel(item.workCategory);
 
   return (
     <article>
       <div className="portfolio-project-item portfolio-editorial-card">
         <div className="portfolio-project-item-header">
-          <p className="portfolio-kicker">{previewNumber} / Work</p>
+          <p className="portfolio-kicker">
+            {previewNumber} / {categoryLabel}
+          </p>
           <span className="portfolio-professional-work-company">
             {item.company}
           </span>

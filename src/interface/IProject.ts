@@ -1,5 +1,6 @@
 import { StaticImageData } from "next/image";
 import { IVisualization } from "./IVisualization";
+import type { TWorkCategory } from "./TWorkCategory";
 import { TypeTechStack } from "../../data/techStack";
 import { Route } from "next";
 
@@ -20,5 +21,6 @@ export interface IProject {
   coverImage?: StaticImageData | string;
   previewMode?: TProjectPreviewMode;
   status: TProjectStatus;
+  workCategory: TWorkCategory;
   order?: number;
 }
