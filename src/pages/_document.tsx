@@ -9,7 +9,9 @@ export default function Document() {
         <link rel="shortcut icon" href="/images/me.png" />
         <link rel="apple-touch-icon" href="/images/me.png" />
       </Head>
-      <body className={`${GeistPixelSquare.variable} theme`}>
+      <body
+        className={`${GeistPixelSquare.variable} ${GeistPixelSquare.className} theme`}
+      >
         <Main />
         <NextScript />
       </body>

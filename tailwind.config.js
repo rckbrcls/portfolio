@@ -69,11 +69,45 @@ module.exports = {
           border: fromVariable("--sidebar-border"),
           ring: fromVariable("--sidebar-ring"),
         },
+        portfolio: {
+          primary: fromVariable("--portfolio-primary"),
+          secondary: fromVariable("--portfolio-secondary"),
+          tertiary: fromVariable("--portfolio-tertiary"),
+          neutral: fromVariable("--portfolio-neutral"),
+          surface: fromVariable("--portfolio-surface"),
+          "surface-alt": fromVariable("--portfolio-surface-alt"),
+          border: fromVariable("--portfolio-border"),
+          highlight: fromVariable("--portfolio-highlight"),
+          success: fromVariable("--portfolio-success"),
+          warning: fromVariable("--portfolio-warning"),
+          danger: fromVariable("--portfolio-danger"),
+          accent: fromVariable("--portfolio-accent"),
+          "accent-border": fromVariable("--portfolio-accent-border"),
+          "code-surface": fromVariable("--portfolio-code-surface"),
+          "code-foreground": fromVariable("--portfolio-code-foreground"),
+        },
+      },
+      spacing: {
+        "portfolio-xs": fromVariable("--portfolio-space-xs"),
+        "portfolio-sm": fromVariable("--portfolio-space-sm"),
+        "portfolio-md": fromVariable("--portfolio-space-md"),
+        "portfolio-lg": fromVariable("--portfolio-space-lg"),
+        "portfolio-xl": fromVariable("--portfolio-space-xl"),
+        "portfolio-xxl": fromVariable("--portfolio-space-xxl"),
+        "portfolio-gutter": fromVariable("--portfolio-gutter"),
       },
       fontFamily: {
         sans: ["var(--font-sans)", ...defaultTheme.fontFamily.sans],
         heading: ["var(--font-heading)", ...defaultTheme.fontFamily.sans],
         mono: ["var(--font-mono)", ...defaultTheme.fontFamily.mono],
+      },
+      boxShadow: {
+        "portfolio-card": "inset 0 0 0 1px var(--portfolio-surface)",
+        "portfolio-card-accent":
+          "inset 0 0 0 1px var(--portfolio-accent-border)",
+      },
+      transitionTimingFunction: {
+        portfolio: fromVariable("--portfolio-ease-out"),
       },
       keyframes: {
         "accordion-down": {

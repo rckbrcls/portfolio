@@ -7,18 +7,24 @@ import {
   PortfolioSectionBody,
 } from "@/components/portfolio-shell";
 import { ProfessionalWorkCard } from "@/components/professional-work-card";
-import { MorphingText } from "@/components/ui/morphing-text";
+import { WordRotate } from "@/components/ui/word-rotate";
 import {
   orderedProfessionalWork,
   orderedProjects,
 } from "@/lib/portfolio-content";
 
-const WORK_TITLE_VARIANTS = [
-  "Builds.",
-  "Products.",
-  "Systems.",
-  "Projects.",
-];
+const WORK_TITLE_VARIANTS = ["Builds.", "Products.", "Systems.", "Projects."];
+
+const editorialStackClassName =
+  "grid gap-y-20 pb-14 max-md:gap-y-16 max-md:pb-10 [&>section]:mt-0";
+
+const sectionIntroClassName =
+  "flex flex-wrap items-end justify-between gap-portfolio-lg";
+
+const sectionHeadingClassName = "grid gap-3";
+
+const sectionTitleClassName =
+  "m-0 max-w-[14ch] text-[2rem] font-[650] leading-[1.02] tracking-normal text-portfolio-primary lg:text-5xl";
 
 export default function WorkPage() {
   return (
@@ -26,17 +32,17 @@ export default function WorkPage() {
       title="Work | rckbrcls"
       description="Professional work and independent projects by Erick Barcelos."
     >
-      <div className="portfolio-editorial-stack">
+      <div className={editorialStackClassName}>
         <PortfolioPageIntro
           kicker="Work"
           title="Builds."
-          titleVisual={<MorphingText texts={WORK_TITLE_VARIANTS} />}
+          titleVisual={<WordRotate words={WORK_TITLE_VARIANTS} />}
         />
 
         <PortfolioSection spacing="stack-tight">
-          <div className="portfolio-section-intro">
-            <div className="portfolio-section-heading">
-              <h2 className="portfolio-section-title">Professional.</h2>
+          <div className={sectionIntroClassName}>
+            <div className={sectionHeadingClassName}>
+              <h2 className={sectionTitleClassName}>Professional.</h2>
             </div>
           </div>
 
@@ -54,9 +60,9 @@ export default function WorkPage() {
         </PortfolioSection>
 
         <PortfolioSection spacing="stack-tight">
-          <div className="portfolio-section-intro">
-            <div className="portfolio-section-heading">
-              <h2 className="portfolio-section-title">Independent.</h2>
+          <div className={sectionIntroClassName}>
+            <div className={sectionHeadingClassName}>
+              <h2 className={sectionTitleClassName}>Independent.</h2>
             </div>
           </div>
 

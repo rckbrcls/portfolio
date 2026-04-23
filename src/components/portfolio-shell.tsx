@@ -10,7 +10,7 @@ import {
   type FocusEvent,
   type ReactNode,
 } from "react";
-import { ArrowUp, ArrowUpRight, Moon, Settings2, Sun } from "lucide-react";
+import { ArrowUpRight, Moon, Settings2, Sun } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -42,8 +42,7 @@ interface PortfolioPageIntroProps {
   action?: ReactNode;
 }
 
-interface PortfolioCollectionProps
-  extends ComponentPropsWithoutRef<"div"> {
+interface PortfolioCollectionProps extends ComponentPropsWithoutRef<"div"> {
   columns: 1 | 2;
 }
 
@@ -100,6 +99,24 @@ const HEADER_BRAND_MACRO_CYCLE = [
 ] as const;
 
 type HeaderBrandBlockName = keyof typeof HEADER_BRAND_BLOCKS;
+
+const portfolioKickerClassName =
+  "m-0 font-mono text-[0.72rem] font-semibold leading-[1.1] tracking-normal text-portfolio-secondary uppercase";
+
+const portfolioSectionHeadingClassName = "grid gap-3";
+
+const sectionSpacingClassNames = {
+  "page-start": "mt-0",
+  stack:
+    "mt-[var(--portfolio-section-stack-space)] max-md:mt-[var(--portfolio-section-stack-space-mobile)]",
+  "stack-tight":
+    "mt-[var(--portfolio-section-stack-space-tight)] max-md:mt-[var(--portfolio-section-stack-space-tight-mobile)]",
+  "stack-loose":
+    "mt-[var(--portfolio-section-stack-space-loose)] max-md:mt-[var(--portfolio-section-stack-space-loose-mobile)]",
+} satisfies Record<PortfolioSectionSpacing, string>;
+
+const crossClassName =
+  "pointer-events-none absolute z-[3] size-[var(--portfolio-cross-size)] bg-portfolio-accent-border [clip-path:var(--portfolio-cross-shape)]";
 
 function HeaderBrandAnimation() {
   const [frameSrc, setFrameSrc] = useState(HEADER_BRAND_IDLE_FRAME);
@@ -252,32 +269,44 @@ function HeaderBrandAnimation() {
 
   return (
     <span
-      className="portfolio-brand-interaction"
+      className="absolute left-[0.72rem] top-[0.22rem] isolate z-[2] inline-flex -translate-y-[22%] items-start max-md:left-[0.64rem] max-md:top-[0.18rem] max-md:-translate-y-[18%]"
       data-greeting-open={isGreetingVisible ? "true" : "false"}
       onMouseEnter={openGreeting}
       onMouseLeave={closeGreeting}
       onFocus={openGreeting}
       onBlur={handleGreetingBlur}
     >
-      <Link href="/" className="portfolio-brand" aria-label="Go to home">
-        <span className="portfolio-brand-animation">
+      <Link
+        href="/"
+        className="relative z-[2] block leading-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-portfolio-accent"
+        aria-label="Go to home"
+      >
+        <span className="block size-[3.1rem] shrink-0 overflow-hidden max-md:size-[2.72rem]">
           <img
             src={frameSrc}
             alt=""
             aria-hidden="true"
-            className="portfolio-brand-photo"
+            className="block size-[3.1rem] shrink-0 object-cover object-top max-md:size-[2.72rem]"
           />
         </span>
       </Link>
 
-      <span className="portfolio-brand-greeting" aria-hidden="true">
-        <span className="portfolio-brand-greeting-tail" />
-        <span className="portfolio-brand-greeting-copy">
+      <span
+        className={cn(
+          "pointer-events-none absolute left-[-0.08rem] top-[calc(100%_+_0.3rem)] z-[3] w-max min-w-0 origin-left border border-portfolio-border bg-portfolio-surface px-[0.58rem] pb-[0.42rem] pt-[0.44rem] shadow-none transition-[opacity,transform,visibility] duration-200 ease-portfolio max-md:left-[-0.04rem] max-md:top-[calc(100%_+_0.24rem)] max-md:max-w-none max-md:px-2 max-md:pb-[0.36rem] max-md:pt-[0.38rem]",
+          isGreetingVisible
+            ? "visible translate-y-0 opacity-100"
+            : "invisible -translate-y-[0.2rem] opacity-0",
+        )}
+        aria-hidden="true"
+      >
+        <span className="absolute left-[0.92rem] top-[-0.38rem] size-[0.72rem] rotate-45 border-l border-t border-portfolio-border bg-portfolio-surface max-md:left-[0.78rem] max-md:top-[-0.34rem] max-md:size-[0.64rem]" />
+        <span className="relative z-[1] block">
           {isGreetingVisible ? (
             <TypingAnimation
               key={greetingAnimationKey}
               as="span"
-              className="portfolio-brand-greeting-text"
+              className="block whitespace-normal font-mono text-[0.68rem] font-semibold leading-[1.15] tracking-normal text-portfolio-primary max-md:text-[0.6rem]"
               delay={120}
               duration={42}
               startOnView={false}
@@ -308,29 +337,30 @@ function HeaderConfigMenu() {
           aria-label="Open config"
           aria-haspopup="menu"
           aria-expanded={open}
-          className="portfolio-nav-button portfolio-nav-icon-button"
+          className="inline-flex min-w-[1.15rem] cursor-pointer appearance-none items-center justify-center border-0 border-b border-portfolio-surface bg-transparent pb-[0.24rem] font-mono text-[0.78rem] font-semibold uppercase leading-[1.1] tracking-normal text-portfolio-secondary transition-colors duration-150 ease-portfolio hover:border-portfolio-accent hover:text-portfolio-accent focus-visible:border-portfolio-accent focus-visible:text-portfolio-primary focus-visible:outline-none aria-expanded:border-portfolio-primary aria-expanded:text-portfolio-primary max-md:text-[0.72rem]"
         >
-          <Settings2 className="portfolio-nav-icon" />
+          <Settings2 className="size-[0.92rem] shrink-0" />
           <span className="sr-only">Config</span>
         </button>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent
         align="end"
+        alignOffset={8}
         sideOffset={10}
-        className="portfolio-config-menu !w-auto !min-w-[14rem] !rounded-none !p-0"
+        className="!w-[9.5rem] !min-w-[9.5rem] !rounded-none !border !border-portfolio-border !bg-portfolio-surface !p-0 !font-mono !shadow-none"
       >
         <DropdownMenuItem
-          className="portfolio-config-menu-item !rounded-none"
+          className="!min-h-10 !cursor-pointer !rounded-none !px-[0.8rem] !py-[0.7rem] !font-mono !text-[0.78rem] !font-semibold !uppercase !leading-[1.1] !tracking-normal !text-portfolio-secondary !transition-colors !duration-150 !ease-portfolio data-[highlighted]:!bg-portfolio-highlight data-[highlighted]:!text-portfolio-primary"
           aria-label={toggleLabel}
           onSelect={() => {
             toggleTheme(triggerRef.current);
             setOpen(false);
           }}
         >
-          <span className="portfolio-config-menu-copy">
-            <ThemeIcon className="portfolio-config-menu-icon h-4 w-4" />
-            <span className="portfolio-config-menu-label">
+          <span className="inline-flex items-center gap-2 font-mono text-[0.78rem] font-semibold uppercase leading-[1.1] tracking-normal [font-variant-ligatures:none]">
+            <ThemeIcon className="size-[0.82rem] shrink-0" />
+            <span className="font-mono text-[0.78rem] font-semibold uppercase leading-[1.1] tracking-normal [font-variant-ligatures:none]">
               {nextThemeLabel}
             </span>
           </span>
@@ -346,95 +376,6 @@ export function PortfolioLayout({
   children,
 }: PortfolioLayoutProps) {
   const router = useRouter();
-  const footerSentinelRef = useRef<HTMLDivElement | null>(null);
-  const footerRef = useRef<HTMLElement | null>(null);
-  const [showBackToTop, setShowBackToTop] = useState(false);
-  const [backToTopFooterOffset, setBackToTopFooterOffset] = useState(0);
-
-  useEffect(() => {
-    const sentinelNode = footerSentinelRef.current;
-    const footerNode = footerRef.current;
-
-    if (!sentinelNode || !footerNode || typeof window === "undefined") {
-      return;
-    }
-
-    let isSentinelVisible = false;
-    let frame = 0;
-
-    const syncVisibility = () => {
-      setShowBackToTop(isSentinelVisible && window.scrollY > 48);
-
-      const footerRect = footerNode.getBoundingClientRect();
-      const footerOffset = Math.max(
-        0,
-        Math.round(window.innerHeight - footerRect.top),
-      );
-
-      setBackToTopFooterOffset(footerOffset);
-    };
-
-    const requestSyncVisibility = () => {
-      if (frame !== 0) {
-        return;
-      }
-
-      frame = window.requestAnimationFrame(() => {
-        frame = 0;
-        syncVisibility();
-      });
-    };
-
-    if (typeof IntersectionObserver === "undefined") {
-      const onScroll = () => {
-        const rect = sentinelNode.getBoundingClientRect();
-        isSentinelVisible = rect.top <= window.innerHeight;
-        requestSyncVisibility();
-      };
-
-      onScroll();
-      window.addEventListener("scroll", onScroll, { passive: true });
-      window.addEventListener("resize", requestSyncVisibility);
-
-      return () => {
-        if (frame !== 0) {
-          window.cancelAnimationFrame(frame);
-        }
-
-        window.removeEventListener("scroll", onScroll);
-        window.removeEventListener("resize", requestSyncVisibility);
-      };
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        isSentinelVisible = entry.isIntersecting;
-        requestSyncVisibility();
-      },
-      {
-        threshold: 0.35,
-      },
-    );
-
-    const onScroll = () => {
-      requestSyncVisibility();
-    };
-
-    observer.observe(sentinelNode);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", requestSyncVisibility);
-    syncVisibility();
-
-    return () => {
-      if (frame !== 0) {
-        window.cancelAnimationFrame(frame);
-      }
-
-      observer.disconnect();
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", requestSyncVisibility);
-    };
-  }, []);
 
   return (
     <>
@@ -443,13 +384,16 @@ export function PortfolioLayout({
         <meta name="description" content={description} />
       </Head>
 
-      <div id="top" className="portfolio-shell">
-        <div className="portfolio-header-shell">
-          <div className="portfolio-header-shell-inner">
-            <header className="portfolio-header">
+      <div className="flex min-h-screen flex-col overflow-x-clip bg-portfolio-neutral text-portfolio-primary">
+        <div className="fixed left-1/2 top-4 z-30 -translate-x-1/2 max-md:left-0 max-md:right-0 max-md:translate-x-0">
+          <div className="w-fit max-w-[calc(100vw_-_2rem)] p-0 max-md:mx-auto max-md:w-[min(calc(100vw_-_1rem),24rem)] max-md:max-w-none">
+            <header className="relative flex min-h-[2.8rem] w-fit items-center justify-between gap-4 border border-portfolio-border bg-portfolio-surface py-[0.6rem] pb-[0.54rem] pl-[4.28rem] pr-[0.96rem] max-md:min-h-[2.62rem] max-md:w-full max-md:gap-[0.72rem] max-md:py-[0.56rem] max-md:pb-2 max-md:pl-[3.64rem] max-md:pr-[0.82rem]">
               <HeaderBrandAnimation />
 
-              <nav className="portfolio-nav" aria-label="Primary navigation">
+              <nav
+                className="flex w-full flex-1 items-center justify-between gap-[0.95rem] whitespace-nowrap max-md:gap-[0.56rem]"
+                aria-label="Primary navigation"
+              >
                 {navigationLinks.map((item) => (
                   <Link
                     key={item.href}
@@ -461,7 +405,7 @@ export function PortfolioLayout({
                         ? "page"
                         : undefined
                     }
-                    className="portfolio-nav-link"
+                    className="border-b border-portfolio-surface pb-[0.24rem] font-mono text-[0.78rem] font-semibold uppercase leading-[1.1] tracking-normal text-portfolio-secondary no-underline transition-colors duration-150 ease-portfolio hover:border-portfolio-accent hover:text-portfolio-accent focus-visible:border-portfolio-accent focus-visible:text-portfolio-primary focus-visible:outline-none aria-[current=page]:border-portfolio-primary aria-[current=page]:text-portfolio-primary max-md:text-[0.72rem]"
                   >
                     {item.number}. {item.label}
                   </Link>
@@ -473,37 +417,44 @@ export function PortfolioLayout({
           </div>
         </div>
 
-        <div className="portfolio-frame">
+        <div className="relative mx-auto my-4 w-[min(calc(100%_-_2rem),var(--portfolio-max-width))] flex-1 border border-portfolio-border max-md:my-2 max-md:w-[calc(100%_-_1rem)]">
           <span
-            className="portfolio-frame-corner portfolio-frame-corner--top-left"
+            className={cn(
+              crossClassName,
+              "left-0 top-0 -translate-x-1/2 -translate-y-1/2",
+            )}
             aria-hidden="true"
           />
           <span
-            className="portfolio-frame-corner portfolio-frame-corner--top-right"
+            className={cn(
+              crossClassName,
+              "right-0 top-0 -translate-y-1/2 translate-x-1/2",
+            )}
             aria-hidden="true"
           />
           <span
-            className="portfolio-frame-corner portfolio-frame-corner--bottom-left"
+            className={cn(
+              crossClassName,
+              "bottom-0 left-0 -translate-x-1/2 translate-y-1/2",
+            )}
             aria-hidden="true"
           />
           <span
-            className="portfolio-frame-corner portfolio-frame-corner--bottom-right"
+            className={cn(
+              crossClassName,
+              "bottom-0 right-0 translate-x-1/2 translate-y-1/2",
+            )}
             aria-hidden="true"
           />
 
-          <div className="portfolio-container">
-            <main className="portfolio-main">{children}</main>
-            <div
-              ref={footerSentinelRef}
-              className="portfolio-end-sentinel"
-              aria-hidden="true"
-            />
+          <div className="relative mx-auto w-full px-[clamp(1rem,2.4vw,var(--portfolio-space-xl))] pb-portfolio-xl pt-[var(--portfolio-header-offset)] max-md:px-4 max-md:pt-[var(--portfolio-header-offset-mobile)]">
+            <main className="min-w-0">{children}</main>
           </div>
         </div>
 
-        <footer ref={footerRef} className="portfolio-footer">
+        <footer className="mt-auto w-screen border-t border-portfolio-border p-0 [margin-left:calc(50%_-_50vw)]">
           <div
-            className="portfolio-footer-card-grid"
+            className="grid gap-px bg-portfolio-border [grid-template-columns:repeat(var(--portfolio-footer-columns,1),minmax(0,1fr))] max-[900px]:grid-cols-1 max-md:grid-cols-1"
             style={
               {
                 "--portfolio-footer-columns": String(contactLinks.length),
@@ -521,16 +472,16 @@ export function PortfolioLayout({
                   href={item.href}
                   target={opensInNewTab ? "_blank" : undefined}
                   rel={opensInNewTab ? "noopener noreferrer" : undefined}
-                  className="portfolio-footer-card"
+                  className="flex min-h-0 items-center justify-between gap-3 bg-portfolio-surface p-[0.9rem_1rem] text-inherit no-underline transition-colors duration-150 ease-portfolio hover:bg-portfolio-highlight hover:text-portfolio-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-portfolio-accent"
                 >
-                  <div className="portfolio-footer-card-line">
-                    <div className="portfolio-footer-card-leading">
-                      <Icon className="portfolio-footer-card-icon h-5 w-5" />
-                      <div className="portfolio-footer-card-copy">
-                        <span className="portfolio-footer-card-title">
+                  <div className="flex w-full min-w-0 items-center justify-between gap-3">
+                    <div className="flex min-w-0 items-center gap-[0.6rem]">
+                      <Icon className="size-5 shrink-0 text-portfolio-accent" />
+                      <div className="flex min-w-0 flex-wrap items-baseline gap-[0.35rem]">
+                        <span className="inline text-[0.88rem] font-semibold leading-[1.4] text-portfolio-primary">
                           {item.title}
                         </span>
-                        <span className="portfolio-footer-card-value">
+                        <span className="inline text-[0.68rem] leading-[1.35] text-portfolio-secondary [overflow-wrap:anywhere]">
                           {item.value}
                         </span>
                       </div>
@@ -543,19 +494,6 @@ export function PortfolioLayout({
             })}
           </div>
         </footer>
-
-        <a
-          href="#top"
-          className={`portfolio-floating-top${showBackToTop ? " is-visible" : ""}`}
-          style={
-            {
-              "--portfolio-floating-top-footer-offset": `${backToTopFooterOffset}px`,
-            } as CSSProperties
-          }
-        >
-          <ArrowUp className="h-4 w-4" />
-          Back to top
-        </a>
       </div>
     </>
   );
@@ -570,29 +508,28 @@ export function PortfolioPageIntro({
   const hasSide = Boolean(action);
 
   return (
-    <PortfolioSection
-      spacing="page-start"
-      className="portfolio-page-intro"
-    >
+    <PortfolioSection spacing="page-start">
       <div
-        className={
+        className={cn(
+          "grid items-end gap-portfolio-xl max-[900px]:grid-cols-1",
           hasSide
-            ? "portfolio-page-intro-grid"
-            : "portfolio-page-intro-grid portfolio-page-intro-grid--compact"
-        }
+            ? "grid-cols-[minmax(0,1fr)_minmax(260px,0.65fr)]"
+            : "grid-cols-1",
+        )}
       >
-        <div className="portfolio-section-heading">
-          <p className="portfolio-kicker">{kicker}</p>
-          <h1 className="portfolio-page-title" aria-label={title}>
+        <div className={portfolioSectionHeadingClassName}>
+          <p className={portfolioKickerClassName}>{kicker}</p>
+          <h1
+            className="m-0 max-w-[12ch] text-[2.7rem] font-bold leading-[0.96] tracking-normal text-portfolio-primary md:text-[3.6rem] lg:text-[4.8rem]"
+            aria-label={title}
+          >
             {titleVisual ?? title}
           </h1>
         </div>
 
         {hasSide ? (
-          <div className="portfolio-page-intro-side">
-            {action ? (
-              <div className="portfolio-page-intro-action">{action}</div>
-            ) : null}
+          <div className="grid justify-items-start gap-portfolio-lg">
+            {action ? <div>{action}</div> : null}
           </div>
         ) : null}
       </div>
@@ -608,11 +545,7 @@ export function PortfolioSection({
 }: PortfolioSectionProps) {
   return (
     <section
-      className={cn(
-        "portfolio-section",
-        `portfolio-section--${spacing}`,
-        className,
-      )}
+      className={cn(sectionSpacingClassNames[spacing], className)}
       {...props}
     >
       {children}
@@ -626,7 +559,13 @@ export function PortfolioSectionBody({
   ...props
 }: PortfolioSectionBodyProps) {
   return (
-    <div className={cn("portfolio-section-body", className)} {...props}>
+    <div
+      className={cn(
+        "mt-[var(--portfolio-section-body-gap)] max-md:mt-[var(--portfolio-section-body-gap-mobile)]",
+        className,
+      )}
+      {...props}
+    >
       {children}
     </div>
   );
@@ -640,24 +579,39 @@ export function PortfolioCollection({
 }: PortfolioCollectionProps) {
   return (
     <div
-      className={cn("portfolio-collection", className)}
+      className={cn(
+        "relative grid gap-px border border-portfolio-border bg-portfolio-border data-[columns=1]:grid-cols-1 data-[columns=2]:grid-cols-2 max-[900px]:data-[columns=2]:grid-cols-1 [&>article:focus-within]:z-[6] [&>article:hover]:z-[6] [&>article>[data-portfolio-card-surface]]:h-full [&>article>[data-portfolio-card-surface]]:min-h-0 [&>article>[data-portfolio-card-surface]]:border-0 [&>article]:relative [&>article]:z-0 [&>article]:h-full [&>article]:min-w-0",
+        className,
+      )}
       data-columns={columns}
       {...props}
     >
       <span
-        className="portfolio-collection-cross portfolio-collection-cross--top-left"
+        className={cn(
+          crossClassName,
+          "left-0 top-0 -translate-x-1/2 -translate-y-1/2",
+        )}
         aria-hidden="true"
       />
       <span
-        className="portfolio-collection-cross portfolio-collection-cross--top-right"
+        className={cn(
+          crossClassName,
+          "right-0 top-0 -translate-y-1/2 translate-x-1/2",
+        )}
         aria-hidden="true"
       />
       <span
-        className="portfolio-collection-cross portfolio-collection-cross--bottom-left"
+        className={cn(
+          crossClassName,
+          "bottom-0 left-0 -translate-x-1/2 translate-y-1/2",
+        )}
         aria-hidden="true"
       />
       <span
-        className="portfolio-collection-cross portfolio-collection-cross--bottom-right"
+        className={cn(
+          crossClassName,
+          "bottom-0 right-0 translate-x-1/2 translate-y-1/2",
+        )}
         aria-hidden="true"
       />
       {children}

@@ -13,37 +13,59 @@ interface ProfessionalWorkCardProps {
   index: number;
 }
 
-function PreviewCardFrame({
-  item,
-  index,
-}: ProfessionalWorkPreviewCardProps) {
+const editorialCardClassName =
+  "group h-full min-h-0 border border-portfolio-border bg-portfolio-surface p-portfolio-lg text-inherit no-underline shadow-portfolio-card transition-[transform,border-color,box-shadow,background-color,color] duration-300 ease-portfolio hover:z-[1] hover:-translate-y-[3px] hover:scale-[1.01] hover:border-portfolio-accent-border hover:bg-portfolio-highlight hover:shadow-portfolio-card-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-portfolio-accent";
+
+const previewCardClassName = `${editorialCardClassName} grid content-start gap-portfolio-md`;
+
+const workItemCardClassName = `${editorialCardClassName} grid content-start gap-portfolio-lg`;
+
+const rowMetaClassName = "flex flex-wrap items-center justify-between gap-4";
+
+const projectCopyClassName = "grid gap-3";
+
+const projectTitleClassName =
+  "m-0 text-[1.65rem] font-semibold leading-[1.02] tracking-normal text-portfolio-primary group-hover:text-portfolio-accent md:text-2xl";
+
+const projectSummaryClassName =
+  "m-0 text-[0.96rem] leading-[1.7] text-portfolio-secondary";
+
+const projectMetaClassName =
+  "m-0 font-mono text-[0.72rem] font-semibold uppercase leading-[1.2] tracking-normal text-portfolio-secondary";
+
+const kickerClassName =
+  "m-0 font-mono text-[0.72rem] font-semibold uppercase leading-[1.1] tracking-normal text-portfolio-secondary";
+
+const cardActionClassName =
+  "inline-flex items-center gap-[0.55rem] font-mono text-[0.8125rem] font-semibold uppercase leading-[1.1] tracking-normal text-portfolio-primary transition-[color,transform] duration-300 ease-portfolio group-hover:text-portfolio-accent";
+
+function PreviewCardFrame({ item, index }: ProfessionalWorkPreviewCardProps) {
   const previewNumber = String(index + 1).padStart(2, "0");
   const categoryLabel = getWorkCategoryLabel(item.workCategory);
 
   return (
     <Link
+      data-portfolio-card-surface=""
       href={item.href ?? "/work"}
-      className="portfolio-preview-item portfolio-editorial-card"
+      className={previewCardClassName}
     >
-      <div className="portfolio-preview-top">
-        <p className="portfolio-kicker">
+      <div className={rowMetaClassName}>
+        <p className={kickerClassName}>
           {previewNumber} / {categoryLabel}
         </p>
-        <span className="portfolio-professional-work-company">
-          {item.company}
-        </span>
+        <span className={projectMetaClassName}>{item.company}</span>
       </div>
 
-      <div className="portfolio-project-copy">
-        <h3 className="portfolio-project-title">{item.name}</h3>
-        <p className="portfolio-project-summary">{item.description}</p>
+      <div className={projectCopyClassName}>
+        <h3 className={projectTitleClassName}>{item.name}</h3>
+        <p className={projectSummaryClassName}>{item.description}</p>
       </div>
 
-      <div className="portfolio-preview-meta">
-        <p className="portfolio-project-stack">{item.meta}</p>
-        <span className="portfolio-card-action">
+      <div className={rowMetaClassName}>
+        <p className={projectMetaClassName}>{item.meta}</p>
+        <span className={cardActionClassName}>
           Open work
-          <ArrowUpRight className="h-4 w-4" />
+          <ArrowUpRight className="h-4 w-4 transition-transform duration-300 ease-portfolio group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
         </span>
       </div>
     </Link>
@@ -69,23 +91,21 @@ export function ProfessionalWorkCard({
 
   return (
     <article>
-      <div className="portfolio-project-item portfolio-editorial-card">
-        <div className="portfolio-project-item-header">
-          <p className="portfolio-kicker">
+      <div data-portfolio-card-surface="" className={workItemCardClassName}>
+        <div className={rowMetaClassName}>
+          <p className={kickerClassName}>
             {previewNumber} / {categoryLabel}
           </p>
-          <span className="portfolio-professional-work-company">
-            {item.company}
-          </span>
+          <span className={projectMetaClassName}>{item.company}</span>
         </div>
 
-        <div className="portfolio-professional-work-item-body">
-          <div className="portfolio-project-item-main">
-            <h2 className="portfolio-project-title">{item.name}</h2>
-            <p className="portfolio-project-summary">{item.description}</p>
+        <div className="grid grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] items-start gap-portfolio-lg max-[900px]:grid-cols-1">
+          <div className={projectCopyClassName}>
+            <h2 className={projectTitleClassName}>{item.name}</h2>
+            <p className={projectSummaryClassName}>{item.description}</p>
           </div>
 
-          <p className="portfolio-project-stack">{item.meta}</p>
+          <p className={projectMetaClassName}>{item.meta}</p>
         </div>
       </div>
     </article>
