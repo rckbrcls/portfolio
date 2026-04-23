@@ -41,9 +41,41 @@ const PREVIEW_GUTTER_PX = 24;
 const PREVIEW_OFFSET_X_PX = 28;
 const PREVIEW_OFFSET_Y_PX = 20;
 const PREVIEW_LERP = 0.16;
-const DEFAULT_PREVIEW_WIDTH_PX = 272;
-const DEFAULT_PREVIEW_HEIGHT_PX = 220;
+const DEFAULT_PREVIEW_WIDTH_PX = 224;
+const DEFAULT_PREVIEW_HEIGHT_PX = 180;
 const DESKTOP_PREVIEW_MIN_WIDTH_PX = 1080;
+
+const editorialCardClassName =
+  "group h-full min-h-0 border border-portfolio-border bg-portfolio-surface p-portfolio-lg text-inherit no-underline shadow-portfolio-card transition-[transform,border-color,box-shadow,background-color,color] duration-300 ease-portfolio hover:z-[1] hover:-translate-y-[3px] hover:scale-[1.01] hover:border-portfolio-accent-border hover:bg-portfolio-highlight hover:shadow-portfolio-card-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-portfolio-accent";
+
+const previewCardClassName = "grid content-start gap-portfolio-md";
+
+const projectItemCardClassName = "grid content-start gap-portfolio-lg";
+
+const rowMetaClassName = "flex flex-wrap items-center justify-between gap-4";
+
+const projectCopyClassName = "grid gap-3";
+
+const projectTitleClassName =
+  "m-0 text-[1.65rem] font-semibold leading-[1.02] tracking-normal text-portfolio-primary group-hover:text-portfolio-accent md:text-2xl";
+
+const projectSummaryClassName =
+  "m-0 text-[0.96rem] leading-[1.7] text-portfolio-secondary";
+
+const projectMetaClassName =
+  "m-0 font-mono text-[0.72rem] font-semibold uppercase leading-[1.2] tracking-normal text-portfolio-secondary";
+
+const kickerClassName =
+  "m-0 font-mono text-[0.72rem] font-semibold uppercase leading-[1.1] tracking-normal text-portfolio-secondary";
+
+const cardActionClassName =
+  "inline-flex items-center gap-[0.55rem] font-mono text-[0.8125rem] font-semibold uppercase leading-[1.1] tracking-normal text-portfolio-primary transition-[color,transform] duration-300 ease-portfolio group-hover:text-portfolio-accent";
+
+const projectPreviewPopoverClassName =
+  "pointer-events-none invisible fixed left-0 top-0 z-[24] hidden w-[clamp(11.5rem,14vw,14rem)] overflow-hidden border border-portfolio-accent-border bg-portfolio-surface opacity-0 [--portfolio-preview-origin-x:left] [--portfolio-preview-origin-y:top] [--portfolio-preview-rotate-x:3deg] [--portfolio-preview-rotate-y:-6deg] [--portfolio-preview-scale:0.96] [--portfolio-preview-x:24px] [--portfolio-preview-y:24px] [backface-visibility:hidden] [transform-origin:var(--portfolio-preview-origin-x)_var(--portfolio-preview-origin-y)] [transform:translate3d(var(--portfolio-preview-x),var(--portfolio-preview-y),0)_perspective(1200px)_rotateX(var(--portfolio-preview-rotate-x))_rotateY(var(--portfolio-preview-rotate-y))_scale(var(--portfolio-preview-scale))] [will-change:transform,opacity] data-[horizontal=left]:[--portfolio-preview-origin-x:right] data-[horizontal=left]:[--portfolio-preview-rotate-y:6deg] data-[horizontal=right]:[--portfolio-preview-origin-x:left] data-[horizontal=right]:[--portfolio-preview-rotate-y:-6deg] data-[vertical=bottom]:[--portfolio-preview-origin-y:top] data-[vertical=bottom]:[--portfolio-preview-rotate-x:3deg] data-[vertical=top]:[--portfolio-preview-origin-y:bottom] data-[vertical=top]:[--portfolio-preview-rotate-x:-3deg] motion-reduce:transition-[opacity,visibility] motion-reduce:duration-150 min-[1080px]:grid transition-[opacity,transform,visibility] duration-200 ease-portfolio";
+
+const projectPreviewVisibleClassName =
+  "visible opacity-100 [--portfolio-preview-rotate-x:0deg] [--portfolio-preview-rotate-y:0deg] [--portfolio-preview-scale:1]";
 
 type PreviewHorizontalSide = "left" | "right";
 type PreviewVerticalSide = "top" | "bottom";
@@ -280,7 +312,7 @@ function ProjectCardFrame({
 
   return (
     <article
-      className="portfolio-featured-project-card-shell"
+      className="relative z-0 min-w-0"
       onPointerEnter={hasPreview ? handlePointerEnter : undefined}
       onPointerMove={hasPreview ? handlePointerMove : undefined}
       onPointerLeave={hasPreview ? hidePreview : undefined}
@@ -288,15 +320,19 @@ function ProjectCardFrame({
     >
       {projectLink ? (
         <a
+          data-portfolio-card-surface=""
           href={projectLink.href}
           target="_blank"
           rel="noopener noreferrer"
-          className={cn(cardClassName, "portfolio-editorial-card")}
+          className={cn(editorialCardClassName, cardClassName)}
         >
           {children}
         </a>
       ) : (
-        <div className={cn(cardClassName, "portfolio-editorial-card")}>
+        <div
+          data-portfolio-card-surface=""
+          className={cn(editorialCardClassName, cardClassName)}
+        >
           {children}
         </div>
       )}
@@ -306,23 +342,21 @@ function ProjectCardFrame({
           ref={previewRef}
           aria-hidden="true"
           className={cn(
-            "portfolio-project-preview-popover",
-            isPreviewVisible && "portfolio-project-preview-popover--visible",
-            isLogoPreview &&
-              !showsIframePreview &&
-              "portfolio-project-preview-popover--logo",
+            projectPreviewPopoverClassName,
+            isPreviewVisible && projectPreviewVisibleClassName,
           )}
         >
           <div
             className={cn(
-              "portfolio-project-preview-media",
-              showsIframePreview && "portfolio-project-preview-media--iframe",
+              "relative aspect-[16/10] overflow-hidden border-b border-portfolio-border bg-portfolio-surface-alt",
+              showsIframePreview && "bg-portfolio-neutral",
+              isLogoPreview && !showsIframePreview && "p-[1.4rem]",
             )}
           >
             {showsIframePreview && isPreviewVisible ? (
               <iframe
                 aria-hidden="true"
-                className="portfolio-project-preview-iframe"
+                className="pointer-events-none absolute inset-0 h-[500%] w-[500%] origin-top-left scale-[0.2] select-none border-0 bg-portfolio-neutral"
                 src={iframePreviewHref ?? undefined}
                 tabIndex={-1}
                 title={`${project.name} preview`}
@@ -337,13 +371,18 @@ function ProjectCardFrame({
                 alt=""
                 fill
                 sizes="288px"
-                className="portfolio-project-preview-image"
+                className={cn(
+                  "object-cover object-top",
+                  isLogoPreview && "object-contain object-center",
+                )}
               />
             ) : null}
           </div>
-          <div className="portfolio-project-preview-footer">
-            <span className="portfolio-project-preview-label">Preview</span>
-            <span className="portfolio-project-preview-name">
+          <div className="flex items-center justify-between gap-[0.8rem] bg-portfolio-surface px-[0.9rem] pb-[0.74rem] pt-[0.78rem]">
+            <span className="font-mono text-[0.66rem] font-semibold uppercase leading-[1.1] tracking-normal text-portfolio-secondary">
+              Preview
+            </span>
+            <span className="text-right font-mono text-[0.66rem] font-semibold uppercase leading-[1.1] tracking-normal text-portfolio-primary">
               {previewLabel}
             </span>
           </div>
@@ -362,29 +401,31 @@ export function FeaturedProjectCard({
   const categoryLabel = getWorkCategoryLabel(project.workCategory);
   const cardContent = (
     <>
-      <div className="portfolio-preview-top">
-        <p className="portfolio-kicker">
+      <div className={rowMetaClassName}>
+        <p className={kickerClassName}>
           {previewNumber} / {categoryLabel}
         </p>
       </div>
 
-      <div className="portfolio-project-copy">
-        <h3 className="portfolio-project-title">{project.name}</h3>
-        <p className="portfolio-project-summary">{getProjectSummary(project)}</p>
+      <div className={projectCopyClassName}>
+        <h3 className={projectTitleClassName}>{project.name}</h3>
+        <p className={projectSummaryClassName}>{getProjectSummary(project)}</p>
       </div>
 
-      <div className="portfolio-preview-meta">
-        <p className="portfolio-project-stack">
+      <div className={rowMetaClassName}>
+        <p className={projectMetaClassName}>
           {getProjectStackPreview(project)}
         </p>
 
         {projectLink ? (
-          <span className="portfolio-card-action">
+          <span className={cardActionClassName}>
             {projectLink.label}
-            <ArrowUpRight className="h-4 w-4" />
+            <ArrowUpRight className="h-4 w-4 transition-transform duration-300 ease-portfolio group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
           </span>
         ) : (
-          <span className="portfolio-project-placeholder">No public link</span>
+          <span className="font-mono text-[0.72rem] font-semibold uppercase tracking-normal text-portfolio-secondary">
+            No public link
+          </span>
         )}
       </div>
     </>
@@ -394,7 +435,7 @@ export function FeaturedProjectCard({
     <ProjectCardFrame
       project={project}
       projectLink={projectLink}
-      cardClassName="portfolio-preview-item"
+      cardClassName={previewCardClassName}
       previewLabel={`${previewNumber} / ${project.name}`}
     >
       {cardContent}
@@ -408,30 +449,34 @@ export function WorkProjectCard({ project, index }: WorkProjectCardProps) {
   const categoryLabel = getWorkCategoryLabel(project.workCategory);
   const cardContent = (
     <>
-      <div className="portfolio-project-item-header">
-        <p className="portfolio-kicker">
+      <div className={rowMetaClassName}>
+        <p className={kickerClassName}>
           {previewNumber} / {categoryLabel}
         </p>
       </div>
 
-      <div className="portfolio-project-item-body">
-        <div className="portfolio-project-item-main">
-          <h2 className="portfolio-project-title">{project.name}</h2>
-          <p className="portfolio-project-summary">{getProjectSummary(project)}</p>
+      <div className="grid grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)_auto] items-start gap-portfolio-lg max-[900px]:grid-cols-1">
+        <div className={projectCopyClassName}>
+          <h2 className={projectTitleClassName}>{project.name}</h2>
+          <p className={projectSummaryClassName}>
+            {getProjectSummary(project)}
+          </p>
         </div>
 
-        <p className="portfolio-project-stack">
+        <p className={projectMetaClassName}>
           {getProjectStackPreview(project, 5)}
         </p>
 
-        <div className="portfolio-project-item-actions">
+        <div className="grid justify-items-start gap-portfolio-sm">
           {projectLink ? (
-            <span className="portfolio-card-action">
+            <span className={cardActionClassName}>
               {projectLink.label}
-              <ArrowUpRight className="h-4 w-4" />
+              <ArrowUpRight className="h-4 w-4 transition-transform duration-300 ease-portfolio group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </span>
           ) : (
-            <span className="portfolio-project-placeholder">No public link</span>
+            <span className="font-mono text-[0.72rem] font-semibold uppercase tracking-normal text-portfolio-secondary">
+              No public link
+            </span>
           )}
         </div>
       </div>
@@ -442,7 +487,7 @@ export function WorkProjectCard({ project, index }: WorkProjectCardProps) {
     <ProjectCardFrame
       project={project}
       projectLink={projectLink}
-      cardClassName="portfolio-project-item"
+      cardClassName={projectItemCardClassName}
       previewLabel={`${previewNumber} / ${project.name}`}
     >
       {cardContent}

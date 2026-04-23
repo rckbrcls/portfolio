@@ -8,7 +8,7 @@ import {
   PortfolioSection,
   PortfolioSectionBody,
 } from "@/components/portfolio-shell";
-import { MorphingText } from "@/components/ui/morphing-text";
+import { WordRotate } from "@/components/ui/word-rotate";
 import { getAllBlogPosts } from "@/lib/blog";
 
 const BLOG_TITLE_VARIANTS = [
@@ -18,6 +18,17 @@ const BLOG_TITLE_VARIANTS = [
   "Posts.",
   "Journal.",
 ];
+
+const kickerClassName =
+  "m-0 font-mono text-[0.72rem] font-semibold uppercase leading-[1.1] tracking-normal text-portfolio-secondary";
+
+const emptyStateClassName = "grid gap-portfolio-md";
+
+const emptyStateTitleClassName =
+  "m-0 text-[1.65rem] font-semibold leading-[1.02] tracking-normal text-portfolio-primary md:text-2xl";
+
+const emptyStateCopyClassName =
+  "m-0 text-[0.96rem] leading-[1.7] text-portfolio-secondary";
 
 export async function getStaticProps() {
   return {
@@ -38,7 +49,7 @@ export default function BlogIndexPage({
       <PortfolioPageIntro
         kicker="Blog"
         title="Writing."
-        titleVisual={<MorphingText texts={BLOG_TITLE_VARIANTS} />}
+        titleVisual={<WordRotate words={BLOG_TITLE_VARIANTS} />}
       />
 
       <PortfolioSection spacing="stack-tight">
@@ -50,12 +61,12 @@ export default function BlogIndexPage({
               ))}
             </PortfolioCollection>
           ) : (
-            <article className="portfolio-empty-state">
-              <p className="portfolio-kicker">No posts yet</p>
-              <h2 className="portfolio-empty-state-title">
+            <article className={emptyStateClassName}>
+              <p className={kickerClassName}>No posts yet</p>
+              <h2 className={emptyStateTitleClassName}>
                 The archive is ready for the first entry.
               </h2>
-              <p className="portfolio-empty-state-copy">
+              <p className={emptyStateCopyClassName}>
                 Publish an MDX post and it will appear here automatically.
               </p>
             </article>
