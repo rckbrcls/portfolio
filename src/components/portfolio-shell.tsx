@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import {
@@ -50,6 +49,173 @@ interface PortfolioSectionProps extends ComponentPropsWithoutRef<"section"> {
 }
 
 interface PortfolioSectionBodyProps extends ComponentPropsWithoutRef<"div"> {}
+
+const HEADER_BRAND_IDLE_FRAME = "/animation/piscar-sorrindo-1(igual).png";
+const HEADER_BRAND_CLOSED_SMILE_FRAME = "/animation/fechar-sorriso-2.png";
+const HEADER_BRAND_OPEN_SMILE_FRAME = "/animation/abrir-sorriso-2(igual).png";
+const HEADER_BRAND_INITIAL_IDLE_HOLD_MS = 1600;
+
+const HEADER_BRAND_BLOCKS = {
+  blinkSmiling: {
+    frameStepMs: 110,
+    cooldownMs: 1800,
+    cooldownFrameSrc: HEADER_BRAND_IDLE_FRAME,
+    frames: [
+      HEADER_BRAND_IDLE_FRAME,
+      "/animation/piscar-sorrindo-2.png",
+      "/animation/piscar-sorrindo-3.png",
+      "/animation/piscar-sorrindo-2.png",
+      HEADER_BRAND_IDLE_FRAME,
+    ],
+  },
+  closeSmile: {
+    frameStepMs: 160,
+    cooldownMs: 2200,
+    cooldownFrameSrc: HEADER_BRAND_CLOSED_SMILE_FRAME,
+    frames: [
+      HEADER_BRAND_IDLE_FRAME,
+      "/animation/fechar-sorriso-1.png",
+      HEADER_BRAND_CLOSED_SMILE_FRAME,
+    ],
+  },
+  openSmile: {
+    frameStepMs: 170,
+    cooldownMs: 2600,
+    cooldownFrameSrc: HEADER_BRAND_OPEN_SMILE_FRAME,
+    frames: [
+      HEADER_BRAND_CLOSED_SMILE_FRAME,
+      "/animation/abrir-sorriso-1.png",
+      HEADER_BRAND_OPEN_SMILE_FRAME,
+    ],
+  },
+} as const;
+
+const HEADER_BRAND_MACRO_CYCLE = [
+  "blinkSmiling",
+  "closeSmile",
+  "openSmile",
+] as const;
+
+type HeaderBrandBlockName = keyof typeof HEADER_BRAND_BLOCKS;
+
+function HeaderBrandAnimation() {
+  const [frameSrc, setFrameSrc] = useState(HEADER_BRAND_IDLE_FRAME);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const preloadedFrames = Array.from(
+      new Set(
+        Object.values(HEADER_BRAND_BLOCKS).flatMap((block) => block.frames),
+      ),
+    ).map((src) => {
+      const image = new window.Image();
+      image.src = src;
+      return image;
+    });
+
+    let timeoutId: number | null = null;
+
+    const stopAnimation = () => {
+      if (timeoutId !== null) {
+        window.clearTimeout(timeoutId);
+        timeoutId = null;
+      }
+    };
+
+    const scheduleTimeout = (callback: () => void, delayMs: number) => {
+      timeoutId = window.setTimeout(() => {
+        callback();
+      }, delayMs);
+    };
+
+    const scheduleCycleStep = (cycleIndex: number) => {
+      const blockName =
+        HEADER_BRAND_MACRO_CYCLE[cycleIndex] ?? HEADER_BRAND_MACRO_CYCLE[0];
+
+      playBlock(blockName, 0, cycleIndex);
+    };
+
+    const playBlock = (
+      blockName: HeaderBrandBlockName,
+      frameIndex: number,
+      cycleIndex: number,
+    ) => {
+      const block = HEADER_BRAND_BLOCKS[blockName];
+      const currentFrame = block.frames[frameIndex] ?? HEADER_BRAND_IDLE_FRAME;
+
+      setFrameSrc(currentFrame);
+
+      if (frameIndex < block.frames.length - 1) {
+        scheduleTimeout(() => {
+          playBlock(blockName, frameIndex + 1, cycleIndex);
+        }, block.frameStepMs);
+        return;
+      }
+
+      scheduleTimeout(() => {
+        setFrameSrc(block.cooldownFrameSrc);
+
+        scheduleTimeout(() => {
+          const nextCycleIndex =
+            (cycleIndex + 1) % HEADER_BRAND_MACRO_CYCLE.length;
+          scheduleCycleStep(nextCycleIndex);
+        }, block.cooldownMs);
+      }, block.frameStepMs);
+    };
+
+    const syncAnimation = () => {
+      stopAnimation();
+      setFrameSrc(HEADER_BRAND_IDLE_FRAME);
+
+      if (mediaQuery.matches) {
+        return;
+      }
+
+      scheduleTimeout(() => {
+        scheduleCycleStep(0);
+      }, HEADER_BRAND_INITIAL_IDLE_HOLD_MS);
+    };
+
+    syncAnimation();
+
+    const handleMediaChange = () => {
+      syncAnimation();
+    };
+
+    if (typeof mediaQuery.addEventListener === "function") {
+      mediaQuery.addEventListener("change", handleMediaChange);
+    } else {
+      mediaQuery.addListener(handleMediaChange);
+    }
+
+    return () => {
+      stopAnimation();
+
+      if (typeof mediaQuery.removeEventListener === "function") {
+        mediaQuery.removeEventListener("change", handleMediaChange);
+      } else {
+        mediaQuery.removeListener(handleMediaChange);
+      }
+
+      preloadedFrames.length = 0;
+    };
+  }, []);
+
+  return (
+    <span className="portfolio-brand-animation">
+      <img
+        src={frameSrc}
+        alt=""
+        aria-hidden="true"
+        className="portfolio-brand-photo"
+      />
+    </span>
+  );
+}
 
 function HeaderConfigMenu() {
   const [open, setOpen] = useState(false);
@@ -211,14 +377,7 @@ export function PortfolioLayout({
                 className="portfolio-brand"
                 aria-label="Go to home"
               >
-                <Image
-                  src="/images/me.png"
-                  alt="Portrait of Erick Barcelos"
-                  width={72}
-                  height={72}
-                  priority
-                  className="portfolio-brand-photo"
-                />
+                <HeaderBrandAnimation />
               </Link>
 
               <nav className="portfolio-nav" aria-label="Primary navigation">

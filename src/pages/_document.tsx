@@ -5,7 +5,9 @@ export default function Document() {
   return (
     <Html lang="en" suppressHydrationWarning>
       <Head>
-        <link rel="icon" href="/images/assets/ico.png" />
+        <link rel="icon" type="image/png" href="/images/me.png" />
+        <link rel="shortcut icon" href="/images/me.png" />
+        <link rel="apple-touch-icon" href="/images/me.png" />
       </Head>
       <body className={`${GeistPixelSquare.variable} theme`}>
         <Main />
