@@ -190,9 +190,20 @@ function FieldError({
       return null
     }
 
-    const uniqueErrors = [
-      ...new Map(errors.map((error) => [error?.message, error])).values(),
-    ]
+    const uniqueErrors = errors.reduce<Array<{ message?: string } | undefined>>(
+      (collection, error) => {
+        const alreadyIncluded = collection.some(
+          (entry) => entry?.message === error?.message
+        )
+
+        if (!alreadyIncluded) {
+          collection.push(error)
+        }
+
+        return collection
+      },
+      []
+    )
 
     if (uniqueErrors?.length == 1) {
       return uniqueErrors[0]?.message
