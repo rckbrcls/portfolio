@@ -485,15 +485,25 @@ body {
 
   .portfolio-hero {
     display: grid;
-    gap: var(--portfolio-space-lg);
-    max-width: 56rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.5rem, 4vw, 3rem);
+    align-items: center;
+    max-width: 72rem;
     padding: 0;
+  }
+
+  .portfolio-hero-copy {
+    display: grid;
+    gap: var(--portfolio-space-lg);
+    min-width: 0;
+    max-width: 56rem;
+    justify-items: start;
   }
 
   .portfolio-hero-title {
     margin: 0;
     max-width: 14ch;
-    font-size: clamp(3.2rem, 8vw, 6rem);
+    font-size: clamp(3.6rem, 9vw, 6.8rem);
     font-weight: 700;
     line-height: 0.94;
     letter-spacing: -0.065em;
@@ -506,6 +516,19 @@ body {
     font-size: 0.96rem;
     line-height: 1.7;
     color: var(--portfolio-secondary);
+  }
+
+  .portfolio-hero-media {
+    display: grid;
+    justify-self: stretch;
+    place-items: center;
+    width: 100%;
+  }
+
+  .portfolio-hero-image {
+    display: block;
+    width: min(100%, 25rem);
+    height: auto;
   }
 
   .portfolio-project-copy {
@@ -1370,6 +1393,28 @@ body {
   }
 
   @media (max-width: 900px) {
+    .portfolio-hero {
+      grid-template-columns: 1fr;
+      align-items: start;
+      justify-items: center;
+      max-width: 56rem;
+    }
+
+    .portfolio-hero-copy {
+      justify-items: center;
+      text-align: center;
+    }
+
+    .portfolio-hero-media {
+      justify-self: center;
+      place-items: center;
+      width: min(100%, 22rem);
+    }
+
+    .portfolio-hero-summary {
+      text-align: center;
+    }
+
     .portfolio-page-intro-grid,
     .portfolio-project-item-body,
     .portfolio-professional-work-item-body {
@@ -1483,6 +1528,14 @@ body {
 
     .portfolio-hero {
       gap: var(--portfolio-space-lg);
+    }
+
+    .portfolio-hero-copy {
+      gap: var(--portfolio-space-lg);
+    }
+
+    .portfolio-hero-media {
+      width: min(72vw, 18rem);
     }
 
     .portfolio-hero-title {
