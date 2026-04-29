@@ -56,7 +56,7 @@ export const projects: IProject[] = [
       "Zustand",
     ],
     timeline: null,
-    link: "https://duplizen.polterware.com",
+    link: "https://duplizen.erickbarcelos.com",
     members: ["Erick Barcelos"],
     coverImage: "/images/projects/duplizen/duplizen.png",
     previewMode: "iframe",
@@ -74,7 +74,7 @@ export const projects: IProject[] = [
     coverImage: "/images/projects/converge/converge.png",
     previewMode: "iframe",
     status: "working",
-    link: "https://converge.polterware.com",
+    link: "https://converge.erickbarcelos.com",
     workCategory: "independent",
   },
   {
