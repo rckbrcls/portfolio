@@ -2,7 +2,7 @@
 
 ## Summary
 
-- Companion folder for the `portifolio` visual evidence.
+- Companion folder for the `portfolio` visual evidence.
 - Stores screenshots that should be referenced from the main project README.
 - Current status: placeholder checklist; screenshots still need to be added.
 
