@@ -48,7 +48,7 @@ portfolio/
 
 ## Current state
 
-The repository is a working personal site. There is a sibling checkout named `portifolio` with the same product direction and a different GitHub remote.
+The repository is a working personal site. There is a sibling checkout named `portfolio` with the same product direction and a different GitHub remote.
 
 ## Working notes
 
