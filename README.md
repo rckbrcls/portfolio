@@ -10,7 +10,7 @@ Personal portfolio and blog for Erick Barcelos. The site presents professional w
 - Personal Next.js portfolio and local-first MDX blog for Erick Barcelos.
 - Solves professional presentation for work, independent projects, experience, writing, and a custom restrained visual system.
 - Main stack: Next.js Pages Router, React, TypeScript, MDX, local data files, custom components, and `DESIGN.md`.
-- Current status: active personal site; sibling checkout `portifolio` has the same product direction.
+- Current status: active personal site; sibling checkout `portfolio` has the same product direction.
 - Technical value: combines static project data, local blog parsing, project/work pages, and browser translation hardening.
 
 ## Overview
