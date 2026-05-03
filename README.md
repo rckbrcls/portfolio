@@ -16,7 +16,7 @@ Personal portfolio and blog for Erick Barcelos. The site presents professional w
 
 ## What it is
 
-`portifolio` is a Next.js Pages Router site. It combines a curated work index, independent project cards, professional experience, and local MDX blog content.
+`portfolio` is a Next.js Pages Router site. It combines a curated work index, independent project cards, professional experience, and local MDX blog content.
 
 ## Goals
 
@@ -35,7 +35,7 @@ Personal portfolio and blog for Erick Barcelos. The site presents professional w
 ## Project map
 
 ```text
-portifolio/
+portfolio/
 ├── content/blog/  # Local MDX posts
 ├── data/          # Projects, tech stack, and professional work data
 ├── public/        # Images, animations, and project assets

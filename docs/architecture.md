@@ -2,7 +2,7 @@
 
 ## Overview
 
-`portifolio` is a Next.js Pages Router site with local MDX content, structured project data, and a custom visual direction documented in `DESIGN.md`.
+`portfolio` is a Next.js Pages Router site with local MDX content, structured project data, and a custom visual direction documented in `DESIGN.md`.
 
 ## Components
 
