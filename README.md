@@ -7,32 +7,31 @@ Personal portfolio and blog for Erick Barcelos. The site presents professional w
 
 ## Summary
 
-- [What it is](#what-it-is)
-- [Goals](#goals)
-- [Site areas](#site-areas)
-- [Project map](#project-map)
-- [Current state](#current-state)
-- [Working notes](#working-notes)
+- Personal Next.js portfolio and local-first MDX blog for Erick Barcelos.
+- Solves professional presentation for work, independent projects, experience, writing, and a custom restrained visual system.
+- Main stack: Next.js Pages Router, React, TypeScript, MDX, local data files, custom components, and `DESIGN.md`.
+- Current status: active personal site; sibling checkout `portfolio` has the same product direction.
+- Technical value: combines static project data, local blog parsing, project/work pages, and browser translation hardening.
 
-## What it is
+## Overview
 
 `portfolio` is a Next.js Pages Router site. It combines a curated work index, independent project cards, professional experience, and local MDX blog content.
 
-## Goals
+## Motivation
 
 - Present Erick Barcelos' work in a way that is specific, useful, and not template-like.
 - Keep independent projects and professional work easy to scan.
 - Publish writing locally through MDX without requiring a CMS.
 - Preserve a strong but restrained design direction documented in `DESIGN.md`.
 
-## Site areas
+## Features
 
 - Home page with hero, professional work preview, independent projects, and latest posts.
 - Work page for broader work/project navigation.
 - Blog content under `content/blog`.
 - Project and professional-work data under `data/`.
 
-## Project map
+## Project Structure
 
 ```text
 portfolio/
@@ -46,11 +45,11 @@ portfolio/
 └── package.json
 ```
 
-## Current state
+## Current Status
 
 The repository is a working personal site. There is a sibling checkout named `portfolio` with the same product direction and a different GitHub remote.
 
-## Working notes
+## Known Limitations
 
 - Follow `DESIGN.md` for visual decisions.
 - Keep browser translation hardening in the document root.
