@@ -2,5 +2,11 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "git": {
     "deploymentEnabled": false
-  }
+  },
+  "rewrites": [
+    {
+      "source": "/api/sparky/appcast.xml",
+      "destination": "https://rckbrcls.github.io/sparky/appcast.xml"
+    }
+  ]
 }
