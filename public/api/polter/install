@@ -192,3 +192,5 @@ fi
 
 echo "✅ ${APP_DISPLAY_NAME} installed at $TARGET_PATH"
 echo "Open with: open \"$TARGET_PATH\""
+
+# deploy bump 20260719T204004Z
