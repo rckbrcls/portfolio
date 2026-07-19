@@ -10,7 +10,7 @@
     },
     {
       "source": "/api/sparky/install",
-      "destination": "https://raw.githubusercontent.com/rckbrcls/sparky/master/scripts/install.sh"
+      "destination": "https://rckbrcls.github.io/sparky/install"
     }
   ]
 }
